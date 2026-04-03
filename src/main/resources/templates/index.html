@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeroGame Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="page">
+    <section class="hero">
+        <div>
+            <p class="eyebrow">Java Programming 2 - SET01</p>
+            <h1>HeroGame Player Management</h1>
+            <p class="lead">Spring Boot web application using SQL database <strong>HeroGame</strong>.</p>
+        </div>
+        <div class="card info-card">
+            <h2>Functions</h2>
+            <p>Add player, delete player, add/delete national, search by name, display all, and display top 10.</p>
+        </div>
+    </section>
+
+    <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="message error" th:text="${errorMessage}"></div>
+
+    <section class="layout">
+        <div class="stack">
+            <div class="card">
+                <h2>Add New Player</h2>
+                <form th:action="@{/players}" method="post" class="form-grid">
+                    <input type="text" name="playerName" placeholder="Player name" required>
+                    <input type="number" name="highScore" placeholder="High Score" min="0" required>
+                    <input type="number" name="level" placeholder="Level" min="0" required>
+                    <select name="nationalId" required>
+                        <option value="">Select national</option>
+                        <option th:each="national : ${nationals}"
+                                th:value="${national.nationalId}"
+                                th:text="${national.nationalName}"></option>
+                    </select>
+                    <button type="submit">Add Player</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Manage National</h2>
+                <form th:action="@{/nationals}" method="post" class="inline-form">
+                    <input type="text" name="nationalName" placeholder="National name" required>
+                    <button type="submit">Add National</button>
+                </form>
+
+                <div class="national-list">
+                    <div th:each="national : ${nationals}" class="national-item">
+                        <span th:text="${national.nationalId + ' - ' + national.nationalName}"></span>
+                        <form th:action="@{/nationals/{id}/delete(id=${national.nationalId})}" method="post">
+                            <button type="submit" class="danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="toolbar">
+                <div>
+                    <h2>Table 1: Player information</h2>
+                    <p>Showing player list from database.</p>
+                </div>
+                <div class="toolbar-actions">
+                    <form th:action="@{/}" method="get" class="inline-form">
+                        <input type="text" name="keyword" th:value="${keyword}" placeholder="Find player by name">
+                        <button type="submit">Search</button>
+                    </form>
+                    <a class="button secondary" th:href="@{/}">Display All</a>
+                    <a class="button secondary" th:href="@{/(view='top10')}">Top 10</a>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Player Id</th>
+                        <th>Player name</th>
+                        <th>High Score</th>
+                        <th>Level</th>
+                        <th>National</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="player : ${players}">
+                        <td th:text="${player.playerId}"></td>
+                        <td th:text="${player.playerName}"></td>
+                        <td th:text="${player.highScore}"></td>
+                        <td th:text="${player.level}"></td>
+                        <td th:text="${player.national.nationalName}"></td>
+                        <td>
+                            <form th:action="@{/players/{id}/delete(id=${player.playerId})}" method="post">
+                                <button type="submit" class="danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(players)}">
+                        <td colspan="6" class="empty">No players found.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
