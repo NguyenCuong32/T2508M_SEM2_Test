@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HeroGame - Quản lý Người chơi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h3>
+                    <img src="https://coderent.vn/storage/settings/wvQ1bhv9HEFdwB4KtY4SFeC8Yyce3GK79hC5RaRW.png"
+                        style="width: 150px">
+                </h3>
+                <p style="color: var(--text-dim); margin-top: 0.25rem;">
+                    <span th:if="${isTop10}" style="color: var(--text-dim); font-weight: 300;">Danh sách Top 10 người
+                        chơi điểm cao nhất</span>
+                    <span th:unless="${isTop10}" style="color: var(--text-dim); font-weight: 300;">Hệ thống Quản lý
+                        Người chơi Chuyên nghiệp</span>
+                </p>
+            </div>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a th:href="@{/}" class="btn btn-outline">Tất cả Người chơi</a>
+                <a th:href="@{/top10}" class="btn btn-primary">Top 10 Điểm cao</a>
+            </div>
+        </header>
+
+        <form th:action="@{/search}" method="get" class="search-bar">
+            <input type="text" name="name" th:value="${searchName}" placeholder="Tìm kiếm anh hùng theo tên...">
+            <button type="submit" class="btn btn-primary">Tìm</button>
+        </form>
+
+        <div class="grid">
+            <div class="card">
+                <h2
+                    style="margin-bottom: 1.5rem; font-size: 1.25rem; border-left: 4px solid var(--primary-color); padding-left: 1rem;">
+                    Bảng Xếp hạng</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mã số</th>
+                                <th>Họ tên</th>
+                                <th>Điểm cao</th>
+                                <th>Cấp độ</th>
+                                <th>Quốc gia</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="player : ${players}">
+                                <td th:text="${player.playerId}">1</td>
+                                <td style="font-weight: 600; color: var(--primary-color);"
+                                    th:text="${player.playerName}">Người chơi 1</td>
+                                <td>
+                                    <span class="badge" th:text="${player.highScore}">100</span>
+                                </td>
+                                <td th:text="${player.level}">2</td>
+                                <td>
+                                    <span class="badge" th:text="${player.national.nationalName}"
+                                        style="background: #f1f3f5; color: var(--text-dim); border: 1px solid var(--border);">Việt
+                                        Nam</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{'/delete-player/' + ${player.playerId}}" class="btn btn-danger"
+                                        onclick="return confirm('Bạn có chắc chắn muốn xóa anh hùng này không?')">Xóa</a>
+                                </td>
+                            </tr>
+                            <tr th:if="${players.empty}">
+                                <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 3rem;">Không
+                                    tìm thấy người chơi nào.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <div class="card">
+                    <h3
+                        style="margin-bottom: 1.25rem; font-size: 1.1rem; border-left: 4px solid var(--primary-color); padding-left: 0.75rem;">
+                        Thêm Mới</h3>
+                    <form th:action="@{/add-player}" method="post">
+                        <div class="form-group">
+                            <label>Họ và tên</label>
+                            <input type="text" name="playerName" required placeholder="Nhập tên người chơi...">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Điểm ban đầu</label>
+                                <input type="number" name="highScore" required placeholder="0">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Cấp độ</label>
+                                <input type="number" name="level" required placeholder="1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Quốc gia</label>
+                            <select name="nationalId" required>
+                                <option value="" disabled selected>-- Chọn Quốc gia --</option>
+                                <option th:each="nat : ${nationals}" th:value="${nat.nationalId}"
+                                    th:text="${nat.nationalName}">Việt Nam</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Thêm ngay</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3
+                        style="margin-bottom: 1.25rem; font-size: 1.1rem; border-left: 4px solid var(--primary-color); padding-left: 0.75rem;">
+                        Thiết lập Quốc gia</h3>
+                    <form th:action="@{/add-national}" method="post">
+                        <div class="form-group">
+                            <label>Tên Quốc gia</label>
+                            <input type="text" name="nationalName" required placeholder="Ví dụ: Việt Nam, Nhật Bản...">
+                        </div>
+                        <button type="submit" class="btn btn-outline" style="width: 100%;">Thêm ngay</button>
+                    </form>
+
+                    <div style="margin-top: 1.5rem;">
+                        <h4
+                            style="margin-bottom: 0.75rem; color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            Các quốc gia hiện có</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <span th:each="nat : ${nationals}" class="badge"
+                                style="display: flex; align-items: center; gap: 0.4rem; background: #f1f3f5; color: var(--text-main); border: 1px solid var(--border);">
+                                <span th:text="${nat.nationalName}">Việt Nam</span>
+                                <a th:href="@{'/delete-national/' + ${nat.nationalId}}"
+                                    style="color: var(--accent); text-decoration: none; font-weight: bold; margin-left: 0.25rem; font-size: 1.1rem; line-height: 1;">&times;</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
