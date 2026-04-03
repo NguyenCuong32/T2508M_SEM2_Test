@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+
+
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.fptaptech.t2508m.ui.PlayerController">
+
+    <!-- TABLE -->
+    <center>
+        <TableView fx:id="table">
+            <columns>
+                <TableColumn text="Name" fx:id="colName" prefWidth="150"/>
+                <TableColumn text="Score" fx:id="colScore" prefWidth="100"/>
+                <TableColumn text="Level" fx:id="colLevel" prefWidth="100"/>
+                <TableColumn text="National" fx:id="colNational" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <!-- FORM -->
+    <bottom>
+        <VBox spacing="10" style="-fx-padding: 10;">
+
+            <HBox spacing="10">
+                <TextField fx:id="txtName" promptText="Player Name"/>
+                <TextField fx:id="txtScore" promptText="Score"/>
+                <TextField fx:id="txtLevel" promptText="Level"/>
+                <ComboBox fx:id="cbNational" prefWidth="150"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Button text="Add" onAction="#handleAdd"/>
+                <Button text="Delete" onAction="#handleDelete"/>
+                <Button text="Top 10" onAction="#handleTop10"/>
+            </HBox>
+
+        </VBox>
+    </bottom>
+
+</BorderPane>
