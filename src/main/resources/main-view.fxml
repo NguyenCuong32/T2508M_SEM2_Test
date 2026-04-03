@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="760.0" prefWidth="1180.0" styleClass="app-root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+    <top>
+        <VBox spacing="18.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="18.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+
+            <VBox spacing="4.0">
+                <Label styleClass="screen-title" text="Hero Game Management" />
+                <Label styleClass="screen-subtitle" text="Manage players, search results, and national data quickly for exam testing." />
+            </VBox>
+
+            <HBox alignment="TOP_LEFT" spacing="16.0">
+                <VBox HBox.hgrow="ALWAYS" spacing="14.0" styleClass="section-card">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label styleClass="section-title" text="1. Player Management" />
+                    </HBox>
+
+                    <GridPane hgap="12.0" vgap="12.0">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="110.0" prefWidth="110.0" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="180.0" prefWidth="200.0" />
+                        </columnConstraints>
+
+                        <Label styleClass="field-label" text="Player Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtPlayerName" prefHeight="36.0" prefWidth="210.0" promptText="Enter player name" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label styleClass="field-label" text="High Score" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtHighScore" prefHeight="36.0" prefWidth="210.0" promptText="Enter high score" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label styleClass="field-label" text="Level" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtLevel" prefHeight="36.0" prefWidth="210.0" promptText="Enter level" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label styleClass="field-label" text="National" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="cbNational" prefHeight="36.0" prefWidth="210.0" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <Label styleClass="field-label" text="Delete ID" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <TextField fx:id="txtDeletePlayerId" prefHeight="36.0" prefWidth="210.0" promptText="Enter player id" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    </GridPane>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <Button mnemonicParsing="false" onAction="#handleAddPlayer" prefHeight="36.0" prefWidth="120.0" styleClass="primary-button" text="Add Player" />
+                        <Button mnemonicParsing="false" onAction="#handleDeletePlayer" prefHeight="36.0" prefWidth="120.0" styleClass="danger-button" text="Delete" />
+                    </HBox>
+                </VBox>
+
+                <VBox HBox.hgrow="ALWAYS" spacing="14.0" styleClass="section-card">
+                    <Label styleClass="section-title" text="2. Search" />
+
+                    <GridPane hgap="12.0" vgap="12.0">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="110.0" prefWidth="110.0" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="180.0" prefWidth="200.0" />
+                        </columnConstraints>
+
+                        <Label styleClass="field-label" text="Player Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtSearchPlayerName" prefHeight="36.0" prefWidth="210.0" promptText="Search by name" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    </GridPane>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <Button mnemonicParsing="false" onAction="#handleSearchByName" prefHeight="36.0" prefWidth="100.0" styleClass="primary-button" text="Search" />
+                        <Button mnemonicParsing="false" onAction="#handleShowAll" prefHeight="36.0" prefWidth="100.0" styleClass="secondary-button" text="Show All" />
+                        <Button mnemonicParsing="false" onAction="#handleTop10" prefHeight="36.0" prefWidth="100.0" styleClass="secondary-button" text="Top 10" />
+                    </HBox>
+
+                    <VBox spacing="6.0" styleClass="hint-box">
+                        <Label styleClass="hint-title" text="Quick Testing" />
+                        <Label styleClass="hint-text" text="Use Search for SQL LIKE filtering, Show All to reload all records, and Top 10 to check score ranking." wrapText="true" />
+                    </VBox>
+                </VBox>
+
+                <VBox HBox.hgrow="ALWAYS" spacing="14.0" styleClass="section-card">
+                    <Label styleClass="section-title" text="3. National Management" />
+
+                    <GridPane hgap="12.0" vgap="12.0">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="110.0" prefWidth="110.0" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="180.0" prefWidth="200.0" />
+                        </columnConstraints>
+
+                        <Label styleClass="field-label" text="New Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtNationalName" prefHeight="36.0" prefWidth="210.0" promptText="Enter national name" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label styleClass="field-label" text="Delete ID" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtDeleteNationalId" prefHeight="36.0" prefWidth="210.0" promptText="Enter national id" styleClass="input-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    </GridPane>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <Button mnemonicParsing="false" onAction="#handleAddNational" prefHeight="36.0" prefWidth="100.0" styleClass="primary-button" text="Add" />
+                        <Button mnemonicParsing="false" onAction="#handleDeleteNational" prefHeight="36.0" prefWidth="100.0" styleClass="danger-button" text="Delete" />
+                        <Button mnemonicParsing="false" onAction="#handleRefreshNationalComboBox" prefHeight="36.0" prefWidth="100.0" styleClass="secondary-button" text="Refresh" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="12.0" styleClass="section-card table-card" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="0.0" />
+            </padding>
+
+            <HBox alignment="CENTER_LEFT">
+                <Label styleClass="section-title" text="Player List" />
+            </HBox>
+
+            <TableView fx:id="tblPlayers" prefHeight="420.0" styleClass="player-table" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colPlayerId" prefWidth="110.0" text="Player Id" />
+                    <TableColumn fx:id="colPlayerName" prefWidth="280.0" text="Player Name" />
+                    <TableColumn fx:id="colHighScore" prefWidth="170.0" text="High Score" />
+                    <TableColumn fx:id="colLevel" prefWidth="120.0" text="Level" />
+                    <TableColumn fx:id="colNational" prefWidth="220.0" text="National" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
