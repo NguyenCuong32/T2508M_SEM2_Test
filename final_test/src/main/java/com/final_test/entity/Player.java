@@ -25,7 +25,8 @@ public class Player {
     public int getNationalId() { return nationalId; }
     public void setNationalId(int nationalId) { this.nationalId = nationalId; }
 
-    public String getPlayerName() { return playerName; }
+    public String getPlayerName() {
+        return playerName; }
     public void setPlayerName(String playerName) { this.playerName = playerName; }
 
     public int getHighScore() { return highScore; }
