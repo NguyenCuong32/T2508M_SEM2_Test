@@ -16,7 +16,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <javafx.version>17.0.11</javafx.version>
         <mysql.version>8.4.0</mysql.version>
-        <build.output.root>${env.LOCALAPPDATA}/HeroGameExamBuild</build.output.root>
     </properties>
 
     <dependencies>
@@ -38,7 +37,6 @@
     </dependencies>
 
     <build>
-        <directory>${build.output.root}/target</directory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

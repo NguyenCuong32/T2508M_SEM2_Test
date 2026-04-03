@@ -1,0 +1,13 @@
+.idea/
+target/
+out/
+*.iml
+
+.classpath
+.project
+.settings/
+
+.DS_Store
+Thumbs.db
+
+/.mvn/wrapper/maven-wrapper.jar.sha256
