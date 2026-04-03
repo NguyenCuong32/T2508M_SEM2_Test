@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+    <top>
+        <VBox spacing="15.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </padding>
+
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Hero Game Management" />
+
+            <GridPane hgap="10.0" vgap="10.0">
+                <Label text="Player Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="txtPlayerName" promptText="Enter player name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label text="High Score:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <TextField fx:id="txtHighScore" promptText="Enter high score" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                <Label text="Level:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="txtLevel" promptText="Enter level" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label text="National:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <ComboBox fx:id="cbNational" prefWidth="220.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                <Button mnemonicParsing="false" onAction="#handleAddPlayer" text="Add Player" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <Label text="Delete Player Id:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <TextField fx:id="txtDeletePlayerId" promptText="Enter player id" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                <Button mnemonicParsing="false" onAction="#handleDeletePlayer" text="Delete Player" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            </GridPane>
+
+            <GridPane hgap="10.0" vgap="10.0">
+                <Label text="Search Player Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="txtSearchPlayerName" promptText="Search by player name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Button mnemonicParsing="false" onAction="#handleSearchByName" text="Search By Name" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Button mnemonicParsing="false" onAction="#handleShowAll" text="Show All" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                <Button mnemonicParsing="false" onAction="#handleTop10" text="Top 10" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+            </GridPane>
+
+            <HBox spacing="10.0">
+                <Label text="New National Name:" />
+                <TextField fx:id="txtNationalName" promptText="Enter national name" prefWidth="200.0" />
+                <Button mnemonicParsing="false" onAction="#handleAddNational" text="Add National" />
+
+                <Label text="Delete National Id:" />
+                <TextField fx:id="txtDeleteNationalId" promptText="Enter national id" prefWidth="150.0" />
+                <Button mnemonicParsing="false" onAction="#handleDeleteNational" text="Delete National" />
+                <Button mnemonicParsing="false" onAction="#handleRefreshNationalComboBox" text="Refresh National ComboBox" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tblPlayers" prefHeight="400.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colPlayerId" prefWidth="100.0" text="Player Id" />
+                <TableColumn fx:id="colPlayerName" prefWidth="250.0" text="Player Name" />
+                <TableColumn fx:id="colHighScore" prefWidth="170.0" text="High Score" />
+                <TableColumn fx:id="colLevel" prefWidth="120.0" text="Level" />
+                <TableColumn fx:id="colNational" prefWidth="250.0" text="National" />
+            </columns>
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="0.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+</BorderPane>

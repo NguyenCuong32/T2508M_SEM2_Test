@@ -1,0 +1,145 @@
+.app-root {
+    -fx-background-color: #f4f7fb;
+}
+
+.screen-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+.screen-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+
+.section-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #d9e2ec;
+    -fx-border-radius: 12;
+    -fx-padding: 18;
+    -fx-effect: dropshadow(gaussian, rgba(31, 41, 55, 0.05), 12, 0.15, 0, 3);
+}
+
+.table-card {
+    -fx-padding: 0 20 20 20;
+}
+
+.section-title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+.field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+}
+
+.input-field {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 8;
+    -fx-font-size: 13px;
+    -fx-padding: 0 10 0 10;
+}
+
+.input-field:focused {
+    -fx-border-color: #2563eb;
+    -fx-background-color: #ffffff;
+}
+
+.button {
+    -fx-background-radius: 8;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.primary-button {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+}
+
+.primary-button:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.secondary-button {
+    -fx-background-color: #e5e7eb;
+    -fx-text-fill: #1f2937;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #d1d5db;
+}
+
+.danger-button {
+    -fx-background-color: #dc2626;
+    -fx-text-fill: white;
+}
+
+.danger-button:hover {
+    -fx-background-color: #b91c1c;
+}
+
+.hint-box {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 10;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 10;
+    -fx-padding: 12;
+}
+
+.hint-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334155;
+}
+
+.hint-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+}
+
+.player-table {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #d9e2ec;
+    -fx-border-radius: 10;
+    -fx-padding: 4;
+}
+
+.player-table .column-header-background {
+    -fx-background-color: #eff6ff;
+    -fx-background-radius: 10 10 0 0;
+}
+
+.player-table .column-header,
+.player-table .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #dbeafe transparent;
+}
+
+.player-table .column-header .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e3a8a;
+}
+
+.player-table .table-row-cell {
+    -fx-cell-size: 38px;
+    -fx-border-color: transparent transparent #edf2f7 transparent;
+}
+
+.player-table .table-row-cell:selected {
+    -fx-background-color: #dbeafe;
+}
+
+.player-table .table-cell {
+    -fx-font-size: 13px;
+    -fx-text-fill: #1f2937;
+}
