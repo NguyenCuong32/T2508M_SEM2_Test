@@ -20,11 +20,11 @@ while (true)
     Console.WriteLine(new string('─', 45));
     Console.Write("  Choose account type: ");
 
-    string? choice = Console.ReadLine();
+    string choice = Console.ReadLine();
 
     if (choice == "0") break;
 
-    IAccount? selectedAccount = choice switch
+    IAccount selectedAccount = choice switch
     {
         "1" => normalAccount,
         "2" => exchangeAccount,
@@ -53,7 +53,7 @@ while (true)
     Console.WriteLine("  [2] Bank Transfer");
     Console.Write("\n  Action: ");
 
-    string? action = Console.ReadLine();
+    string action = Console.ReadLine();
 
     Console.WriteLine();
 
@@ -66,7 +66,7 @@ while (true)
 
         case "2":
             Console.Write("  Enter transfer amount (VND): ");
-            string? input = Console.ReadLine();
+            string input = Console.ReadLine();
             if (decimal.TryParse(input?.Replace(".", "").Replace(",", ""), out decimal amount))
             {
                 Console.Write("  ");
