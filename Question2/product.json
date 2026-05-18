@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "productName": "iPhone 15 Pro",
+        "price": 1000.99
+    },
+    {
+        "id": 2,
+        "productName": "Macbook air",
+        "price": 1500.99
+    },
+    {
+        "id": 3,
+        "productName": "iPod",
+        "price": 100.5
+    }
+]

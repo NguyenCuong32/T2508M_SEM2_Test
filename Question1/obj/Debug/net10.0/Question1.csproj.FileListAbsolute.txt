@@ -1,0 +1,15 @@
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\bin\Debug\net10.0\Question1.exe
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\bin\Debug\net10.0\Question1.deps.json
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\bin\Debug\net10.0\Question1.runtimeconfig.json
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\bin\Debug\net10.0\Question1.dll
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\bin\Debug\net10.0\Question1.pdb
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\Question1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\Question1.AssemblyInfoInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\Question1.AssemblyInfo.cs
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\Question1.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\Question1.sourcelink.json
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\Question1.dll
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\refint\Question1.dll
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\Question1.pdb
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\Question1.genruntimeconfig.cache
+C:\Users\Admin\OneDrive\Máy tính\Thi\T2508M_SEM2_Test\Question1\obj\Debug\net10.0\ref\Question1.dll
