@@ -1,0 +1,15 @@
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\bin\Debug\net9.0\BankApp.exe
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\bin\Debug\net9.0\BankApp.deps.json
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\bin\Debug\net9.0\BankApp.runtimeconfig.json
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\bin\Debug\net9.0\BankApp.dll
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\bin\Debug\net9.0\BankApp.pdb
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\BankApp.GeneratedMSBuildEditorConfig.editorconfig
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\BankApp.AssemblyInfoInputs.cache
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\BankApp.AssemblyInfo.cs
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\BankApp.csproj.CoreCompileInputs.cache
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\BankApp.sourcelink.json
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\BankApp.dll
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\refint\BankApp.dll
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\BankApp.pdb
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\BankApp.genruntimeconfig.cache
+E:\Project-T2508M\LeTriPhuong_PPC\BankApp\obj\Debug\net9.0\ref\BankApp.dll
