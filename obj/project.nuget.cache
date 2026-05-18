@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "EG5mG8ewC5Q=",
+  "success": true,
+  "projectFilePath": "/Users/hcc/Desktop/T2508M_SEM2_Test/T2508M_SEM2_Test.csproj",
+  "expectedPackageFiles": [
+    "/Users/hcc/.nuget/packages/newtonsoft.json/13.0.4/newtonsoft.json.13.0.4.nupkg.sha512"
+  ],
+  "logs": []
+}
