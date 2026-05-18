@@ -1,0 +1,15 @@
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\bin\Debug\net10.0\BankAccountSystem.exe
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\bin\Debug\net10.0\BankAccountSystem.deps.json
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\bin\Debug\net10.0\BankAccountSystem.runtimeconfig.json
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\bin\Debug\net10.0\BankAccountSystem.dll
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\bin\Debug\net10.0\BankAccountSystem.pdb
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\BankAccountSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\BankAccountSystem.AssemblyInfoInputs.cache
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\BankAccountSystem.AssemblyInfo.cs
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\BankAccountSystem.csproj.CoreCompileInputs.cache
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\BankAccountSystem.sourcelink.json
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\BankAccountSystem.dll
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\refint\BankAccountSystem.dll
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\BankAccountSystem.pdb
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\BankAccountSystem.genruntimeconfig.cache
+C:\Users\xcuon\OneDrive\Desktop\final_test\T2508M_SEM2_Test\BankAccountSystem\obj\Debug\net10.0\ref\BankAccountSystem.dll
