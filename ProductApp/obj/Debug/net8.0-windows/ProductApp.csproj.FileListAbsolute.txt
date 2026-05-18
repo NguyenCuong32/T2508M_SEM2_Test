@@ -1,0 +1,15 @@
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ProductApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ProductApp.AssemblyInfoInputs.cache
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ProductApp.AssemblyInfo.cs
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ProductApp.csproj.CoreCompileInputs.cache
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ProductApp.sourcelink.json
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\bin\Debug\net8.0-windows\ProductApp.exe
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\bin\Debug\net8.0-windows\ProductApp.deps.json
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\bin\Debug\net8.0-windows\ProductApp.runtimeconfig.json
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\bin\Debug\net8.0-windows\ProductApp.dll
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\bin\Debug\net8.0-windows\ProductApp.pdb
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ProductApp.dll
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\refint\ProductApp.dll
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ProductApp.pdb
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ProductApp.genruntimeconfig.cache
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net8.0-windows\ref\ProductApp.dll

@@ -1,0 +1,2 @@
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net9.0-windows\App.g.cs
+C:\Users\HUNG\Desktop\New folder\T2508M_SEM2_Test\ProductApp\obj\Debug\net9.0-windows\ProductApp_MarkupCompile.cache
