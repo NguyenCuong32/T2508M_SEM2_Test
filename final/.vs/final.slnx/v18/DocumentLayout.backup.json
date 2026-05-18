@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{932D6541-7FA9-95F1-45D7-CE5A8BE1396F}|ProductViewer\\ProductViewer.csproj|e:\\c#\\finalc#\\t2508m_sem2_test\\final\\productviewer\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{932D6541-7FA9-95F1-45D7-CE5A8BE1396F}|ProductViewer\\ProductViewer.csproj|solutionrelative:productviewer\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{932D6541-7FA9-95F1-45D7-CE5A8BE1396F}|ProductViewer\\ProductViewer.csproj|e:\\c#\\finalc#\\t2508m_sem2_test\\final\\productviewer\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{932D6541-7FA9-95F1-45D7-CE5A8BE1396F}|ProductViewer\\ProductViewer.csproj|solutionrelative:productviewer\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{932D6541-7FA9-95F1-45D7-CE5A8BE1396F}|ProductViewer\\ProductViewer.csproj|e:\\c#\\finalc#\\t2508m_sem2_test\\final\\productviewer\\productviewer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{932D6541-7FA9-95F1-45D7-CE5A8BE1396F}|ProductViewer\\ProductViewer.csproj|solutionrelative:productviewer\\productviewer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3092049-D833-521F-0A1A-1751B5EE39F7}|final.csproj|e:\\c#\\finalc#\\t2508m_sem2_test\\final\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3092049-D833-521F-0A1A-1751B5EE39F7}|final.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3092049-D833-521F-0A1A-1751B5EE39F7}|final.csproj|e:\\c#\\finalc#\\t2508m_sem2_test\\final\\domain\\interfaces\\iaccount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3092049-D833-521F-0A1A-1751B5EE39F7}|final.csproj|solutionrelative:domain\\interfaces\\iaccount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Product.cs",
+              "DocumentMoniker": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\ProductViewer\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "ProductViewer\\Models\\Product.cs",
+              "ToolTip": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\ProductViewer\\Models\\Product.cs*",
+              "RelativeToolTip": "ProductViewer\\Models\\Product.cs*",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwCQAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T02:34:08.665Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\ProductViewer\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "ProductViewer\\AssemblyInfo.cs",
+              "ToolTip": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\ProductViewer\\AssemblyInfo.cs",
+              "RelativeToolTip": "ProductViewer\\AssemblyInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T02:34:05.956Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductViewer",
+              "DocumentMoniker": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\ProductViewer\\ProductViewer.csproj",
+              "RelativeDocumentMoniker": "ProductViewer\\ProductViewer.csproj",
+              "ToolTip": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\ProductViewer\\ProductViewer.csproj",
+              "RelativeToolTip": "ProductViewer\\ProductViewer.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-18T02:23:17.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAccount.cs",
+              "DocumentMoniker": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\Domain\\Interfaces\\IAccount.cs",
+              "RelativeDocumentMoniker": "Domain\\Interfaces\\IAccount.cs",
+              "ToolTip": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\Domain\\Interfaces\\IAccount.cs",
+              "RelativeToolTip": "Domain\\Interfaces\\IAccount.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T02:13:58.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "E:\\C#\\finalC#\\T2508M_SEM2_Test\\final\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T02:01:38.043Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

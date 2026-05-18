@@ -1,0 +1,15 @@
+E:\C#\finalC#\T2508M_SEM2_Test\final\bin\Debug\net10.0\final.exe
+E:\C#\finalC#\T2508M_SEM2_Test\final\bin\Debug\net10.0\final.deps.json
+E:\C#\finalC#\T2508M_SEM2_Test\final\bin\Debug\net10.0\final.runtimeconfig.json
+E:\C#\finalC#\T2508M_SEM2_Test\final\bin\Debug\net10.0\final.dll
+E:\C#\finalC#\T2508M_SEM2_Test\final\bin\Debug\net10.0\final.pdb
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\final.GeneratedMSBuildEditorConfig.editorconfig
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\final.AssemblyInfoInputs.cache
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\final.AssemblyInfo.cs
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\final.csproj.CoreCompileInputs.cache
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\final.sourcelink.json
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\final.dll
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\refint\final.dll
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\final.pdb
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\final.genruntimeconfig.cache
+E:\C#\finalC#\T2508M_SEM2_Test\final\obj\Debug\net10.0\ref\final.dll

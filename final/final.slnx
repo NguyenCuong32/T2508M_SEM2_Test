@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="final.csproj" />
+  <Project Path="ProductViewer\ProductViewer.csproj" />
+</Solution>
+
