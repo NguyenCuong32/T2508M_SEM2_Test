@@ -1,17 +1,3 @@
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\bin\Debug\net8.0\BankSystem.exe
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\bin\Debug\net8.0\BankSystem.deps.json
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\bin\Debug\net8.0\BankSystem.runtimeconfig.json
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\bin\Debug\net8.0\BankSystem.dll
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\bin\Debug\net8.0\BankSystem.pdb
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\BankSystem.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\BankSystem.AssemblyInfoInputs.cache
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\BankSystem.AssemblyInfo.cs
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\BankSystem.csproj.CoreCompileInputs.cache
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\BankSystem.dll
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\refint\BankSystem.dll
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\BankSystem.pdb
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\BankSystem.genruntimeconfig.cache
-C:\Users\kx3va\Desktop\Work\codium\Csharp-Test\BankSystem\obj\Debug\net8.0\ref\BankSystem.dll
 C:\Users\kx3va\Desktop\Work\codium\T2508M_SEM2_Test\Question-1\BankSystem\bin\Debug\net8.0\BankSystem.exe
 C:\Users\kx3va\Desktop\Work\codium\T2508M_SEM2_Test\Question-1\BankSystem\bin\Debug\net8.0\BankSystem.deps.json
 C:\Users\kx3va\Desktop\Work\codium\T2508M_SEM2_Test\Question-1\BankSystem\bin\Debug\net8.0\BankSystem.runtimeconfig.json
