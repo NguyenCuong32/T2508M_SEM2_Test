@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kx3va\\Desktop\\Work\\codium\\Csharp-Test\\BankSystem\\BankSystem.csproj",
+      "projectUniqueName": "C:\\Users\\kx3va\\Desktop\\Work\\codium\\T2508M_SEM2_Test\\Question-1\\BankSystem\\BankSystem.csproj",
       "projectName": "BankSystem",
-      "projectPath": "C:\\Users\\kx3va\\Desktop\\Work\\codium\\Csharp-Test\\BankSystem\\BankSystem.csproj",
+      "projectPath": "C:\\Users\\kx3va\\Desktop\\Work\\codium\\T2508M_SEM2_Test\\Question-1\\BankSystem\\BankSystem.csproj",
       "packagesPath": "C:\\Users\\kx3va\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kx3va\\Desktop\\Work\\codium\\Csharp-Test\\BankSystem\\obj\\",
+      "outputPath": "C:\\Users\\kx3va\\Desktop\\Work\\codium\\T2508M_SEM2_Test\\Question-1\\BankSystem\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kx3va\\AppData\\Roaming\\NuGet\\NuGet.Config"
