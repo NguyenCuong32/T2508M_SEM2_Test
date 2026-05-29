@@ -1,0 +1,7 @@
+[project]
+name = "t2508m-sem2-test"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas>=3.0.3",
+]
