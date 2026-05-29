@@ -1,0 +1,7 @@
+id,name,price,quantity,total
+P001,Keyboard,120.0,15,1800.0
+P002,Mouse,35.5,40,1420.0
+P003,Monitor,250.0,8,2000.0
+P004,USB Cable,8.75,100,875.0
+P005,Headset,150.0,12,1800.0
+P006,Laptop Stand,85.0,20,1700.0
