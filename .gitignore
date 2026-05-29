@@ -1,0 +1,17 @@
+# Python bytecode and runtime cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Auto-generated datasets and temporary test CSVs
+products.csv
+temp_products_test.csv
+
+# IDEs, Editors, and OS-specific metadata
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+Desktop.ini
