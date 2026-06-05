@@ -7,6 +7,47 @@
 
 ---
 
+## ⚡ Review nhanh cơ sở dữ liệu (Database Quick Review)
+
+> Dự án đã bao gồm sẵn file `db.sqlite3` với đầy đủ **12 sách mẫu** và **tài khoản quản trị viên** phục vụ mục đích kiểm thử và review nhanh dữ liệu.
+
+### Bước 1: Khởi chạy dự án
+
+```bash
+# Tạo và kích hoạt virtual environment
+python -m venv venv
+.\venv\Scripts\activate        # Windows
+# source venv/bin/activate     # macOS/Linux
+
+# Cài đặt thư viện
+pip install django pillow
+
+# Khởi chạy local server
+python manage.py runserver
+```
+
+Truy cập hệ thống tại: **http://127.0.0.1:8000**
+
+### Tài khoản thử nghiệm có sẵn
+
+| Tài khoản | Username | Password | Vai trò |
+|---|---|---|---|
+| Quản trị viên | `admin` | `Admin@1234` | Superuser |
+
+> Có thể đăng ký thêm tài khoản mới trực tiếp trên giao diện tại `/accounts/register/`
+
+### Dữ liệu mẫu đã nạp
+
+- **12 cuốn sách** đầy đủ tiêu đề, tác giả và ảnh bìa.
+- **3 cuốn sách có giá trên 100 USD** (phù hợp với các điều kiện lọc trong yêu cầu nghiệp vụ).
+- Dữ liệu hoàn toàn sạch, phục vụ việc review nhanh các tính năng và database.
+- **4 sách giá dưới 100.000 ₫** (đáp ứng yêu cầu bộ lọc VND)
+- Tất cả sách có thể xem tại **http://127.0.0.1:8000**
+
+---
+
+
+
 ## 1. Giới thiệu tổng quan
 
 ### 1.1 Mục đích
