@@ -1,0 +1,13 @@
+<h2>Books Price > 100</h2>
+
+<ul>
+{% for book in books %}
+<li>
+{{ book.title }} -
+{{ book.author }} -
+{{ book.price }}
+</li>
+{% endfor %}
+</ul>
+
+<a href="/books/">Back</a>
