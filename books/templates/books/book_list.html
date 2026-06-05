@@ -1,0 +1,61 @@
+{% extends 'books/base.html' %}
+
+{% block title %}All Books | Bookstore{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+        <h1 class="gradient-text" style="margin-bottom: 0.2rem;">Book Catalog</h1>
+        <p style="color: var(--text-muted);">Explore and manage our library collection.</p>
+    </div>
+    <div style="display: flex; gap: 1rem; align-items: center;">
+        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600;">
+            Total Books: <span style="color: var(--primary); font-size: 1.1rem; margin-left: 0.3rem;">{{ total_books }}</span>
+        </div>
+        <a href="{% url 'add_book' %}" class="btn-login" style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.6rem 1.2rem;">
+            <span>➕</span> Add Book
+        </a>
+    </div>
+</div>
+
+<div class="glass-card" style="margin-bottom: 2rem; padding: 2rem;">
+    <h2>All Books</h2>
+    {% if books %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+            {% for book in books %}
+                <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; position: relative;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(99, 102, 241, 0.1)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+                    <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem; color: #fff;">{{ book.title }}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">By {{ book.author }}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 700; color: #a5b4fc; font-size: 1.1rem;">${{ book.price }}</span>
+                        {% if book.price > 100 %}
+                            <span style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fba518; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">Premium</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="color: var(--text-muted); font-style: italic; margin-top: 1rem;">No books available in the catalog yet.</p>
+    {% endif %}
+</div>
+
+<div class="glass-card" style="padding: 2rem; border-color: rgba(245, 158, 11, 0.2); background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.05), var(--container-bg));">
+    <h2 style="display: flex; align-items: center; gap: 0.5rem;"><span style="color: #fba518;">⭐</span> Premium Books (Price > $100)</h2>
+    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Curated high-value books from our premium collection.</p>
+    
+    {% if expensive_books %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+            {% for book in expensive_books %}
+                <div style="background: rgba(245, 158, 11, 0.03); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 1.5rem;">
+                    <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem; color: #fff;">{{ book.title }}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.8rem;">By {{ book.author }}</p>
+                    <span style="font-weight: 700; color: #fba518; font-size: 1rem;">${{ book.price }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="color: var(--text-muted); font-style: italic;">No premium books found exceeding $100.</p>
+    {% endif %}
+</div>
+{% endblock %}

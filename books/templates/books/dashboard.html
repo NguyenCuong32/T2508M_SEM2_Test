@@ -1,0 +1,25 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Dashboard | Bookstore{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h1 class="gradient-text">Welcome, {{ user.username }}!</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">You have successfully authenticated into the Bookstore application.</p>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+            <span style="font-size: 1.5rem;">🛡️</span>
+            <h3 style="margin-bottom: 0.2rem;">Account Security</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Your account is protected using Django's secure built-in authentication system.</p>
+        </div>
+        
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+            <span style="font-size: 1.5rem;">📊</span>
+            <h3 style="margin-bottom: 0.2rem;">Manage Inventory</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Use your dashboard to access restricted bookstore statistics and catalog actions.</p>
+            <a href="{% url 'book_list' %}" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: auto; display: inline-flex; align-items: center; gap: 0.3rem;">View Catalog &rarr;</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

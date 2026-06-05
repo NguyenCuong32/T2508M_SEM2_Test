@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Databases
+# db.sqlite3 is included since it contains the test user database
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# vscode / VS
+.vscode/
+.vs/
+*.suo
+*.user
+*.userossc
+*.sln
+*.docstates
