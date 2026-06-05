@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% block title %}Book Management - Django Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .book-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    @media (max-width: 900px) {
+        .book-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Stats Grid */
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+    }
+
+    .stat-icon.secondary {
+        background: rgba(244, 63, 94, 0.1);
+        color: #f43f5e;
+    }
+
+    .stat-info h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.1rem;
+    }
+
+    .stat-info p {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Form Styles */
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: var(--text-main);
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+        background: rgba(30, 41, 59, 0.8);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background: var(--primary-gradient);
+        color: white;
+        box-shadow: 0 4px 14px 0 rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px 0 rgba(56, 189, 248, 0.4);
+    }
+
+    /* Table Styles */
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.95rem;
+    }
+
+    .custom-table th {
+        padding: 1rem;
+        border-bottom: 1px solid var(--card-border);
+        color: var(--text-muted);
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .custom-table td {
+        padding: 1.25rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .custom-table tr:hover {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .book-title {
+        font-weight: 600;
+        color: var(--text-main);
+        font-size: 1rem;
+    }
+
+    .book-author {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .book-price {
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .book-date {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--text-muted);
+    }
+
+    .no-data i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="book-grid">
+    <!-- Left Column: Add Book Form -->
+    <div class="glass-card">
+        <h2 class="gradient-text"><i class="fa-solid fa-plus-circle"></i> Add New Book</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Enter the book details to insert a new entry into the database.</p>
+        
+        <form method="POST" id="add-book-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_title">Book Title</label>
+                {{ form.title }}
+            </div>
+            <div class="form-group">
+                <label for="id_author">Author Name</label>
+                {{ form.author }}
+            </div>
+            <div class="form-group">
+                <label for="id_price">Price ($)</label>
+                {{ form.price }}
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-add-book">
+                <i class="fa-solid fa-save"></i> Save Book
+            </button>
+        </form>
+    </div>
+
+    <!-- Right Column: Stats and Table -->
+    <div>
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-books"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="stat-total-books">{{ total_books }}</h3>
+                    <p>Total Books</p>
+                </div>
+            </div>
+            
+            <a href="{% url 'expensive_books' %}" style="text-decoration: none; color: inherit;">
+                <div class="stat-card" style="cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                    <div class="stat-icon secondary">
+                        <i class="fa-solid fa-tag"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Price > $100</h3>
+                        <p>View Premium</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Book List Card -->
+        <div class="glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="margin-bottom: 0;"><i class="fa-solid fa-list"></i> Books Directory</h2>
+                <span class="badge" style="background: rgba(56, 189, 248, 0.15); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">All Records</span>
+            </div>
+
+            <div class="table-container">
+                {% if books %}
+                    <table class="custom-table" id="books-table">
+                        <thead>
+                            <tr>
+                                <th>Book Details</th>
+                                <th>Price</th>
+                                <th>Added Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in books %}
+                                <tr class="book-row">
+                                    <td>
+                                        <div class="book-title">{{ book.title }}</div>
+                                        <div class="book-author">by {{ book.author }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="book-price">${{ book.price }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="book-date">{{ book.created_at|date:"M d, Y H:i" }}</div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="no-data">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <p>No books registered in the system yet.</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Use the form on the left to add a book.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

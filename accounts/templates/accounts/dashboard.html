@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Django Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-header {
+        margin-bottom: 2.5rem;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .dashboard-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+    }
+
+    /* Grid Layout */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    /* Card styling */
+    .dashboard-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 250px;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+        border-color: rgba(56, 189, 248, 0.25);
+    }
+
+    .card-header-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+    }
+
+    .card-header-icon.alt {
+        background: rgba(244, 63, 94, 0.1);
+        color: #f43f5e;
+    }
+
+    .card-header-icon.success {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+    }
+
+    .card-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-main);
+    }
+
+    .card-content p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+
+    .btn-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: gap 0.2s;
+    }
+
+    .btn-link:hover {
+        color: var(--primary-hover);
+        gap: 0.75rem;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Welcome, <span class="gradient-text" id="welcome-username">{{ user.username }}</span>!</h1>
+    <p>This is your personal admin panel. Manage catalogs, inventory, and application analytics.</p>
+</div>
+
+<div class="dashboard-grid">
+    <!-- Stat Card: Total Books -->
+    <div class="glass-card dashboard-card">
+        <div>
+            <div class="card-header-icon">
+                <i class="fa-solid fa-book"></i>
+            </div>
+            <div class="card-content">
+                <h3>Book Catalog</h3>
+                <p>Monitor your entire list of items, update prices, and input new items.</p>
+                <div class="stat-number gradient-text" id="dash-total-books">{{ total_books }}</div>
+            </div>
+        </div>
+        <div>
+            <a href="{% url 'book_list' %}" class="btn-link" id="dash-link-books">
+                Open Book Manager <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Stat Card: Premium Books -->
+    <div class="glass-card dashboard-card">
+        <div>
+            <div class="card-header-icon alt">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+            <div class="card-content">
+                <h3>Premium Selection</h3>
+                <p>Filter catalog items that are considered premium (unit cost exceeds $100).</p>
+                <div class="stat-number" style="color: #f43f5e;" id="dash-expensive-books">{{ expensive_books }}</div>
+            </div>
+        </div>
+        <div>
+            <a href="{% url 'expensive_books' %}" class="btn-link" style="color: #f43f5e;" id="dash-link-expensive">
+                View Premium Books <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Info/Quick Action Card -->
+    <div class="glass-card dashboard-card">
+        <div>
+            <div class="card-header-icon success">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+            </div>
+            <div class="card-content">
+                <h3>Quick Database Tools</h3>
+                <p>Need to populate details quickly? Click below to navigate directly to the registration page or add test inputs in the manager.</p>
+            </div>
+        </div>
+        <div>
+            <a href="{% url 'book_list' %}" class="btn-link" style="color: #10b981;">
+                Add New Book <i class="fa-solid fa-plus"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
