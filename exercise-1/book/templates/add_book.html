@@ -1,0 +1,7 @@
+<form method="post">
+    {% csrf_token %}
+    <input name="title" placeholder="title" />
+    <input name="author" placeholder="author" />
+    <input name="price" type="number" step="0.01" placeholder="price" />
+    <button type="submit">save</button>
+</form>
