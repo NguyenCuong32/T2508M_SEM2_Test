@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-welcome">
+        <div class="welcome-avatar">{{ user.username|first|upper }}</div>
+        <h1>Welcome back, <span class="username-highlight">{{ user.username }}</span>!</h1>
+        <p class="welcome-sub">You're successfully logged in to your dashboard.</p>
+    </div>
+    <div class="dashboard-cards">
+        <div class="dash-card">
+            <div class="dash-card-icon">📚</div>
+            <h3>Browse Books</h3>
+            <p>Explore our book catalog and add new titles.</p>
+            <a href="{% url 'book_list' %}" class="btn-dash">Go to Books</a>
+        </div>
+        <div class="dash-card">
+            <div class="dash-card-icon">👤</div>
+            <h3>Account Info</h3>
+            <p>Logged in as <strong>{{ user.username }}</strong></p>
+            <a href="{% url 'logout' %}" class="btn-dash btn-dash-logout">Sign Out</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
