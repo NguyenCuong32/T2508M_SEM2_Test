@@ -1,0 +1,455 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Quản lý sách | DjangoSuite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-layout {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .card {
+        padding: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-family: var(--font-outfit);
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: var(--text-primary);
+        font-family: var(--font-inter);
+        font-size: 0.95rem;
+        transition: all var(--transition-speed);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #818cf8;
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25);
+    }
+
+    /* Stats Layout */
+    .stats-layout {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .stat-card {
+        padding: 1.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--primary-gradient);
+    }
+
+    .stat-card.expensive::before {
+        background: var(--secondary-gradient);
+    }
+
+    .stat-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        background: rgba(99, 102, 241, 0.15);
+        color: #818cf8;
+    }
+
+    .stat-card.expensive .stat-icon {
+        background: rgba(236, 72, 153, 0.15);
+        color: #f472b6;
+    }
+
+    .stat-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        font-family: var(--font-outfit);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .stat-value {
+        font-size: 2.25rem;
+        font-weight: 800;
+        font-family: var(--font-outfit);
+        line-height: 1.2;
+        margin-top: 0.25rem;
+    }
+
+    .chart-card {
+        padding: 0.75rem 1rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        height: 100%;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--panel-border);
+        padding-bottom: 0.75rem;
+    }
+
+    .tab-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-family: var(--font-outfit);
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all var(--transition-speed);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .tab-link:hover {
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-link.active {
+        color: white;
+        background: var(--primary-gradient);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Table styles */
+    .table-container {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    th {
+        font-family: var(--font-outfit);
+        font-weight: 600;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 1rem;
+        border-bottom: 2px solid var(--panel-border);
+    }
+
+    td {
+        padding: 1.25rem 1rem;
+        border-bottom: 1px solid var(--panel-border);
+        font-size: 0.95rem;
+        color: var(--text-primary);
+    }
+
+    tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .book-title {
+        font-weight: 600;
+        font-family: var(--font-outfit);
+        font-size: 1.05rem;
+        color: white;
+    }
+
+    .book-author {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .book-price {
+        font-weight: 700;
+        font-family: var(--font-outfit);
+        color: #a5b4fc;
+        font-size: 1rem;
+    }
+
+    .book-price.expensive {
+        color: #f472b6;
+    }
+
+    .date-column {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-secondary);
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 992px) {
+        .dashboard-layout {
+            grid-template-columns: 1fr;
+        }
+        .stats-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    
+    <!-- Sidebar: Add Book Form -->
+    <div class="glass-panel card">
+        <h2 style="font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-plus-circle" style="color: #818cf8;"></i> Thêm Sách Mới
+        </h2>
+        <p style="font-size: 0.85rem; margin-bottom: 1.5rem;">Điền đầy đủ thông tin bên dưới để thêm sách mới vào hệ thống.</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Tiêu đề sách</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <span style="color: var(--accent-red); font-size: 0.8rem;">{{ form.title.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.author.id_for_label }}">Tác giả</label>
+                {{ form.author }}
+                {% if form.author.errors %}
+                    <span style="color: var(--accent-red); font-size: 0.8rem;">{{ form.author.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.price.id_for_label }}">Giá tiền (USD)</label>
+                {{ form.price }}
+                {% if form.price.errors %}
+                    <span style="color: var(--accent-red); font-size: 0.8rem;">{{ form.price.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                <i class="fa-solid fa-plus"></i> Thêm Sách
+            </button>
+        </form>
+    </div>
+
+    <!-- Main Content: Stats & List -->
+    <div>
+        <!-- Stats Layout (Stats Grid + Doughnut Chart) -->
+        <div class="stats-layout">
+            <div class="stats-grid">
+                <div class="glass-panel stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Tổng số sách</span>
+                        <span class="stat-value">{{ total_books }}</span>
+                    </div>
+                </div>
+                
+                <div class="glass-panel stat-card expensive">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Sách > $100</span>
+                        <span class="stat-value">{{ expensive_count }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doughnut Chart Panel -->
+            <div class="glass-panel chart-card">
+                <canvas id="booksRatioChart" style="max-width: 100px; max-height: 100px;"></canvas>
+                <div style="font-family: var(--font-outfit); font-size: 0.8rem; color: var(--text-secondary);">
+                    <span style="display: block; font-weight: 600; color: white;">Tỉ Lệ Giá</span>
+                    <span style="font-size: 0.75rem;">Phân bổ sách</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book List Section -->
+        <div class="glass-panel card">
+            <div class="filter-tabs">
+                <a href="?filter=all" class="tab-link {% if active_filter == 'all' %}active{% endif %}">
+                    <i class="fa-solid fa-folder-open"></i> Tất cả sách
+                </a>
+                <a href="?filter=expensive" class="tab-link {% if active_filter == 'expensive' %}active{% endif %}">
+                    <i class="fa-solid fa-fire"></i> Sách giá > $100
+                </a>
+            </div>
+
+            {% if books %}
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thông tin sách</th>
+                                <th>Tác giả</th>
+                                <th>Giá tiền</th>
+                                <th>Ngày tạo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in books %}
+                                <tr>
+                                    <td>
+                                        <div class="book-title">{{ book.title }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="book-author">{{ book.author }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="book-price {% if book.price > 100 %}expensive{% endif %}">
+                                            ${{ book.price }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="date-column">{{ book.created_at|date:"d/m/Y H:i" }}</div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                    <h3>Chưa có cuốn sách nào</h3>
+                    {% if active_filter == 'expensive' %}
+                        <p>Không có cuốn sách nào có giá trị lớn hơn $100.</p>
+                    {% else %}
+                        <p>Hãy thêm một cuốn sách bằng cách điền vào mẫu thông tin bên trái.</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const total = {{ total_books|default:0 }};
+        const expensive = {{ expensive_count|default:0 }};
+        const normal = total - expensive;
+
+        // If there are no books, we can render a placeholder chart
+        const chartData = total > 0 ? [expensive, normal] : [0, 1];
+        const chartColors = total > 0 
+            ? ['rgba(236, 72, 153, 0.85)', 'rgba(99, 102, 241, 0.85)'] 
+            : ['rgba(255, 255, 255, 0.05)', 'rgba(255, 255, 255, 0.1)'];
+        const borderColors = total > 0
+            ? ['rgba(236, 72, 153, 1)', 'rgba(99, 102, 241, 1)']
+            : ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.2)'];
+
+        const ctx = document.getElementById('booksRatioChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Giá > $100', 'Giá <= $100'],
+                datasets: [{
+                    data: chartData,
+                    backgroundColor: chartColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: total > 0,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + ' cuốn';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Đăng ký tài khoản | DjangoSuite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        padding: 1.5rem 0;
+    }
+
+    .auth-card {
+        max-width: 480px;
+        width: 100%;
+        padding: 2.5rem;
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .auth-header i {
+        font-size: 2.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-family: var(--font-outfit);
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: var(--text-primary);
+        font-family: var(--font-inter);
+        font-size: 0.95rem;
+        transition: all var(--transition-speed);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #818cf8;
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25);
+    }
+
+    .error-msg {
+        color: var(--accent-red);
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .auth-footer a {
+        color: #818cf8;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color var(--transition-speed);
+    }
+
+    .auth-footer a:hover {
+        color: #a5b4fc;
+        text-decoration: underline;
+    }
+
+    /* Styles for Django form errors list at the top */
+    .form-errors-list {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.25);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        list-style-type: none;
+    }
+
+    .form-errors-list li {
+        color: #f87171;
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="glass-panel auth-card">
+        
+        <div class="auth-header">
+            <i class="fa-solid fa-user-plus"></i>
+            <h2>Đăng Ký Tài Khoản</h2>
+            <p>Tạo tài khoản mới để trải nghiệm đầy đủ tính năng</p>
+        </div>
+
+        {% if form.non_field_errors %}
+            <ul class="form-errors-list">
+                {% for error in form.non_field_errors %}
+                    <li><i class="fa-solid fa-triangle-exclamation"></i> {{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <span class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">
+                <i class="fa-solid fa-user-check"></i> Đăng ký ngay
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <span>Bạn đã có tài khoản? </span>
+            <a href="{% url 'login' %}">Đăng nhập tại đây</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

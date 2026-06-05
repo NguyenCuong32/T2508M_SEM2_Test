@@ -1,0 +1,127 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Đăng nhập | DjangoSuite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 60vh;
+    }
+
+    .auth-card {
+        max-width: 420px;
+        width: 100%;
+        padding: 2.5rem;
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .auth-header i {
+        font-size: 2.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-family: var(--font-outfit);
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: var(--text-primary);
+        font-family: var(--font-inter);
+        font-size: 0.95rem;
+        transition: all var(--transition-speed);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #818cf8;
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25);
+    }
+
+    /* Standard user credentials indicator */
+    .credentials-demo {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px dashed rgba(192, 132, 252, 0.3);
+        border-radius: 8px;
+        font-size: 0.85rem;
+        color: #d8b4fe;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="glass-panel auth-card">
+        
+        <div class="auth-header">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h2>Đăng Nhập</h2>
+            <p>Vui lòng đăng nhập để truy cập trang quản trị</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Tên đăng nhập (Username)</label>
+                <input type="text" name="username" id="{{ form.username.id_for_label }}" class="form-control" placeholder="Nhập tên đăng nhập..." required autofocus>
+                {% if form.username.errors %}
+                    <span style="color: var(--accent-red); font-size: 0.8rem;">{{ form.username.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Mật khẩu (Password)</label>
+                <input type="password" name="password" id="{{ form.password.id_for_label }}" class="form-control" placeholder="Nhập mật khẩu..." required>
+                {% if form.password.errors %}
+                    <span style="color: var(--accent-red); font-size: 0.8rem;">{{ form.password.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+            </button>
+        </form>
+
+        <div class="auth-footer" style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+            <span>Chưa có tài khoản? </span>
+            <a href="{% url 'register' %}" style="color: #818cf8; text-decoration: none; font-weight: 600; transition: color var(--transition-speed);">Đăng ký tại đây</a>
+        </div>
+
+
+        <div class="credentials-demo">
+            <strong><i class="fa-solid fa-circle-info"></i> Gợi ý:</strong>
+            <p style="margin: 0.25rem 0 0; font-size: 0.8rem; color: var(--text-secondary);">
+                Bạn có thể tạo tài khoản quản trị (superuser) thông qua terminal hoặc đăng nhập với tài khoản hiện có.
+            </p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,280 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Dashboard | DjangoSuite{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .welcome-card {
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .welcome-card::after {
+        content: '';
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        top: -50px;
+        right: -50px;
+        border-radius: 50%;
+    }
+
+    .avatar-wrapper {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--primary-gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.25rem;
+        color: white;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    }
+
+    .welcome-text h1 {
+        font-size: 2rem;
+        margin-bottom: 0.25rem;
+        background: linear-gradient(135deg, white, #a5b4fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .welcome-text p {
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .profile-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .info-card {
+        padding: 1.5rem;
+    }
+
+    .info-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+        color: #a5b4fc;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .info-label {
+        color: var(--text-secondary);
+    }
+
+    .info-val {
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .quick-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .action-card {
+        flex: 1;
+        min-width: 250px;
+        padding: 2rem;
+        text-align: center;
+        transition: transform var(--transition-speed), border-color var(--transition-speed);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .action-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(99, 102, 241, 0.3);
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .action-card i {
+        font-size: 2.5rem;
+        margin-bottom: 1.25rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .action-card.secondary i {
+        background: var(--secondary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .security-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-top: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    
+    <!-- Welcome Panel -->
+    <div class="glass-panel welcome-card">
+        <div class="avatar-wrapper">
+            <i class="fa-regular fa-user"></i>
+        </div>
+        <div class="welcome-text">
+            <h1>Xin chào, {{ user.username }}!</h1>
+            <p>Chào mừng bạn đến với trang quản trị hệ thống Django.</p>
+            <div class="security-badge">
+                <i class="fa-solid fa-circle-check"></i> Đã xác thực bảo mật
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Details & System Info -->
+    <div class="profile-details">
+        <div class="glass-panel info-card">
+            <h3><i class="fa-solid fa-id-card"></i> Thông tin tài khoản</h3>
+            <div class="info-item">
+                <span class="info-label">Tên đăng nhập:</span>
+                <span class="info-val">{{ user.username }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email:</span>
+                <span class="info-val">{% if user.email %}{{ user.email }}{% else %}Chưa cập nhật{% endif %}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Loại tài khoản:</span>
+                <span class="info-val">
+                    {% if user.is_superuser %}
+                        Quản trị viên (Superuser)
+                    {% else %}
+                        Thành viên (Staff)
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <div class="glass-panel info-card">
+            <h3><i class="fa-solid fa-clock"></i> Hoạt động</h3>
+            <div class="info-item">
+                <span class="info-label">Đăng nhập mới:</span>
+                <span class="info-val">{{ user.last_login|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Ngày tham gia:</span>
+                <span class="info-val">{{ user.date_joined|date:"d/m/Y" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Trạng thái:</span>
+                <span class="info-val">
+                    {% if user.is_active %}
+                        <span class="badge badge-success">Online</span>
+                    {% else %}
+                        <span class="badge badge-danger">Offline</span>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <!-- System Resource Monitor Card -->
+        <div class="glass-panel info-card">
+            <h3><i class="fa-solid fa-server"></i> Hiệu năng hệ thống</h3>
+            <div class="info-item" style="flex-direction: column; align-items: stretch; margin-bottom: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
+                    <span class="info-label">CPU:</span>
+                    <span class="info-val" id="cpu-metric" style="color: #34d399;">12%</span>
+                </div>
+                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                    <div id="cpu-progress" style="width: 12%; height: 100%; background: var(--primary-gradient); transition: width 1.5s ease;"></div>
+                </div>
+            </div>
+            
+            <div class="info-item" style="flex-direction: column; align-items: stretch; margin-bottom: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
+                    <span class="info-label">RAM:</span>
+                    <span class="info-val" id="ram-metric" style="color: #60a5fa;">26%</span>
+                </div>
+                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                    <div id="ram-progress" style="width: 26%; height: 100%; background: var(--secondary-gradient); transition: width 1.5s ease;"></div>
+                </div>
+            </div>
+
+            <div class="info-item" style="margin-bottom: 0.25rem;">
+                <span class="info-label">Phản hồi DB:</span>
+                <span class="info-val" style="color: #fbbf24;"><i class="fa-solid fa-bolt"></i> 0.8ms</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Navigation Actions -->
+    <h2 style="font-size: 1.5rem; margin-bottom: 1.25rem;">Thao tác nhanh</h2>
+    <div class="quick-actions">
+        <a href="{% url 'book_list' %}" class="glass-panel action-card">
+            <i class="fa-solid fa-book"></i>
+            <h3>Quản lý sách</h3>
+            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Thêm sách mới, lọc theo giá và xem danh sách đầy đủ.</p>
+        </a>
+
+        <a href="{% url 'logout' %}" class="glass-panel action-card secondary">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <h3>Đăng xuất</h3>
+            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Thoát khỏi phiên làm việc và bảo vệ tài khoản của bạn.</p>
+        </a>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const cpuMetric = document.getElementById('cpu-metric');
+        const cpuProgress = document.getElementById('cpu-progress');
+        const ramMetric = document.getElementById('ram-metric');
+        const ramProgress = document.getElementById('ram-progress');
+
+        setInterval(() => {
+            // Mock CPU fluctuation
+            const cpuVal = Math.floor(Math.random() * (16 - 5 + 1)) + 5; // 5% to 16%
+            cpuMetric.textContent = cpuVal + '%';
+            cpuProgress.style.width = cpuVal + '%';
+
+            // Mock RAM fluctuation
+            const ramVal = Math.floor(Math.random() * (29 - 25 + 1)) + 25; // 25% to 29%
+            ramMetric.textContent = ramVal + '%';
+            ramProgress.style.width = ramVal + '%';
+        }, 3000);
+    });
+</script>
+{% endblock %}
