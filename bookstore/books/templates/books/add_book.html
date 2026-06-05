@@ -1,0 +1,33 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Add New Book | Bookstore{% endblock %}
+
+{% block header_actions %}
+<a href="{% url 'book_list' %}" class="btn btn-outline">Back to Catalog</a>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 style="margin-top: 0;">Add a New Book</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+                <div class="helptext">{{ field.help_text }}</div>
+            {% endif %}
+            {% for error in field.errors %}
+                <div style="color: #ef4444; font-size: 0.85rem; margin-top: 0.25rem;">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+        <div style="margin-top: 2rem;">
+            <button type="submit" class="btn" style="width: 100%;">💾 Save Book</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

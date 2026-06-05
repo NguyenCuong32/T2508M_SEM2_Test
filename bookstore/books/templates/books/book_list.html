@@ -1,0 +1,70 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Book List | Bookstore{% endblock %}
+
+{% block header_actions %}
+<a href="{% url 'add_book' %}" class="btn">✨ Add New Book</a>
+{% endblock %}
+
+{% block content %}
+<div class="stats-card">
+    <div class="stats-value">{{ total_books }}</div>
+    <div class="stats-label">Total Books in Catalog</div>
+</div>
+
+<h2>All Books</h2>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td><strong>{{ book.title }}</strong></td>
+                <td>{{ book.author }}</td>
+                <td>${{ book.price }}</td>
+                <td style="color: #94a3b8; font-size: 0.9em;">{{ book.created_at|date:"M d, Y, h:i a" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="empty-state">No books available in the catalog yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h2>Premium Books (&gt; $100)</h2>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in expensive_books %}
+            <tr>
+                <td><strong>{{ book.title }}</strong></td>
+                <td>{{ book.author }}</td>
+                <td style="color: #4ade80; font-weight: 600;">${{ book.price }}</td>
+                <td style="color: #94a3b8; font-size: 0.9em;">{{ book.created_at|date:"M d, Y, h:i a" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="empty-state">No premium books available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

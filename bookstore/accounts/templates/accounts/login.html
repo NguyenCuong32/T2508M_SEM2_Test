@@ -1,0 +1,41 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Login | Bookstore{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 style="margin-top: 0; text-align: center;">Welcome Back</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 2rem;">Please sign in to access your dashboard</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}
+                <div style="color: #ef4444; font-size: 0.85rem; margin-top: 0.25rem;">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+        {% if form.non_field_errors %}
+        <div style="color: #ef4444; font-size: 0.85rem; margin-top: 1rem; text-align: center;">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div style="margin-top: 2rem;">
+            <button type="submit" class="btn" style="width: 100%;">🔑 Sign In</button>
+        </div>
+    </form>
+    
+    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem;">
+        <span style="color: #cbd5e1;">Don't have an account?</span> 
+        <a href="{% url 'register' %}" style="color: #60a5fa; text-decoration: none; font-weight: 500;">Register here</a>
+    </div>
+</div>
+{% endblock %}

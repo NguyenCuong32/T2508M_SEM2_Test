@@ -1,0 +1,17 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Dashboard | Bookstore{% endblock %}
+
+{% block header_actions %}
+<a href="{% url 'book_list' %}" class="btn btn-outline" style="margin-right: 1rem;">View Catalog</a>
+<a href="{% url 'logout' %}" class="btn" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">🚪 Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="stats-card" style="width: 100%; box-sizing: border-box; text-align: center; padding: 4rem 2rem;">
+    <h2 style="font-size: 2.5rem; margin-top: 0; color: white;">Welcome back, <span style="color: #60a5fa;">{{ user.username }}</span>! 👋</h2>
+    <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 600px; margin: 1rem auto 0;">
+        You have successfully logged into your dashboard. This is a protected area only visible to authenticated users.
+    </p>
+</div>
+{% endblock %}
