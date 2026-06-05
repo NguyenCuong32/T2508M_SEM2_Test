@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - Simple Auth{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="glass-card auth-card">
+        <h1 class="auth-title">Create Account</h1>
+        <p style="text-align: center; margin-bottom: 2rem;">Sign up below to access your personal dashboard.</p>
+        
+        <form method="POST" action="{% url 'accounts:register' %}" novalidate>
+            {% csrf_token %}
+            
+            <!-- Username -->
+            <div class="form-group">
+                <label class="form-label" for="id_username">{{ form.username.label }}</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <p style="color: var(--error-color); font-size: 0.85rem; margin-top: 0.25rem;">
+                        {{ form.username.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+            
+
+            <!-- Password -->
+            <div class="form-group">
+                <label class="form-label" for="id_password">{{ form.password.label }}</label>
+                <div class="password-wrapper">
+                    {{ form.password }}
+                    <span class="toggle-password" onclick="togglePasswordVisibility('id_password', this)">👁️</span>
+                </div>
+                <small style="color: var(--text-secondary); font-size: 0.75rem; display: block; margin-top: 0.25rem;">
+                    Must be at least 8 characters and contain at least one number.
+                </small>
+                {% if form.password.errors %}
+                    <p style="color: var(--error-color); font-size: 0.85rem; margin-top: 0.25rem;">
+                        {{ form.password.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+            
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label class="form-label" for="id_confirm_password">{{ form.confirm_password.label }}</label>
+                <div class="password-wrapper">
+                    {{ form.confirm_password }}
+                    <span class="toggle-password" onclick="togglePasswordVisibility('id_confirm_password', this)">👁️</span>
+                </div>
+                {% if form.confirm_password.errors %}
+                    <p style="color: var(--error-color); font-size: 0.85rem; margin-top: 0.25rem;">
+                        {{ form.confirm_password.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+            
+            <!-- Security Question -->
+            <div class="form-group">
+                <label class="form-label" for="id_security_question">{{ form.security_question.label }}</label>
+                {{ form.security_question }}
+                {% if form.security_question.errors %}
+                    <p style="color: var(--error-color); font-size: 0.85rem; margin-top: 0.25rem;">
+                        {{ form.security_question.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+            
+            <!-- Security Answer -->
+            <div class="form-group">
+                <label class="form-label" for="id_security_answer">{{ form.security_answer.label }}</label>
+                {{ form.security_answer }}
+                {% if form.security_answer.errors %}
+                    <p style="color: var(--error-color); font-size: 0.85rem; margin-top: 0.25rem;">
+                        {{ form.security_answer.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Register</button>
+        </form>
+        
+        <p class="auth-redirect">
+            Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    function togglePasswordVisibility(inputId, toggleEl) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            toggleEl.textContent = '🙈';
+        } else {
+            input.type = 'password';
+            toggleEl.textContent = '👁️';
+        }
+    }
+</script>
+{% endblock %}

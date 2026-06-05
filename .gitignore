@@ -1,0 +1,95 @@
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pyc
+
+# ===========================
+# Virtual Environment
+# ===========================
+venv/
+env/
+.venv/
+.env/
+ENV/
+
+# ===========================
+# Django
+# ===========================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# ===========================
+# Static files collected
+# ===========================
+staticfiles/
+static_root/
+
+# ===========================
+# Environment Variables
+# ===========================
+.env
+.env.local
+.env.production
+*.env
+
+# ===========================
+# IDE & Editor
+# ===========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# ===========================
+# OS generated
+# ===========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# ===========================
+# Testing
+# ===========================
+.coverage
+htmlcov/
+.pytest_cache/
+coverage.xml
+*.cover
+
+# ===========================
+# Distribution / Packaging
+# ===========================
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# ===========================
+# Jupyter Notebook
+# ===========================
+.ipynb_checkpoints
+
+# ===========================
+# Byte-compiled / optimized
+# ===========================
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt

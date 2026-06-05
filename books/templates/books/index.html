@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Books Management{% endblock %}
+
+{% block content %}
+<div class="grid-2col">
+    <!-- Left Column: Add New Book Form -->
+    <div class="glass-card">
+        {% if user.is_authenticated %}
+            <h2>Add a New Book</h2>
+            <p style="margin-bottom: 2rem;">Fill in the bilingual details and price in both USD and VND to add a new book.</p>
+            
+            <form method="POST" action="{% url 'books:book_list' %}" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="form-group">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p style="color: var(--error-color); font-size: 0.85rem; margin-top: 0.25rem;">
+                                {{ field.errors.0 }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Add Book</button>
+            </form>
+        {% else %}
+            <h2>Add a New Book</h2>
+            <p style="margin-bottom: 2rem;">You must be logged in to contribute and add a new book to the library.</p>
+            <a href="{% url 'accounts:login' %}?next={% url 'books:book_list' %}" class="btn btn-primary" style="width: 100%; display: block; text-align: center; text-decoration: none;">Sign In to Add Book</a>
+        {% endif %}
+    </div>
+
+    <!-- Right Column: Stats & Books List -->
+    <div>
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-val">{{ total_books }}</div>
+                <div class="stat-label">Total Books</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">{{ above_100_count }}</div>
+                <div class="stat-label">Books &gt; $100</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">{{ above_100k_vnd_count }}</div>
+                <div class="stat-label">Books &gt; 100.000 &#8363;</div>
+            </div>
+        </div>
+
+        <!-- Sort & Currency Switcher Bar -->
+        <div class="actions-bar">
+            <h2>Books List</h2>
+            <div class="filters" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                
+                <!-- Currency Toggle Switch -->
+                <div class="currency-switch">
+                    <button id="btn-usd" class="switch-btn active" onclick="switchCurrency('USD')">USD ($)</button>
+                    <button id="btn-vnd" class="switch-btn" onclick="switchCurrency('VND')">VND (&#8363;)</button>
+                </div>
+                
+                <!-- Sort Dropdown -->
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Sort by:</span>
+                    <select id="sort-select" class="form-input" style="width: auto; padding: 0.4rem 2rem 0.4rem 0.75rem; font-size: 0.85rem; border-radius: 20px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border); color: var(--text-primary); cursor: pointer;" onchange="location.href='?sort=' + this.value">
+                        <option value="default" {% if sort_param == 'default' or not sort_param %}selected{% endif %}>Newest</option>
+                        <option value="alphabetical" {% if sort_param == 'alphabetical' %}selected{% endif %}>Title (A-Z)</option>
+                        <option value="price_asc" {% if sort_param == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
+                        <option value="price_desc" {% if sort_param == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Books Cards -->
+        {% if books %}
+            <div class="books-grid">
+                {% for book in books %}
+                    <div class="book-card">
+                        <div class="book-cover-container">
+                            {% if book.cover_image %}
+                                <img src="{{ book.cover_image.url }}" alt="{{ book.title_en }}" class="book-cover">
+                            {% else %}
+                                <div class="book-cover-placeholder">📖</div>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <div class="book-title">{{ book.title_en }}</div>
+                            <div class="book-subtitle" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-style: italic;">
+                                {{ book.title_vi }}
+                            </div>
+                            <div class="book-author">by {{ book.author }}</div>
+                        </div>
+                        <div class="book-footer">
+                            <span class="book-price book-price-usd">${{ book.price_usd|stringformat:".2f" }}</span>
+                            <span class="book-price book-price-vnd" style="display: none;">{{ book.price_vnd|intcomma }}&nbsp;&#8363;</span>
+                            <span class="book-date" title="Publication Date">Published: {{ book.created_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="glass-card" style="text-align: center; padding: 3rem;">
+                <p>No books found. Start by adding one on the left panel!</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const savedCurrency = localStorage.getItem("preferred_currency") || "USD";
+        switchCurrency(savedCurrency);
+    });
+
+    function switchCurrency(currency) {
+        const usdPrices = document.querySelectorAll('.book-price-usd');
+        const vndPrices = document.querySelectorAll('.book-price-vnd');
+        const usdBtn = document.getElementById('btn-usd');
+        const vndBtn = document.getElementById('btn-vnd');
+        
+        if (currency === 'USD') {
+            usdPrices.forEach(el => el.style.display = 'inline');
+            vndPrices.forEach(el => el.style.display = 'none');
+            usdBtn.classList.add('active');
+            vndBtn.classList.remove('active');
+        } else {
+            usdPrices.forEach(el => el.style.display = 'none');
+            vndPrices.forEach(el => el.style.display = 'inline');
+            vndBtn.classList.add('active');
+            usdBtn.classList.remove('active');
+        }
+        
+        localStorage.setItem("preferred_currency", currency);
+    }
+</script>
+{% endblock %}
