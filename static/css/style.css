@@ -1,0 +1,4 @@
+/* Global transitions and overrides */
+a, button, input {
+    transition: all 0.25s ease-in-out;
+}

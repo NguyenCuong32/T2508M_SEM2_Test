@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block title %}Premium Books (> $100) - Django Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Stats Grid */
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+    }
+
+    .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        background: rgba(244, 63, 94, 0.1);
+        color: #f43f5e;
+    }
+
+    .stat-info h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.1rem;
+    }
+
+    .stat-info p {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Table Styles */
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.95rem;
+    }
+
+    .custom-table th {
+        padding: 1rem;
+        border-bottom: 1px solid var(--card-border);
+        color: var(--text-muted);
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .custom-table td {
+        padding: 1.25rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .custom-table tr:hover {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .book-title {
+        font-weight: 600;
+        color: var(--text-main);
+        font-size: 1rem;
+    }
+
+    .book-author {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .book-price {
+        font-weight: 700;
+        color: #f43f5e;
+    }
+
+    .book-date {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--text-muted);
+    }
+
+    .no-data i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+        transition: color 0.3s;
+    }
+
+    .btn-back:hover {
+        color: var(--primary);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'book_list' %}" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to all books</a>
+
+<div class="stats-container">
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fa-solid fa-tag"></i>
+        </div>
+        <div class="stat-info">
+            <h3 id="stat-total-expensive">{{ total_expensive }}</h3>
+            <p>Premium Books (Price > $100)</p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card" style="max-width: 800px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="margin-bottom: 0;" class="gradient-text"><i class="fa-solid fa-fire"></i> Premium Catalog</h2>
+        <span class="badge" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Price > $100</span>
+    </div>
+
+    <div class="table-container">
+        {% if books %}
+            <table class="custom-table" id="expensive-books-table">
+                <thead>
+                    <tr>
+                        <th>Book Details</th>
+                        <th>Price</th>
+                        <th>Added Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                        <tr class="book-row">
+                            <td>
+                                <div class="book-title">{{ book.title }}</div>
+                                <div class="book-author">by {{ book.author }}</div>
+                            </td>
+                            <td>
+                                <div class="book-price">${{ book.price }}</div>
+                            </td>
+                            <td>
+                                <div class="book-date">{{ book.created_at|date:"M d, Y H:i" }}</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="no-data">
+                <i class="fa-solid fa-tags"></i>
+                <p>No premium books found costing more than $100.</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">Add some books with price > 100 in the Book Manager.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
