@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Django Book App</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .navbar {
+            background: #2c3e50;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: white;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+        }
+
+        button {
+            padding: 8px 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <a href="{% url 'book_list' %}?tab=ex1">
+        Exercise 1
+    </a>
+
+    <a href="{% url 'add_book' %}">
+        Add Book
+    </a>
+
+    <a href="{% url 'dashboard' %}?tab=ex2">
+        Exercise 2
+    </a>
+
+</div>
+
+<div class="container">
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>

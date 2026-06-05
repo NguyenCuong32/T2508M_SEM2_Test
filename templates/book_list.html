@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if tab == "ex1" %}
+
+<div class="card">
+    <h1>Exercise 1 - Book Management</h1>
+
+    <h3>Total Books: {{ total_books }}</h3>
+</div>
+
+<div class="card">
+    <a href="{% url 'add_book' %}">
+        <button>Add Book</button>
+    </a>
+</div>
+
+<div class="card">
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+        </tr>
+
+        {% for book in books %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="card">
+    <h2>Books Price > 100</h2>
+
+    <ul>
+        {% for book in expensive_books %}
+            <li>{{ book.title }} - {{ book.price }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endif %}
+
+{% endblock %}
