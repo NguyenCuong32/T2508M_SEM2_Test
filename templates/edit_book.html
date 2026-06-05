@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Sửa Sách{% endblock %}
+
+{% block content %}
+<style>
+    .edit-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4rem 0;
+    }
+
+    .edit-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+
+    .edit-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+        color: var(--text-muted);
+    }
+
+    .form-group input {
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.02);
+        box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .actions-row {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn-submit {
+        flex: 1;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px var(--primary-glow);
+        text-align: center;
+    }
+
+    .btn-submit:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+    }
+
+    .btn-cancel {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.03);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        text-align: center;
+    }
+
+    .btn-cancel:hover {
+        background: rgba(0, 0, 0, 0.06);
+        border-color: rgba(0, 0, 0, 0.12);
+    }
+</style>
+
+<div class="edit-container">
+    <div class="edit-card">
+        <h2 class="edit-title">Sửa Thông Tin Sách</h2>
+        <form method="post" action="{% url 'edit_book' book.id %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div style="color: var(--danger); font-size: 0.8rem; margin-top: 0.25rem;">
+                            {{ field.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="actions-row">
+                <button type="submit" class="btn-submit">Lưu Thay Đổi</button>
+                <a href="{% url 'books' %}" class="btn-cancel">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

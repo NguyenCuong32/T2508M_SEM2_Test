@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4rem 0;
+    }
+
+    .welcome-box {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 3.5rem 2.5rem;
+        text-align: center;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .welcome-box::before {
+        content: '';
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+        top: -50px;
+        right: -50px;
+        pointer-events: none;
+    }
+
+    .user-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--primary), #ec4899);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+    }
+
+    .welcome-msg {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .welcome-msg span {
+        background: linear-gradient(135deg, #4f46e5, #ec4899);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .user-status {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        max-width: 400px;
+    }
+
+    .actions-row {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-action {
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-action.primary {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .btn-action.primary:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+    }
+
+    .btn-action.secondary {
+        background: rgba(0, 0, 0, 0.03);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+    }
+
+    .btn-action.secondary:hover {
+        background: rgba(0, 0, 0, 0.06);
+        border-color: rgba(0, 0, 0, 0.12);
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="welcome-box">
+        <div class="user-avatar">
+            {{ user.username|slice:":1"|upper }}
+        </div>
+        <h2 class="welcome-msg">Chào mừng quay lại, <span>{{ user.username }}</span>!</h2>
+        <p class="user-status">Bạn đã xác thực đăng nhập thành công bằng cơ chế session tích hợp của Django. Đây là trang cá nhân (dashboard) được bảo vệ an toàn.</p>
+        
+        <div class="actions-row">
+            <a href="{% url 'books' %}" class="btn-action primary">Quản lý sách</a>
+            <a href="{% url 'logout' %}" class="btn-action secondary">Đăng xuất</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

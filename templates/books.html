@@ -1,0 +1,412 @@
+{% extends 'base.html' %}
+
+{% block title %}Books Management{% endblock %}
+
+{% block content %}
+<style>
+    .books-layout {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 2.5rem;
+        align-items: start;
+    }
+
+    @media (max-width: 992px) {
+        .books-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 2rem;
+        position: sticky;
+        top: 100px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .card-title-main {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+        color: var(--text-muted);
+    }
+
+    .form-group input {
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.02);
+        box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .submit-btn {
+        width: 100%;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .submit-btn:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+    }
+
+    .dashboard-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .stats-bar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .stat-val {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: var(--primary);
+    }
+
+    .stat-lbl {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .lists-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .lists-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .list-container {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        min-height: 400px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .list-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .list-badge {
+        background: rgba(0, 0, 0, 0.05);
+        padding: 0.25rem 0.6rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .list-badge.premium {
+        background: rgba(16, 185, 129, 0.1);
+        color: #059669;
+    }
+
+    .book-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .book-card {
+        background: rgba(0, 0, 0, 0.015);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        padding: 1rem 2.25rem 1rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    .book-card:hover {
+        background: rgba(0, 0, 0, 0.03);
+        border-color: rgba(0, 0, 0, 0.08);
+        transform: translateX(3px);
+    }
+
+    .book-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .book-title {
+        font-weight: 600;
+        color: var(--text-main);
+        font-size: 0.95rem;
+    }
+
+    .book-author {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .book-date {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+    }
+
+    .book-price {
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 1rem;
+    }
+
+    .book-card.expensive-item {
+        border-left: 3px solid #10b981;
+    }
+
+    .book-card.expensive-item .book-price {
+        color: #10b981;
+    }
+
+    .delete-btn-abs {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: color 0.2s ease;
+        line-height: 1;
+    }
+
+    .delete-btn-abs:hover {
+        color: var(--danger);
+    }
+
+    .btn-edit-small {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(79, 70, 229, 0.08);
+        color: var(--primary);
+        border: 1px solid rgba(79, 70, 229, 0.15);
+        border-radius: 8px;
+        padding: 0.35rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-edit-small:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 2px 8px var(--primary-glow);
+    }
+
+    .empty-state {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        padding: 3rem 0;
+    }
+</style>
+
+<div class="books-layout">
+    <div class="form-card">
+        <h2 class="card-title-main">Thêm Sách Mới</h2>
+        <form method="post" action="{% url 'books' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div style="color: var(--danger); font-size: 0.8rem; margin-top: 0.25rem;">
+                    {{ field.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="submit-btn">Thêm Sách</button>
+        </form>
+    </div>
+
+    <div class="dashboard-panel">
+        <div class="stats-bar">
+            <div class="stat-card">
+                <span class="stat-val">{{ total_books }}</span>
+                <span class="stat-lbl">Tổng Số Sách</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val" style="color: #34d399;">{{ expensive_books.count }}</span>
+                <span class="stat-lbl">Sách Cao Cấp (> $100)</span>
+            </div>
+        </div>
+
+        <div class="lists-grid">
+            <div class="list-container">
+                <h3 class="list-title">
+                    <span>Tất Cả Sách</span>
+                    <span class="list-badge">{{ books.count }}</span>
+                </h3>
+                <div class="book-items">
+                    {% for book in books %}
+                    <div class="book-card">
+                        <form action="{% url 'delete_book' book.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <a href="#" onclick="confirmDelete(event, this)" class="delete-btn-abs"
+                                title="Xóa sách">&times;</a>
+                        </form>
+                        <div class="book-info">
+                            <span class="book-title">{{ book.title }}</span>
+                            <span class="book-author">bởi {{ book.author }}</span>
+                            <span class="book-date">Đã thêm {{ book.created_at|date:"Y-m-d H:i" }}</span>
+                        </div>
+                        <div class="book-meta"
+                            style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
+                            <span class="book-price">${{ book.price }}</span>
+                            <div class="book-actions">
+                                <a href="{% url 'edit_book' book.id %}" class="btn-edit-small">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-edit-2"
+                                        style="margin-right: 4px; display: inline-block; vertical-align: middle;">
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                    </svg>Sửa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="empty-state">Chưa có sách nào được đăng ký.</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="list-container" style="border-color: rgba(16, 185, 129, 0.15);">
+                <h3 class="list-title">
+                    <span>Lọc Sách Cao Cấp</span>
+                    <span class="list-badge premium">> $100</span>
+                </h3>
+                <div class="book-items">
+                    {% for book in expensive_books %}
+                    <div class="book-card expensive-item">
+                        <form action="{% url 'delete_book' book.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <a href="#" onclick="confirmDelete(event, this)" class="delete-btn-abs"
+                                title="Xóa sách">&times;</a>
+                        </form>
+                        <div class="book-info">
+                            <span class="book-title">{{ book.title }}</span>
+                            <span class="book-author">bởi {{ book.author }}</span>
+                            <span class="book-date">Đã thêm {{ book.created_at|date:"Y-m-d H:i" }}</span>
+                        </div>
+                        <div class="book-meta"
+                            style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
+                            <span class="book-price">${{ book.price }}</span>
+                            <div class="book-actions">
+                                <a href="{% url 'edit_book' book.id %}" class="btn-edit-small">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-edit-2"
+                                        style="margin-right: 4px; display: inline-block; vertical-align: middle;">
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                    </svg>Sửa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="empty-state">Chưa có sách nào giá trên $100.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(event, element) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Xác nhận xóa?',
+            text: 'Bạn có chắc chắn muốn xóa cuốn sách này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4f46e5',
+            cancelButtonColor: '#ef4444',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                element.closest('form').submit();
+            }
+        });
+    }
+</script>
+{% endblock %}
