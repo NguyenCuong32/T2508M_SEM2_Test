@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tree Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('partials/header', { active: 'home' }) %>
+
+  <main class="container">
+    <div class="page-head">
+      <h1 class="page-title">Tree Shop</h1>
+      <span class="count-badge"><%= trees.length %> cây</span>
+    </div>
+
+    <div class="content">
+      <form class="tree-form" action="/add" method="POST" enctype="multipart/form-data">
+        <% if (error) { %>
+          <div class="error-message"><%= error %></div>
+        <% } %>
+
+        <div class="form-body">
+          <div class="form-preview">
+            <img id="preview" class="preview-img" src="" alt="" style="display:none;" />
+            <div id="preview-placeholder" class="preview-placeholder">
+              <span>🌿</span>
+              <small>Ảnh cây sẽ hiển thị ở đây</small>
+            </div>
+          </div>
+
+          <div class="form-fields">
+            <label for="treename">Tree Name</label>
+            <input type="text" id="treename" name="treename" placeholder="Tree Name" required />
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Description" required></textarea>
+
+            <label for="image">Image</label>
+            <input type="file" id="image" name="image" accept="image/*" />
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-add">Add</button>
+              <button type="reset" class="btn btn-reset-form">Reset</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="tree-table-wrap">
+        <table class="tree-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Description</th>
+              <th class="col-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (trees.length === 0) { %>
+              <tr>
+                <td colspan="5" class="empty-state">🌱 Chưa có cây nào. Hãy thêm cây đầu tiên!</td>
+              </tr>
+            <% } else { %>
+              <% trees.forEach(function(tree, index) { %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= tree.treename %></td>
+                  <td>
+                    <% if (tree.image) { %>
+                      <img class="tree-thumb" src="<%= tree.image %>" alt="<%= tree.treename %>" />
+                    <% } %>
+                  </td>
+                  <td class="desc-cell">
+                    <span class="desc-text"><%= tree.description %></span>
+                    <button type="button" class="desc-toggle" onclick="toggleDesc(this)">Xem thêm</button>
+                  </td>
+                  <td class="col-actions">
+                    <a href="/edit/<%= tree._id %>" class="action-icon edit" title="Edit">✎</a>
+                    <form action="/delete/<%= tree._id %>" method="POST" class="inline-form"
+                          onsubmit="return confirm('Xoá cây này?');">
+                      <button type="submit" class="action-icon delete" title="Delete">🗑</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }); %>
+            <% } %>
+          </tbody>
+        </table>
+
+        <% if (trees.length > 0) { %>
+          <form action="/reset" method="POST" class="reset-all-form"
+                onsubmit="return confirm('Xoá tất cả cây? Hành động này không thể hoàn tác.');">
+            <button type="submit" class="btn btn-reset-all">Reset All</button>
+          </form>
+        <% } %>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    function toggleDesc(btn) {
+      var cell = btn.closest('.desc-cell');
+      var text = cell.querySelector('.desc-text');
+      var expanded = text.classList.toggle('expanded');
+      btn.textContent = expanded ? 'Thu gọn' : 'Xem thêm';
+    }
+
+    (function () {
+      document.querySelectorAll('.desc-cell').forEach(function (cell) {
+        var text = cell.querySelector('.desc-text');
+        var btn = cell.querySelector('.desc-toggle');
+        if (text.scrollHeight <= text.clientHeight + 1) {
+          btn.style.display = 'none';
+        }
+      });
+    })();
+
+    (function () {
+      var input = document.getElementById('image');
+      var preview = document.getElementById('preview');
+      var placeholder = document.getElementById('preview-placeholder');
+      var form = input && input.closest('form');
+      if (!input) return;
+
+      input.addEventListener('change', function () {
+        var file = input.files && input.files[0];
+        if (file) {
+          var url = URL.createObjectURL(file);
+          preview.src = url;
+          preview.style.display = 'block';
+          placeholder.style.display = 'none';
+        } else {
+          resetPreview();
+        }
+      });
+
+      function resetPreview() {
+        preview.src = '';
+        preview.style.display = 'none';
+        placeholder.style.display = 'flex';
+      }
+
+      if (form) {
+        form.addEventListener('reset', function () {
+          setTimeout(resetPreview, 0);
+        });
+      }
+    })();
+  </script>
+
+  <% if (msg) { %>
+    <div id="toast" class="toast toast-<%= msg === 'deleted' || msg === 'reset' ? 'warn' : 'success' %>">
+      <%
+        var msgText = {
+          added: '✅ Đã thêm cây thành công!',
+          updated: '✅ Đã cập nhật cây!',
+          deleted: '🗑 Đã xoá cây.',
+          reset: '🗑 Đã xoá tất cả cây.'
+        }[msg] || '';
+      %>
+      <%= msgText %>
+    </div>
+    <script>
+      setTimeout(function () {
+        var t = document.getElementById('toast');
+        if (t) { t.classList.add('hide'); }
+      }, 3000);
+    </script>
+  <% } %>
+</body>
+</html>

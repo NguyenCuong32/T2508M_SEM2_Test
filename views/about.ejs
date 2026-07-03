@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About me</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('partials/header', { active: 'about' }) %>
+
+  <main class="container">
+    <div class="page-head">
+      <h1 class="page-title">About me</h1>
+    </div>
+    <div class="about-content">
+      <p>Tree Shop is a practice project for the Essentials of NodeJS exam, built with Express, EJS and MongoDB.</p>
+      <p>Author: Le Tri Phuong</p>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Tree</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('partials/header', { active: 'home' }) %>
+
+  <main class="container">
+    <div class="page-head">
+      <h1 class="page-title">Edit Tree</h1>
+    </div>
+
+    <form class="tree-form edit-form" action="/edit/<%= tree._id %>" method="POST" enctype="multipart/form-data">
+      <% if (error) { %>
+        <div class="error-message"><%= error %></div>
+      <% } %>
+
+      <label for="treename">Tree Name</label>
+      <input type="text" id="treename" name="treename" value="<%= tree.treename %>" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required><%= tree.description %></textarea>
+
+      <label>Current Image</label>
+      <% if (tree.image) { %>
+        <img class="edit-preview" src="<%= tree.image %>" alt="<%= tree.treename %>" />
+      <% } else { %>
+        <p class="muted">Chưa có ảnh</p>
+      <% } %>
+
+      <label for="image">Change Image (tuỳ chọn)</label>
+      <input type="file" id="image" name="image" accept="image/*" />
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-add">Save</button>
+        <a href="/" class="btn btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
