@@ -1,0 +1,98 @@
+<%- include('partials/header') %>
+
+<div class="container">
+    <h1 class="page-title">Tree Shop</h1>
+
+    <!-- Error / Success Messages -->
+    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+        <div class="alert alert-error">
+            <% errors.forEach(err => { %>
+                <p><i class="fas fa-exclamation-circle"></i> <%= err %></p>
+            <% }) %>
+        </div>
+    <% } %>
+    <% if (typeof success !== 'undefined' && success !== '') { %>
+        <div class="alert alert-success">
+            <p><i class="fas fa-check-circle"></i> <%= success %></p>
+        </div>
+    <% } %>
+
+    <!-- Question 1: Add form -->
+    <div class="form-section">
+        <div class="form-image-preview">
+            <img src="https://images.unsplash.com/photo-1610397648930-477b8c7f0943?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tree Preview" id="previewImg">
+        </div>
+
+        <div class="form-fields">
+            <form action="/add" method="POST" id="addForm">
+                <div class="form-group">
+                    <label for="treename">Tree Name</label>
+                    <input type="text" id="treename" name="treename" placeholder="Phong lan">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="3" placeholder="Nhắc đến ý nghĩa của hoa phong lan, người ta nghĩ ngay đến sự giàu sang, quyền quý của gia chủ bởi vẻ đẹp cùng sự quyến rũ của loài hoa này."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <div class="image-input-group">
+                        <input type="text" id="image" name="image" placeholder="D:\image\phonglan.png">
+                        <button type="button" class="btn-browse">Browser</button>
+                    </div>
+                </div>
+
+                <div class="form-buttons">
+                    <!-- Question 1: Add button -->
+                    <button type="submit" class="btn btn-add">Add</button>
+                    <!-- Question 5: Reset button - xóa tất cả dữ liệu -->
+                    <button type="button" class="btn btn-reset" onclick="if(confirm('Are you sure you want to reset all data?')) window.location.href='/reset'">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Question 4: Show all trees -->
+    <div class="table-section">
+        <table class="tree-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (trees && trees.length > 0) { %>
+                    <% trees.forEach((tree, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= tree.treename %></td>
+                            <td class="img-cell">
+                                <% if (tree.image && tree.image.startsWith('http')) { %>
+                                    <img src="<%= tree.image %>" alt="<%= tree.treename %>" class="tree-img" onerror="this.style.display='none'">
+                                <% } else { %>
+                                    <div class="no-image"><i class="fas fa-image"></i></div>
+                                <% } %>
+                            </td>
+                            <td class="desc-cell"><%= tree.description %></td>
+                            <td class="action-cell">
+                                <button class="icon-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                <button class="icon-btn" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5" class="empty-msg">No trees found. Add some!</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
