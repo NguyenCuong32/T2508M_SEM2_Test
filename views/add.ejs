@@ -1,0 +1,90 @@
+<%- include("partials/header") %>
+
+<div class="row justify-content-center">
+
+    <div class="col-md-7">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white">
+
+                <h3>Add New Tree</h3>
+
+            </div>
+
+            <div class="card-body">
+
+                <% if(typeof error !=="undefined"){ %>
+
+                    <div class="alert alert-danger">
+
+                        <%= error %>
+
+                    </div>
+
+                <% } %>
+
+                <form action="/add" method="POST">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Tree Name
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="treename">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Description
+
+                        </label>
+
+                        <textarea
+                            class="form-control"
+                            rows="4"
+                            name="description"></textarea>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Image URL
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="image">
+
+                    </div>
+
+                    <button class="btn btn-success">
+
+                        Add Tree
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<%- include("partials/footer") %>

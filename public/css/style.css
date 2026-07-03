@@ -1,0 +1,55 @@
+body{
+    background:#f5f8f2;
+}
+
+.tree-card{
+    transition:.3s;
+    border:none;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.tree-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 18px 35px rgba(0,0,0,.18);
+}
+
+.tree-image{
+    height:230px;
+    object-fit:cover;
+}
+
+.card{
+    border-radius:18px;
+}
+
+.btn{
+    border-radius:30px;
+}
+
+footer{
+    margin-top:80px;
+}
+
+.navbar-brand{
+    font-size:1.5rem;
+}
+
+h2,h3,h4{
+    font-weight:700;
+}
+
+.pagination .page-link{
+    color:#198754;
+}
+
+.pagination .page-item.active .page-link{
+    background:#198754;
+    border-color:#198754;
+}
+
+.pagination .page-link:hover{
+    color:#fff;
+    background:#198754;
+    border-color:#198754;
+}
