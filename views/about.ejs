@@ -1,0 +1,31 @@
+<%- include("partials/header", { title, currentPath }) %>
+
+<main class="page-shell">
+  <section class="about-hero" aria-labelledby="about-title">
+    <div>
+      <p class="eyebrow">About me</p>
+      <h1 id="about-title">TreeShop Practical Project</h1>
+      <p>
+        Practice Essentials of NodeJS - SET01, built with Express, EJS and MongoDB.
+      </p>
+    </div>
+    <img src="/images/tree-placeholder.png" alt="TreeShop plant">
+  </section>
+
+  <section class="about-details" aria-label="Project details">
+    <article>
+      <span>Stack</span>
+      <strong>Express + EJS + MongoDB</strong>
+    </article>
+    <article>
+      <span>Database</span>
+      <strong>TreeShop / TreeCollection</strong>
+    </article>
+    <article>
+      <span>Functions</span>
+      <strong>Add, list, edit, delete and reset trees</strong>
+    </article>
+  </section>
+</main>
+
+<%- include("partials/footer") %>

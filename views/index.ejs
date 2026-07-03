@@ -1,0 +1,147 @@
+<%- include("partials/header", { title, currentPath }) %>
+
+<main class="page-shell">
+  <section class="shop-workspace" aria-labelledby="shop-title">
+    <div class="image-panel">
+      <img
+        id="previewImage"
+        src="<%= (formData.image || (editTree && editTree.image)) || '/images/tree-placeholder.png' %>"
+        alt="Tree preview"
+        data-placeholder="/images/tree-placeholder.png"
+      >
+      <div class="image-caption">
+        <strong>TreeCollection</strong>
+        <span><%= trees.length %> item<%= trees.length === 1 ? "" : "s" %></span>
+      </div>
+    </div>
+
+    <div class="form-panel">
+      <p class="eyebrow">Practice Essentials of NodeJS - SET01</p>
+      <h1 id="shop-title">Tree Shop</h1>
+
+      <% if (dbError) { %>
+        <div class="alert alert-warning"><%= dbError %></div>
+      <% } %>
+
+      <% if (successMessage) { %>
+        <div class="alert alert-success"><%= successMessage %></div>
+      <% } %>
+
+      <% if (errors && errors.length) { %>
+        <div class="alert alert-error">
+          <% errors.forEach((error) => { %>
+            <p><%= error %></p>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <form
+        id="treeForm"
+        class="tree-form"
+        action="<%= editTree ? `/trees/${editTree._id}/update` : '/trees' %>"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <% if (editTree && editTree.image) { %>
+          <input type="hidden" name="currentImage" value="<%= editTree.image %>">
+        <% } %>
+
+        <label for="treename">Tree Name</label>
+        <input
+          id="treename"
+          name="treename"
+          type="text"
+          value="<%= formData.treename || '' %>"
+          placeholder="Phong Lan"
+          required
+        >
+
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          placeholder="Write a short tree description"
+          required
+        ><%= formData.description || '' %></textarea>
+
+        <label for="image">Image</label>
+        <div class="file-row">
+          <input
+            id="image"
+            name="image"
+            type="text"
+            value="<%= formData.image || '' %>"
+            placeholder="/uploads/tree.png or https://example.com/tree.jpg"
+          >
+          <label class="browse-button" for="imageFile">Browser</label>
+          <input id="imageFile" class="sr-only" name="imageFile" type="file" accept="image/*">
+        </div>
+      </form>
+
+      <div class="button-row">
+        <button class="btn btn-primary" form="treeForm" type="submit"><%= editTree ? "Update" : "Add" %></button>
+        <% if (editTree) { %>
+          <a class="btn btn-ghost" href="/treeshop">Cancel</a>
+        <% } %>
+        <form class="reset-form" action="/trees/reset" method="POST" data-confirm="Remove all trees from TreeCollection?">
+          <button class="btn btn-danger" type="submit">Reset</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="table-section" aria-labelledby="table-title">
+    <div class="section-heading">
+      <h2 id="table-title">Trees in database</h2>
+      <span>Database: TreeShop</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (trees.length === 0) { %>
+            <tr>
+              <td colspan="5" class="empty-state">No trees in TreeCollection yet.</td>
+            </tr>
+          <% } %>
+
+          <% trees.forEach((tree, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td class="name-cell"><%= tree.treename %></td>
+              <td>
+                <img
+                  class="tree-thumb"
+                  src="<%= tree.image || '/images/tree-placeholder.png' %>"
+                  alt="<%= tree.treename %>"
+                  data-placeholder="/images/tree-placeholder.png"
+                >
+              </td>
+              <td class="description-cell"><%= tree.description %></td>
+              <td>
+                <div class="row-actions">
+                  <a class="action-link" href="/trees/<%= tree._id %>/edit">Edit</a>
+                  <form action="/trees/<%= tree._id %>/delete" method="POST" data-confirm="Delete this tree?">
+                    <button class="action-link danger-link" type="submit">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<%- include("partials/footer") %>

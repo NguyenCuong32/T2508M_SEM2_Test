@@ -1,0 +1,26 @@
+{
+  "name": "treeshop-exam",
+  "version": "1.0.0",
+  "description": "Practice Essentials of NodeJS - TreeShop practical exam",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js"
+  },
+  "keywords": [
+    "express",
+    "ejs",
+    "mongodb",
+    "treeshop"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "multer": "^2.2.0"
+  }
+}
