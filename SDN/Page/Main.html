@@ -1,0 +1,46 @@
+<% include ../Layout/Header.html %>
+
+<h2>Tree Shop</h2>
+
+<form action="/add" method="POST">
+    <input type="text" name="treename" placeholder="Tree Name" required/>
+    <br><br>
+
+    <textarea name="description" placeholder="Description" required></textarea>
+    <br><br>
+
+    <input type="text" name="image" placeholder="Image URL or path"/>
+    <br><br>
+
+    <button type="submit">Add Tree</button>
+</form>
+
+<form action="/reset" method="POST">
+    <button type="submit" style="background: red; color: white;">Reset</button>
+</form>
+
+<hr>
+
+<table border="1" width="100%">
+    <tr>
+        <th>ID</th>
+        <th>Tree Name</th>
+        <th>Description</th>
+        <th>Image</th>
+    </tr>
+
+    <% trees.forEach((tree.index) => {%>
+    <tr>
+        <td><% index + 1 %></td>
+        <td><% tree.treename %></td>
+        <td>
+            <% if (tree.image) { %>
+                <image src= "<%= tree.image %>" width="80"/>
+                <% } %>
+        </td>
+        <td><% tree.description %></td>
+    </tr>
+    < % }) %>
+</table>
+
+<% include ../Layout/Footer.html %>
