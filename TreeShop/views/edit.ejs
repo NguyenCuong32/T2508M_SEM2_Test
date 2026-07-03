@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+
+<div style="display: flex; justify-content: center; padding: 20px;">
+    <div class="glass-card" style="width: 100%; max-width: 600px;">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4 style="margin: 0; font-size: 1.25rem;">Sửa Cây: <%= tree.treename %></h4>
+                <p style="margin: 4px 0 0; font-size: 0.9rem; color: var(--text-muted);">Cập nhật thông tin chi tiết.</p>
+            </div>
+            <a href="/" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">
+                <i class="bi bi-x-lg"></i> Hủy
+            </a>
+        </div>
+        <div class="card-body">
+            <form action="/edit/<%= tree.id %>" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="treename" class="form-label">Tên cây</label>
+                    <input type="text" class="form-control" id="treename" name="treename" value="<%= tree.treename %>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description" class="form-label">Mô tả</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" required><%= tree.description %></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 24px;">
+                    <label for="image" class="form-label">Hình ảnh mới (Tùy chọn)</label>
+                    <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 12px;">
+                        <img src="<%= tree.image %>" alt="<%= tree.treename %>" class="tree-img" style="width: 60px; height: 60px;">
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Hình ảnh hiện tại</span>
+                    </div>
+                    <input class="form-control" type="file" id="image" name="image" accept="image/*">
+                    <small style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; display: block;">Nếu không chọn ảnh mới, hệ thống sẽ giữ nguyên ảnh cũ.</small>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end;">
+                    <button type="submit" class="btn btn-primary" style="padding: 12px 32px;">
+                        <i class="bi bi-check-lg"></i> Lưu Thay Đổi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

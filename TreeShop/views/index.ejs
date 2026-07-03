@@ -1,0 +1,97 @@
+<%- include('partials/header') %>
+
+<div class="row">
+    <!-- Form Card -->
+    <div class="col-form">
+        <div class="glass-card">
+            <div class="card-header">
+                <h4 style="margin: 0; font-size: 1.25rem;">Thêm Cây Mới</h4>
+                <p style="margin: 4px 0 0; font-size: 0.9rem; color: var(--text-muted);">Làm phong phú bộ sưu tập cây của bạn.</p>
+            </div>
+            <div class="card-body">
+                <form action="/add" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="treename" class="form-label">Tên cây</label>
+                        <input type="text" class="form-control" id="treename" name="treename" placeholder="VD: Cây Trầu Bà" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Hướng dẫn chăm sóc hoặc chi tiết..." required></textarea>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 24px;">
+                        <label for="image" class="form-label">Hình ảnh</label>
+                        <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+                    </div>
+
+                    <div style="display: flex; gap: 12px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 2;">
+                            <i class="bi bi-plus-lg"></i> Thêm Cây
+                        </button>
+                        <button type="reset" class="btn btn-secondary" style="flex: 1;">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="col-table">
+        <div class="glass-card">
+            <div class="card-header">
+                <h4 style="margin: 0; font-size: 1.25rem;">Danh Sách Cây</h4>
+                <p style="margin: 4px 0 0; font-size: 0.9rem; color: var(--text-muted);">Quản lý các loại cây hiện tại của bạn.</p>
+            </div>
+            <div class="card-body table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="5%">#</th>
+                            <th width="20%">Tên cây</th>
+                            <th width="35%">Mô tả</th>
+                            <th width="20%">Hình ảnh</th>
+                            <th width="20%" style="text-align: center;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (trees && trees.length > 0) { %>
+                            <% trees.forEach((tree, index) => { %>
+                                <tr>
+                                    <td style="font-weight: 600; color: var(--text-muted);"><%= index + 1 %></td>
+                                    <td style="font-weight: 600; color: var(--primary-dark);"><%= tree.treename %></td>
+                                    <td style="font-size: 0.95rem; line-height: 1.5;"><%= tree.description %></td>
+                                    <td>
+                                        <img src="<%= tree.image %>" alt="<%= tree.treename %>" class="tree-img">
+                                    </td>
+                                    <td style="text-align: center; white-space: nowrap;">
+                                        <a href="/edit/<%= tree.id %>" class="btn btn-primary" style="padding: 6px 10px; font-size: 0.85rem; border-radius: 8px;">
+                                            <i class="bi bi-pencil-square"></i> Sửa
+                                        </a>
+                                        <a href="/delete/<%= tree.id %>" class="btn btn-secondary" style="padding: 6px 10px; font-size: 0.85rem; border-radius: 8px; background: #ef4444; color: white; margin-left: 4px;" onclick="return confirm('Bạn có chắc chắn muốn xóa cây này?');">
+                                            <i class="bi bi-trash"></i> Xóa
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="empty-state">
+                                        <i class="bi bi-inbox empty-icon"></i>
+                                        <h5 style="margin-top: 0">Chưa có dữ liệu cây nào</h5>
+                                        <p style="margin-bottom: 0">Hãy thêm cây đầu tiên bằng form bên cạnh để bắt đầu.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
