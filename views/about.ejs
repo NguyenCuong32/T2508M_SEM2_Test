@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About me - Tree Shop</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="container">
+    <section class="hero">
+      <h1>👋 About me</h1>
+      <p>Thông tin về tác giả dự án Tree Shop.</p>
+    </section>
+
+    <section class="card about-card">
+      <h2>Đỗ Khắc Gia Khoa</h2>
+      <p>
+        Đây là bài thực hành <strong>Practice Essentials of NodeJS - SET01</strong>,
+        xây dựng bằng <strong>Express</strong>, <strong>EJS</strong> và <strong>MongoDB</strong>.
+      </p>
+      <ul class="about-list">
+        <li>💻 Công nghệ: Node.js, Express, EJS, MongoDB (Mongoose)</li>
+        <li>🌳 Dự án: Tree Shop - Quản lý danh sách cây cảnh</li>
+        <li>📍 Địa chỉ: 13 Phan Tây Nhạc, Phường Xuân Phương, TP. Hà Nội</li>
+      </ul>
+      <a href="/" class="btn btn-primary">← Quay lại trang chủ</a>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

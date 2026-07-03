@@ -1,0 +1,7 @@
+node_modules/
+
+# Đề bài gốc (không cần đẩy lên git)
+*.pdf
+
+# Claude Code local settings
+.claude/

@@ -1,0 +1,88 @@
+<div class="form-card">
+  <h1 class="page-title">Tree Shop</h1>
+
+  <% if (error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <% const previewImage = formData.image || ''; %>
+  <% const previewRatio = formData.imageRatio || '1:1'; %>
+  <% const previewCssRatio = previewRatio.split(':').join(' / '); %>
+  <section class="content-grid">
+    <div class="preview-col">
+      <div class="preview-frame" id="previewFrame" style="aspect-ratio: <%= previewCssRatio %>;">
+        <% if (previewImage) { %>
+          <img id="previewImg" src="<%= previewImage %>" alt="" onerror="this.style.display='none'; document.getElementById('previewPlaceholder').style.display='flex';" />
+        <% } else { %>
+          <img id="previewImg" src="" alt="" style="display:none;" />
+        <% } %>
+        <div id="previewPlaceholder" class="preview-placeholder" style="<%= previewImage ? 'display:none;' : '' %>">
+          Chưa có ảnh xem trước
+        </div>
+      </div>
+    </div>
+
+    <div class="form-col">
+      <form action="/add" method="POST" class="tree-form">
+        <div class="form-group">
+          <div class="label-row">
+            <label for="treename">Tree Name</label>
+            <span class="char-counter" id="treenameCounter">0/100</span>
+          </div>
+          <input
+            type="text"
+            id="treename"
+            name="treename"
+            maxlength="100"
+            placeholder="Phong lan"
+            value="<%= formData.treename || '' %>"
+            autocomplete="off"
+          />
+          <p class="name-check-msg" id="treenameCheckMsg"></p>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="description">Description</label>
+            <span class="char-counter" id="descriptionCounter">0/500</span>
+          </div>
+          <textarea
+            id="description"
+            name="description"
+            rows="5"
+            maxlength="500"
+            placeholder="Nhắc đến ý nghĩa của hoa phong lan, người ta nghĩ ngay đến sự giàu sang, quyến quý của gia chủ..."
+          ><%= formData.description || '' %></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="imageDisplay">Image</label>
+          <p class="field-hint">Chọn ảnh sẽ mở công cụ cắt ảnh theo tỷ lệ 1:1, 2:3 hoặc 3:2.</p>
+          <div class="image-input-row">
+            <input
+              type="text"
+              id="imageDisplay"
+              placeholder="D:\image\phonglan.png"
+              value="<%= (formData.image && !formData.image.startsWith('data:')) ? formData.image : '' %>"
+            />
+            <button type="button" class="btn btn-browse" id="browseBtn">Browser</button>
+            <input type="file" id="fileInput" accept="image/*" hidden />
+          </div>
+          <div class="size-meter-row">
+            <div class="size-meter">
+              <div class="size-bar" id="imageSizeBar"></div>
+            </div>
+            <span class="size-text" id="imageSizeText">Chưa có ảnh</span>
+          </div>
+          <input type="hidden" id="image" name="image" value="<%= formData.image || '' %>" />
+          <input type="hidden" id="imageRatio" name="imageRatio" value="<%= formData.imageRatio || '' %>" />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Add</button>
+          <button type="submit" formaction="/reset" formnovalidate class="btn btn-danger" onclick="return confirm('Xóa toàn bộ dữ liệu cây?');">Reset</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

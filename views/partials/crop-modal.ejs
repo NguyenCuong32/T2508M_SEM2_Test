@@ -1,0 +1,32 @@
+<div id="cropModal" class="crop-modal-overlay" hidden>
+  <div class="crop-modal">
+    <h3>Cắt ảnh</h3>
+
+    <div class="crop-ratio-group">
+      <button type="button" class="ratio-btn active" data-ratio="1:1">1:1</button>
+      <button type="button" class="ratio-btn" data-ratio="2:3">2:3</button>
+      <button type="button" class="ratio-btn" data-ratio="3:2">3:2</button>
+    </div>
+
+    <div class="crop-viewport" id="cropViewport">
+      <img id="cropImage" alt="" draggable="false" />
+    </div>
+
+    <div class="crop-zoom-row">
+      <span>Zoom</span>
+      <input type="range" id="cropZoom" min="1" max="3" step="0.001" value="1" />
+    </div>
+
+    <div class="size-meter-row">
+      <div class="size-meter">
+        <div class="size-bar" id="cropSizeBar"></div>
+      </div>
+      <span class="size-text" id="cropSizeText">Ảnh gốc: —</span>
+    </div>
+
+    <div class="crop-actions">
+      <button type="button" class="btn btn-browse" id="cropCancelBtn">Hủy</button>
+      <button type="button" class="btn btn-primary" id="cropConfirmBtn">Xác nhận</button>
+    </div>
+  </div>
+</div>
