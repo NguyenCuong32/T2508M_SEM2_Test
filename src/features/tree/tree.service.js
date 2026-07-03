@@ -1,6 +1,26 @@
 import treeRepository from './tree.repository.js';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadDir = path.join(__dirname, '..', '..', '..', 'public', 'uploads');
 
 class TreeService {
+  async deleteUploadedImage(image) {
+    if (!image || !image.startsWith('/uploads/')) return;
+
+    const fileName = path.basename(image);
+    const filePath = path.join(uploadDir, fileName);
+
+    try {
+      await fs.unlink(filePath);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+
   validateTreeData({ treename, description }) {
     const errors = [];
 
@@ -37,11 +57,21 @@ class TreeService {
   }
 
   async resetTrees() {
+    const trees = await treeRepository.findAll();
+
+    await Promise.all(trees.map((tree) => this.deleteUploadedImage(tree.image)));
+
     return treeRepository.deleteAll();
   }
 
   async deleteTreeById(id) {
-    return treeRepository.deleteById(id);
+    const deletedTree = await treeRepository.deleteById(id);
+
+    if (deletedTree) {
+      await this.deleteUploadedImage(deletedTree.image);
+    }
+
+    return deletedTree;
   }
 }
 
