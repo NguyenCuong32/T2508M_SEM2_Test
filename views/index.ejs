@@ -1,0 +1,178 @@
+<%- include('partials/header', { title: 'Tree Shop - Home' }) %>
+
+<main>
+  <h1 class="page-title">Tree Shop</h1>
+
+  <div class="main-card">
+    <!-- Display Messages -->
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-danger">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span><%= error %></span>
+      </div>
+    <% } %>
+    
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="alert alert-success">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span><%= success %></span>
+      </div>
+    <% } %>
+
+    <!-- Form Container -->
+    <form id="treeForm" action="<%= typeof editTree !== 'undefined' ? '/edit/' + editTree._id : '/add' %>" method="POST" enctype="multipart/form-data">
+      <div class="form-section">
+        <!-- Image Preview Panel (Left Side) -->
+        <div class="image-preview-panel" id="previewContainer">
+          <% if (typeof editTree !== 'undefined' && editTree.image) { %>
+            <img id="previewImg" src="<%= editTree.image %>" alt="Tree Preview">
+          <% } else { %>
+            <img id="previewImg" src="/images/phonglan.png" alt="Tree Preview">
+          <% } %>
+        </div>
+
+        <!-- Form Inputs (Right Side) -->
+        <div class="form-inputs">
+          <div class="form-group">
+            <label for="treename">Tree Name</label>
+            <input type="text" id="treename" name="treename" class="form-control" 
+                   value="<%= typeof editTree !== 'undefined' ? editTree.treename : '' %>"
+                   placeholder="Enter tree name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" class="form-control" 
+                      placeholder="Enter tree description" required><%= typeof editTree !== 'undefined' ? editTree.description : '' %></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="image">Image</label>
+            <div class="image-input-group">
+              <input type="text" id="imagePath" name="image" class="form-control" 
+                     value="<%= typeof editTree !== 'undefined' ? editTree.image : '/images/phonglan.png' %>"
+                     placeholder="Image path or select a file">
+              <button type="button" class="btn-browser" id="browseBtn">Browser</button>
+            </div>
+            <!-- Hidden File Input for uploading images -->
+            <input type="file" id="fileInput" name="imageFile" style="display: none;" accept="image/*">
+          </div>
+
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-add">
+              <%= typeof editTree !== 'undefined' ? 'Update' : 'Add' %>
+            </button>
+            <button type="button" class="btn btn-reset" id="resetBtn">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Table Container -->
+  <div class="main-card">
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">Id</th>
+            <th class="col-name">Name</th>
+            <th class="col-image">Image</th>
+            <th class="col-description">Description</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (trees && trees.length > 0) { %>
+            <% trees.forEach((tree, index) => { %>
+              <tr>
+                <td class="col-id"><%= index + 1 %></td>
+                <td class="col-name"><%= tree.treename %></td>
+                <td class="col-image">
+                  <img src="<%= tree.image || '/images/phonglan.png' %>" class="table-thumb" alt="<%= tree.treename %>" onerror="this.src='/images/phonglan.png'">
+                </td>
+                <td class="col-description"><%= tree.description %></td>
+                <td class="col-actions">
+                  <div class="action-links">
+                    <!-- Edit Action (Reloads page with edit query parameter) -->
+                    <a href="/?edit=<%= tree._id %>" class="action-btn action-btn-edit" title="Edit">
+                      <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                      </svg>
+                    </a>
+                    <!-- Delete Action (Post form for safe deletion) -->
+                    <form action="/delete/<%= tree._id %>" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this tree?');">
+                      <button type="submit" class="action-btn action-btn-delete" title="Delete">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }); %>
+          <% } else { %>
+            <tr>
+              <td colspan="5" style="text-align: center; color: var(--text-light); padding: 30px;">
+                No trees found in the database. Use the form above to add a new tree.
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Browser Button and File Selection logic
+  const browseBtn = document.getElementById('browseBtn');
+  const fileInput = document.getElementById('fileInput');
+  const imagePath = document.getElementById('imagePath');
+  const previewImg = document.getElementById('previewImg');
+  const resetBtn = document.getElementById('resetBtn');
+
+  // Trigger file selection when clicking Browser
+  browseBtn.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  // When a file is selected
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Set the path text box to show the file name (similar to fakepath or standard path in mockup)
+      imagePath.value = 'C:\\fakepath\\' + file.name;
+      
+      // Update image preview instantly
+      const objectUrl = URL.createObjectURL(file);
+      previewImg.src = objectUrl;
+    }
+  });
+
+  // Reset button logic: triggers a database cleanup (as per the "Reset to clean all" database function)
+  resetBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to reset the database and clean all tree entries? This cannot be undone.')) {
+      const resetForm = document.createElement('form');
+      resetForm.method = 'POST';
+      resetForm.action = '/reset';
+      document.body.appendChild(resetForm);
+      resetForm.submit();
+    }
+  });
+
+  // Optional: Update image preview if user types in the text input directly
+  imagePath.addEventListener('input', (e) => {
+    const val = e.target.value;
+    if (val && (val.startsWith('http') || val.startsWith('/') || val.startsWith('.'))) {
+      previewImg.src = val;
+    }
+  });
+</script>
+
+<%- include('partials/footer') %>

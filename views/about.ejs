@@ -1,0 +1,47 @@
+<%- include('partials/header', { title: 'Tree Shop - About Me' }) %>
+
+<main>
+  <h1 class="page-title">About Me</h1>
+
+  <div class="main-card">
+    <div class="about-card">
+      <!-- Left side: avatar / illustration -->
+      <div class="about-avatar" style="background-color: #f0f4f1; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 3px solid var(--primary-color);">
+        <svg width="100" height="100" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16" style="color: var(--primary-color);">
+          <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+        </svg>
+      </div>
+
+      <!-- Right side: student details -->
+      <div class="about-details">
+        <h2>Student Information</h2>
+        <p class="about-bio">
+          This project is part of the final practical exam for the **Essentials of NodeJS** course (SET01). 
+          It implements a complete CRUD application for managing a tree catalog using Express, EJS, and MongoDB.
+        </p>
+
+        <div class="student-info-grid">
+          <div class="info-label">Full Name:</div>
+          <div class="info-value">Nguyễn Văn A</div>
+
+          <div class="info-label">Student ID:</div>
+          <div class="info-value">STUDENT_ID_T2508M</div>
+
+          <div class="info-label">Class:</div>
+          <div class="info-value">T2508M</div>
+
+          <div class="info-label">Subject:</div>
+          <div class="info-value">Essentials of NodeJS</div>
+
+          <div class="info-label">Location:</div>
+          <div class="info-value">Số 8, Tôn Thất Thuyết, Cầu Giấy, Hà Nội</div>
+
+          <div class="info-label">School:</div>
+          <div class="info-value">Aptech Hanoi Computer Education Center</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
