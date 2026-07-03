@@ -1,0 +1,27 @@
+{
+  "name": "t2508m_sem2_test",
+  "version": "1.0.0",
+  "description": "Nơi nộp bài lớp T2508M học kỳ 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NguyenCuong32/T2508M_SEM2_Test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/NguyenCuong32/T2508M_SEM2_Test/issues"
+  },
+  "homepage": "https://github.com/NguyenCuong32/T2508M_SEM2_Test#readme",
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.7.3",
+    "mysql2": "^3.22.5"
+  }
+}
