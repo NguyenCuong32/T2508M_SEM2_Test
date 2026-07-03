@@ -1,0 +1,203 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #4a4a4a;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+header {
+    background-color: #8fa596;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-style: italic;
+    font-weight: normal;
+    font-size: 28px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.header-links a {
+    font-style: italic;
+}
+
+/* Form section */
+.shop-section {
+    display: flex;
+    margin: 30px 0;
+    gap: 30px;
+}
+
+.shop-image {
+    flex: 1;
+}
+
+.shop-image img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.shop-form {
+    flex: 2;
+}
+
+.shop-form h2 {
+    font-size: 32px;
+    font-style: italic;
+    color: #6a8c77;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #aa9c9c;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbb8b8;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+.file-input-wrapper {
+    display: flex;
+}
+.file-input-wrapper input[type="file"] {
+    border: none;
+    padding: 0;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn-add {
+    background-color: #87af92;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-reset {
+    background-color: #b56c6c;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.error-text {
+    color: red;
+    margin-bottom: 15px;
+}
+
+/* Table section */
+.tree-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.tree-table th {
+    background-color: #8fa596;
+    color: white;
+    text-align: left;
+    padding: 12px;
+    font-weight: normal;
+}
+
+.tree-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+.tree-table img.td-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.action-icons, .action-icons button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4a90e2;
+    font-size: 16px;
+    margin: 0 5px;
+}
+
+/* Footer */
+footer {
+    background-color: #b3c5bb;
+    color: white;
+    padding: 15px 30px;
+    margin-top: auto;
+}
+footer p {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Layout wrappers to push footer to bottom */
+html, body {
+    height: 100%;
+}
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.main-content {
+    flex: 1;
+}
