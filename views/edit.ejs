@@ -1,0 +1,64 @@
+<%- include('partials/header') %>
+
+<h1 class="page-title">Edit Tree Details</h1>
+
+<% if (errors && errors.length > 0) { %>
+  <div class="alert alert-danger">
+    <% errors.forEach(function(error) { %>
+      <div><%= error %></div>
+    <% }) %>
+  </div>
+<% } %>
+
+<div class="content-wrapper">
+  <div class="preview-section">
+    <img id="previewImg" class="preview-image" src="<%= tree.image || '/images/default.png' %>" alt="Tree Preview">
+  </div>
+
+  <div class="form-section">
+    <form action="/edit/<%= tree.id %>" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="treename">Tree Name</label>
+        <input type="text" id="treename" name="treename" class="form-control" value="<%= tree.treename %>">
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" class="form-control"><%= tree.description %></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Image</label>
+        <div class="image-input-group">
+          <input type="text" id="imageText" name="imageText" value="<%= tree.image %>" readonly class="form-control">
+          <input type="file" id="imageFile" name="imageFile" style="display: none;" accept="image/*">
+          <button type="button" id="browseBtn" class="btn-browser">Browser</button>
+        </div>
+      </div>
+
+      <div class="buttons-row">
+        <button type="submit" class="btn btn-add">Save</button>
+        <a href="/" class="btn btn-reset">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.getElementById('browseBtn').addEventListener('click', function() {
+    document.getElementById('imageFile').click();
+  });
+
+  document.getElementById('imageFile').addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      document.getElementById('imageText').value = this.files[0].name;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('previewImg').src = e.target.result;
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+</script>
+
+<%- include('partials/footer') %>
