@@ -1,0 +1,91 @@
+<%- include('partials/header') %>
+
+<div class="page-container">
+    <div class="left-banner">
+        <!-- Ảnh tĩnh minh họa lấy theo mẫu đề -->
+        <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Banner Image" class="banner-img">
+    </div>
+
+    <div class="right-content">
+        <h1 class="page-title">Tree Shop</h1>
+        
+        <form action="/add" method="POST" class="add-form">
+            <div class="form-group">
+                <label for="treename">Tree Name</label>
+                <!-- Validate bằng HTML5 required attribute -->
+                <input type="text" id="treename" name="treename" required placeholder="Phong lan">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <!-- Validate bằng HTML5 required attribute -->
+                <textarea id="description" name="description" rows="4" required placeholder="Nhắc đến ý nghĩa của hoa phong lan..."></textarea>
+            </div>
+
+            <div class="form-group image-group">
+                <label for="image">Image</label>
+                <div class="image-input-wrapper">
+                    <!-- Trong đề đang nhập path text, ta làm ô input text bình thường -->
+                    <input type="text" id="image" name="image" placeholder="D:\\image\phonglan.png">
+                    <!-- Button có type là button để không submit form -->
+                    <button type="button" class="btn-browser">Browser</button>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-add">Add</button>
+                <!-- type="reset" tự động xóa trắng toàn bộ form như yêu cầu chức năng Reset -->
+                <button type="reset" class="btn btn-reset">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="tree-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (trees && trees.length > 0) { %>
+                <% trees.forEach((tree, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= tree.treename %></td>
+                        <td class="img-cell">
+                            <% if (tree.image) { %>
+                                <!-- Nếu text là đường dẫn mạng thì load được, nếu đường dẫn ổ đĩa local thường bị trình duyệt chặn, đây chỉ là mô phỏng -->
+                                <img src="<%= tree.image.startsWith('http') ? tree.image : 'https://via.placeholder.com/60x80' %>" alt="<%= tree.treename %>" class="table-img" onerror="this.src='https://via.placeholder.com/60x80?text=Error'">
+                            <% } else { %>
+                                <span class="no-img">No Image</span>
+                            <% } %>
+                        </td>
+                        <td class="desc-cell"><%= tree.description %></td>
+                        <td class="action-cell">
+                            <!-- Icon sửa (chỉ hiển thị) -->
+                            <button class="icon-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            <!-- Chức năng xóa mở rộng -->
+                            <form action="/delete/<%= tree.id %>" method="POST" class="delete-form" style="display:inline;">
+                                <button type="submit" class="icon-btn delete-btn" title="Delete" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="5" class="empty-msg" style="text-align: center; padding: 20px;">Không có dữ liệu cây. Hãy thêm vào!</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('partials/footer') %>
