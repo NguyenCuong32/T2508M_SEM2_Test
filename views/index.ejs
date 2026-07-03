@@ -1,0 +1,86 @@
+<%- include('partials/header') %>
+
+<div class="content-wrapper">
+    <!-- Header title from mockup -->
+    <h1 class="page-title">Tree Shop</h1>
+    
+    <!-- Form Section -->
+    <div class="form-container">
+        <div class="form-image">
+            <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22300%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23eeeeee%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-size%3D%2218%22%20fill%3D%22%23999999%22%3ENo%20Image%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Phong Lan" id="previewImage">
+        </div>
+        <div class="form-fields">
+            <form action="/add" method="POST" enctype="multipart/form-data" id="addForm">
+                <div class="form-group">
+                    <label for="treename">Tree Name</label>
+                    <input type="text" id="treename" name="treename" placeholder="Phong lan" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Nhắc đến ý nghĩa của hoa phong lan..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <div class="file-input-wrapper">
+                        <input type="text" id="imageText" placeholder="D:\\image\\phonglan.png" readonly style="flex: 1; margin-right: 10px;">
+                        <input type="file" id="image" name="image" style="display: none;" accept="image/*" onchange="document.getElementById('imageText').value = this.value">
+                        <button type="button" class="btn btn-browser" onclick="document.getElementById('image').click()">Browser</button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-add">Add</button>
+                    <button type="reset" class="btn btn-reset">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <% if (typeof dbError !== 'undefined' && dbError) { %>
+        <div style="background-color: #f8d7da; color: #721c24; padding: 15px; margin-bottom: 20px; border-radius: 4px; text-align: center;">
+            <strong>Lỗi kết nối cơ sở dữ liệu:</strong> Không thể kết nối đến MongoDB. Nếu bạn dùng MongoDB Atlas, hãy chắc chắn bạn đã cấu hình <strong>Network Access (Whitelist IP 0.0.0.0/0)</strong>.
+        </div>
+    <% } %>
+    <table class="tree-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (trees && trees.length > 0) { %>
+                <% trees.forEach((tree, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= tree.treename %></td>
+                    <td>
+                        <% if (tree.image) { %>
+                            <img src="<%= tree.image %>" alt="<%= tree.treename %>" class="table-img">
+                        <% } else { %>
+                            <span>No image</span>
+                        <% } %>
+                    </td>
+                    <td><%= tree.description %></td>
+                    <td class="action-icons">
+                        <a href="#" class="icon-btn" title="Edit"><i class="edit-icon">✎</i></a>
+                        <a href="/delete/<%= tree._id %>" class="icon-btn" title="Delete" onclick="return confirm('Are you sure you want to delete this tree?');"><i class="delete-icon">🗑</i></a>
+                    </td>
+                </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="5" style="text-align: center;">No trees found in database.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('partials/footer') %>
