@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= pageTitle %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="page-shell">
+    <section class="hero-card">
+      <div class="preview-image">
+        <img src="/images/sample-tree.svg" alt="Yellow orchid tree" />
+      </div>
+
+      <div class="form-area">
+        <h1>Tree Shop</h1>
+
+        <% if (errors.length > 0) { %>
+          <div class="alert" role="alert">
+            <% errors.forEach((error) => { %>
+              <p><%= error %></p>
+            <% }) %>
+          </div>
+        <% } %>
+
+        <form action="/trees" method="post" enctype="multipart/form-data" novalidate>
+          <label for="treename">Tree Name</label>
+          <input id="treename" name="treename" type="text" value="<%= formData.treename || '' %>" placeholder="Phong lan" required />
+
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="4" required placeholder="Nhắc đến ý nghĩa của hoa phong lan..."><%= formData.description || '' %></textarea>
+
+          <label for="image">Image</label>
+          <div class="image-row">
+            <input id="image" name="image" type="text" value="<%= formData.image || '' %>" placeholder="/images/sample-tree.svg or image URL" />
+            <label class="file-button" for="imageFile">Browser</label>
+            <input id="imageFile" class="file-input" name="imageFile" type="file" accept="image/*" />
+          </div>
+
+          <div class="button-row">
+            <button class="btn add" type="submit">Add</button>
+            <button class="btn reset" type="submit" formaction="/trees/reset" formmethod="post">Reset</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="table-card" aria-labelledby="tree-table-title">
+      <h2 id="tree-table-title" class="sr-only">All trees</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (trees.length === 0) { %>
+            <tr>
+              <td colspan="5" class="empty">No trees in database.</td>
+            </tr>
+          <% } %>
+
+          <% trees.forEach((tree, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= tree.treename %></td>
+              <td>
+                <% if (tree.image) { %>
+                  <img class="table-image" src="<%= tree.image %>" alt="<%= tree.treename %>" />
+                <% } else { %>
+                  <img class="table-image" src="/images/sample-tree.svg" alt="Default tree" />
+                <% } %>
+              </td>
+              <td><%= tree.description %></td>
+              <td class="actions">
+                <span class="icon" title="Edit placeholder">✎</span>
+                <form action="/trees/<%= tree._id %>/delete" method="post">
+                  <button type="submit" class="icon-button" title="Delete">⌫</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

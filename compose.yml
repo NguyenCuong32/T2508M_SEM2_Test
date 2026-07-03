@@ -1,0 +1,45 @@
+# This is podman not docker!!!
+services:
+  app:
+    build: .
+    container_name: treeshop_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      MONGO_URI: mongodb://mongo:27017/TreeShop
+    command:
+      - sh
+      - -c
+      - >
+        until bun -e "const net = require('node:net');
+        const socket = net.connect(27017, 'mongo');
+        socket.on('connect', () => { socket.end(); process.exit(0); });
+        socket.on('error', () => process.exit(1));
+        setTimeout(() => process.exit(1), 1000);"; do
+        echo "Waiting for MongoDB...";
+        sleep 2;
+        done;
+        exec bun src/app.js
+    volumes:
+      - ./public/uploads:/app/public/uploads:Z
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    container_name: treeshop_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  mongo_data:

@@ -1,0 +1,17 @@
+{
+  "name": "treeshop-bun-express",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun src/app.js",
+    "dev": "bun --watch src/app.js"
+  },
+  "dependencies": {
+    "@types/multer": "^2.0.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.5",
+    "multer": "^2.0.2"
+  }
+}
