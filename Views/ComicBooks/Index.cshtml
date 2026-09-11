@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BookStore.Models.ComicBooks>
+
+@{
+    ViewData["Title"] = "Comic Books";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Comic Books</h1>
+        <a asp-action="Create" class="btn btn-primary">Create New Book</a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ComicBookId</td>
+                    <td>@item.Title</td>
+                    <td>@item.Author</td>
+                    <td>$@item.PricePerDay.ToString("F2")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ComicBookId" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.ComicBookId" class="btn btn-sm btn-outline-info">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.ComicBookId" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

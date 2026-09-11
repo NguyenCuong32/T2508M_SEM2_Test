@@ -1,0 +1,24 @@
+﻿@model BookStore.Models.Customers
+
+@{
+    ViewData["Title"] = "Register Customer";
+}
+
+<div class="container mt-4">
+    <h1>Register Customer</h1>
+    <hr/>
+    <form asp-action="Create">
+        <div class="mb-3"">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-action="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PhoneNumber" class="form-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>

@@ -1,0 +1,39 @@
+﻿@model BookStore.Models.ComicBooks
+@{
+    ViewData["Title"] = "Create Comic Book";
+}
+
+<div class="container mt-4">
+    <h1>Rent Comic Book</h1>
+    <hr />
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="CustomerId" class="form-label"></label>
+            <select asp-for="CustomerId" class="form-select" asp-items="ViewBag.Customers"></select>
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ComicBookId" class="form-label"></label>
+            <select asp-for="ComicBookId" class="form-select" asp-items="ViewBag.ComicBooks"></select>
+            <span asp-validation-for="ComicBookId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="RentalDate" class="form-label"></label>
+            <input asp-for="RentalDate" type="date" class="form-control" />
+            <span asp-validation-for="RentalDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ReturnDate" class="form-label"></label>
+            <input asp-for="ReturnDate" type="date" class="form-control" />
+            <span asp-validation-for="ReturnDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Quantity" class="form-label"></label>
+            <input asp-for="Quantity" type="number" min="1" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>
