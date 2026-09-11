@@ -1,0 +1,279 @@
+@model IEnumerable<ComicSystem.Models.Rental>
+
+@{
+    ViewData["Title"] = "Trang Chủ - Hệ Thống Thuê Truyện Tranh";
+}
+
+<!-- Hero Banner -->
+<div class="p-5 mb-4 bg-light rounded-4 shadow-sm border border-light-subtle">
+    <div class="container-fluid py-2">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <span class="badge bg-primary px-3 py-2 mb-3">Exam Paper: Developing ASP.NET Core MVC Applications</span>
+                <h1 class="display-5 fw-bold text-dark mb-2">Hệ Thống Thuê Truyện Tranh <span class="text-primary">ComicSys</span></h1>
+                <p class="col-md-11 fs-5 text-muted mb-4">
+                    Website: <strong>comicsys.com</strong> | Database: <strong>ComicSystem</strong> (SQL Server LocalDB).
+                    Triển khai đầy đủ 4 câu hỏi thi theo Marking Schema (15/15 Marks + Bonus).
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a asp-controller="Rentals" asp-action="Create" class="btn btn-primary btn-lg shadow-sm">
+                        <i class="bi bi-cart-plus me-1"></i> Thuê Truyện (Câu 3 - 5đ)
+                    </a>
+                    <a asp-controller="Reports" asp-action="Index" class="btn btn-outline-dark btn-lg">
+                        <i class="bi bi-file-earmark-bar-graph me-1"></i> Xem Báo Cáo (Câu 4 - 3đ)
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center mt-4 mt-lg-0">
+                <div class="p-4 bg-white rounded-4 shadow-sm border">
+                    <div class="fs-1 text-primary mb-2"><i class="bi bi-trophy-fill"></i></div>
+                    <h4 class="fw-bold mb-1">Thang Điểm Bài Thi</h4>
+                    <p class="text-muted small mb-3">Tổng cộng 15 điểm + 1 điểm bonus</p>
+                    <div class="text-start small">
+                        <div class="d-flex justify-content-between py-1 border-bottom">
+                            <span>Q1: CRUD Comic Books</span>
+                            <span class="badge bg-success">3 Marks</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1 border-bottom">
+                            <span>Q2: Customer Register</span>
+                            <span class="badge bg-success">3 Marks</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1 border-bottom">
+                            <span>Q3: Rental Book Page</span>
+                            <span class="badge bg-success">5 Marks</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1 border-bottom">
+                            <span>Q4: Report All Book Rents</span>
+                            <span class="badge bg-success">3 Marks</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1 text-primary fw-bold">
+                            <span>Bonus: UI/UX & Clean Code</span>
+                            <span class="badge bg-warning text-dark">+1 Mark</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Live Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body d-flex align-items-center">
+                <div class="bg-primary-subtle text-primary p-3 rounded-3 me-3 fs-3">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">@ViewBag.TotalBooks</h3>
+                    <span class="text-muted small">Đầu truyện tranh</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body d-flex align-items-center">
+                <div class="bg-success-subtle text-success p-3 rounded-3 me-3 fs-3">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">@ViewBag.TotalCustomers</h3>
+                    <span class="text-muted small">Khách hàng đăng ký</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body d-flex align-items-center">
+                <div class="bg-warning-subtle text-warning p-3 rounded-3 me-3 fs-3">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">@ViewBag.ActiveRentals</h3>
+                    <span class="text-muted small">Phiếu đang thuê</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body d-flex align-items-center">
+                <div class="bg-info-subtle text-info p-3 rounded-3 me-3 fs-3">
+                    <i class="bi bi-journal-check"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">@ViewBag.TotalRentals</h3>
+                    <span class="text-muted small">Tổng số lượt thuê</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4 Requirement Cards -->
+<div class="row g-4 mb-5">
+    <!-- Q1 -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-4">
+                        <i class="bi bi-collection"></i>
+                    </div>
+                    <span class="badge bg-primary">Question 1 (3đ)</span>
+                </div>
+                <h5 class="card-title fw-bold">CRUD Comic Books</h5>
+                <p class="card-text text-muted small flex-grow-1">
+                    Trang tạo, đọc, cập nhật và xóa truyện tranh (bảng ComicBooks: Title, Author, PricePerDay).
+                </p>
+                <div class="pt-2 border-top d-flex gap-2">
+                    <a asp-controller="ComicBooks" asp-action="Index" class="btn btn-outline-primary btn-sm flex-fill">
+                        <i class="bi bi-list me-1"></i> Danh sách
+                    </a>
+                    <a asp-controller="ComicBooks" asp-action="Create" class="btn btn-primary btn-sm">
+                        <i class="bi bi-plus"></i> Thêm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="p-2 bg-success-subtle text-success rounded-3 fs-4">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+                    <span class="badge bg-success">Question 2 (3đ)</span>
+                </div>
+                <h5 class="card-title fw-bold">Customer Register</h5>
+                <p class="card-text text-muted small flex-grow-1">
+                    Đăng ký khách hàng lần đầu sử dụng hệ thống (bảng Customers: FullName, PhoneNumber, RegistrationDate).
+                </p>
+                <div class="pt-2 border-top d-flex gap-2">
+                    <a asp-controller="Customers" asp-action="Index" class="btn btn-outline-success btn-sm flex-fill">
+                        <i class="bi bi-people me-1"></i> Khách hàng
+                    </a>
+                    <a asp-controller="Customers" asp-action="Register" class="btn btn-success btn-sm">
+                        <i class="bi bi-person-plus me-1"></i> Đăng ký
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm border-primary">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="p-2 bg-warning-subtle text-warning rounded-3 fs-4">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+                    <span class="badge bg-warning text-dark">Question 3 (5đ)</span>
+                </div>
+                <h5 class="card-title fw-bold">Rental Book Page</h5>
+                <p class="card-text text-muted small flex-grow-1">
+                    Tạo phiếu thuê truyện: Rental date, Return date, Quantity, Price per day (Lưu vào cả Rentals và RentalDetails).
+                </p>
+                <div class="pt-2 border-top d-flex gap-2">
+                    <a asp-controller="Rentals" asp-action="Index" class="btn btn-outline-warning btn-sm flex-fill text-dark">
+                        <i class="bi bi-journal-text me-1"></i> Phiếu thuê
+                    </a>
+                    <a asp-controller="Rentals" asp-action="Create" class="btn btn-warning btn-sm text-dark">
+                        <i class="bi bi-cart-plus me-1"></i> Thuê sách
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="p-2 bg-info-subtle text-info rounded-3 fs-4">
+                        <i class="bi bi-bar-chart"></i>
+                    </div>
+                    <span class="badge bg-info text-white">Question 4 (3đ)</span>
+                </div>
+                <h5 class="card-title fw-bold">Report All Books</h5>
+                <p class="card-text text-muted small flex-grow-1">
+                    Báo cáo tất cả truyện đã thuê từ start date đến end date theo đúng bảng mẫu (No, Book, Dates, Customer, Qty).
+                </p>
+                <div class="pt-2 border-top">
+                    <a asp-controller="Reports" asp-action="Index" class="btn btn-info text-white btn-sm w-100">
+                        <i class="bi bi-file-earmark-text me-1"></i> Xem Báo Cáo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Rentals Table -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i>Phiếu Thuê Gần Đây Nhất</h5>
+        <a asp-controller="Rentals" asp-action="Index" class="btn btn-sm btn-outline-primary">Xem tất cả</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Mã</th>
+                        <th>Khách hàng</th>
+                        <th>Truyện tranh</th>
+                        <th>Ngày thuê</th>
+                        <th>Ngày trả</th>
+                        <th>Trạng thái</th>
+                        <th class="text-end pe-4">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var r in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-muted">#@r.RentalID</td>
+                                <td class="fw-bold">@r.Customer?.FullName</td>
+                                <td>
+                                    @foreach (var d in r.RentalDetails)
+                                    {
+                                        <div><span class="text-primary fw-semibold">@d.ComicBook?.Title</span> (SL: @d.Quantity)</div>
+                                    }
+                                </td>
+                                <td>@r.RentalDate.ToString("dd/MM/yyyy")</td>
+                                <td>@r.ReturnDate.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <span class="badge @(r.Status == "Đang thuê" ? "bg-warning text-dark" : "bg-success")">
+                                        @r.Status
+                                    </span>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <a asp-controller="Rentals" asp-action="Details" asp-route-id="@r.RentalID" class="btn btn-outline-info btn-sm">
+                                        Chi tiết
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-muted">Chưa có phiếu thuê nào.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

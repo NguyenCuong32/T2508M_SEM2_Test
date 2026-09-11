@@ -1,0 +1,51 @@
+@model ComicSystem.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer Registration";
+}
+
+<div class="row justify-content-center pt-3">
+    <div class="col-md-7 col-lg-5">
+        <div class="card border-0 shadow-sm" style="border-radius: 6px; background: #ffffff;">
+            <div class="card-header py-3" style="background-color: #3e8e7e; color: #ffffff; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                    <i class="bi bi-person-plus"></i> Customer Registration
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label fw-semibold" style="font-size: 0.9rem;">Full Name</label>
+                        <input asp-for="FullName" class="form-control" placeholder="e.g. Nguyen Hung" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PhoneNumber" class="form-label fw-semibold" style="font-size: 0.9rem;">Phone Number</label>
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="e.g. 0987654321" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="RegistrationDate" class="form-label fw-semibold" style="font-size: 0.9rem;">Registration Date</label>
+                        <input asp-for="RegistrationDate" class="form-control" type="datetime-local" value="@Model.RegistrationDate.ToString("yyyy-MM-ddTHH:mm")" />
+                        <span asp-validation-for="RegistrationDate" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary" style="border-radius: 6px;">Cancel</a>
+                        <button type="submit" class="btn-add-new" style="border-radius: 6px; padding: 8px 24px;">
+                            Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Comic System</title>
+    
+    <!-- Bootstrap 5 & Icons -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background-color: #edf2f7;
+            color: #2d3748;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        /* Navbar exact match to screenshot */
+        .comic-navbar {
+            background-color: #3e8e7e;
+            padding: 10px 0;
+        }
+
+        .comic-navbar .navbar-brand {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .comic-navbar .nav-link {
+            color: #ffffff !important;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            transition: opacity 0.2s;
+        }
+
+        .comic-navbar .nav-link:hover {
+            opacity: 0.85;
+        }
+
+        /* Table header gradient */
+        .table-comic thead th {
+            background: linear-gradient(90deg, #24584e 0%, #1e4b42 100%);
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 12px 16px;
+            border: none;
+        }
+
+        .table-comic thead th:first-child {
+            border-top-left-radius: 4px;
+        }
+
+        .table-comic thead th:last-child {
+            border-top-right-radius: 4px;
+        }
+
+        .table-comic tbody td {
+            padding: 14px 16px;
+            vertical-align: middle;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+            font-size: 0.95rem;
+        }
+
+        .table-comic tbody tr:hover td {
+            background-color: #f7fafc;
+        }
+
+        /* Badges & Buttons matching screenshot */
+        .badge-price {
+            background-color: #48bb78;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .btn-add-new {
+            background-color: #2b4c6f;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-radius: 6px;
+            padding: 8px 18px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .btn-add-new:hover {
+            background-color: #1e3650;
+            color: #ffffff;
+        }
+
+        /* Action buttons matching screenshot */
+        .btn-action-view {
+            background-color: #38b2ac;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+        }
+        .btn-action-view:hover { background-color: #319795; color: #ffffff; }
+
+        .btn-action-edit {
+            background-color: #ed8936;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+        }
+        .btn-action-edit:hover { background-color: #dd6b20; color: #ffffff; }
+
+        .btn-action-delete {
+            background-color: #e53e3e;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+        }
+        .btn-action-delete:hover { background-color: #c53030; color: #ffffff; }
+
+        /* Footer */
+        .comic-footer {
+            background-color: #1a202c;
+            color: #a0aec0;
+            font-size: 0.875rem;
+            padding: 16px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .comic-footer a {
+            color: #cbd5e0;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="comic-navbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" asp-controller="ComicBooks" asp-action="Index">
+                <i class="bi bi-book-half"></i> Comic System
+            </a>
+            
+            <nav class="d-flex align-items-center gap-2">
+                <a class="nav-link" asp-controller="ComicBooks" asp-action="Index">
+                    <i class="bi bi-journal-text"></i> Comic Books
+                </a>
+                <a class="nav-link" asp-controller="Customers" asp-action="Index">
+                    <i class="bi bi-people"></i> Customers
+                </a>
+                <a class="nav-link" asp-controller="Rentals" asp-action="Index">
+                    <i class="bi bi-cart"></i> Rentals
+                </a>
+                <a class="nav-link" asp-controller="Reports" asp-action="Index">
+                    <i class="bi bi-graph-up"></i> Reports
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-4 flex-grow-1">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="comic-footer">
+        <div class="container">
+            &copy; 2024 <strong>Comic System</strong> &mdash; <a href="http://comicsys.com" target="_blank">comicsys.com</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
