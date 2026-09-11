@@ -1,0 +1,37 @@
+@model ComicSystem.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Xóa truyện";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Xác nhận xóa truyện tranh</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-danger fw-bold">Bạn có chắc chắn muốn xóa cuốn truyện này không?</p>
+                <dl class="row">
+                    <dt class="col-sm-4">ID:</dt>
+                    <dd class="col-sm-8">@Model.ComicBookID</dd>
+
+                    <dt class="col-sm-4">Tên truyện:</dt>
+                    <dd class="col-sm-8 fw-bold">@Model.Title</dd>
+
+                    <dt class="col-sm-4">Tác giả:</dt>
+                    <dd class="col-sm-8">@Model.Author</dd>
+
+                    <dt class="col-sm-4">Giá thuê/ngày:</dt>
+                    <dd class="col-sm-8">@Model.PricePerDay.ToString("N0") VNĐ</dd>
+                </dl>
+
+                <form asp-action="Delete" class="d-flex justify-content-between pt-3">
+                    <input type="hidden" asp-for="ComicBookID" />
+                    <a asp-action="Index" class="btn btn-secondary">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-danger">Xóa khỏi hệ thống</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+@model ComicSystem.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Chi tiết truyện";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">Thông tin chi tiết truyện</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Mã truyện:</dt>
+                    <dd class="col-sm-8">@Model.ComicBookID</dd>
+
+                    <dt class="col-sm-4">Tên truyện:</dt>
+                    <dd class="col-sm-8 fw-bold text-primary fs-5">@Model.Title</dd>
+
+                    <dt class="col-sm-4">Tác giả:</dt>
+                    <dd class="col-sm-8">@Model.Author</dd>
+
+                    <dt class="col-sm-4">Giá thuê 1 ngày:</dt>
+                    <dd class="col-sm-8 text-success fw-bold">@Model.PricePerDay.ToString("N0") VNĐ</dd>
+                </dl>
+
+                <div class="d-flex justify-content-between pt-3">
+                    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                    <a asp-action="Edit" asp-route-id="@Model.ComicBookID" class="btn btn-warning">Chỉnh sửa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
