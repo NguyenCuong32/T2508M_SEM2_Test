@@ -1,0 +1,64 @@
+@model IEnumerable<ACMF_PRACTICE_1.Models.ComicBook>
+@{
+    ViewData["Title"] = "Comic Books";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2><i class="bi bi-book-half me-2"></i>Comic Books</h2>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>Add New Book
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th class="text-end">Price / Day</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">No comic books found. Add your first book!</td>
+                    </tr>
+                }
+                @{int i = 1;}
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td><strong>@book.Title</strong></td>
+                        <td>@book.Author</td>
+                        <td class="text-end">@book.PricePerDay.ToString("N0") VND</td>
+                        <td class="text-center">
+                            <a asp-action="Details" asp-route-id="@book.ComicBookID" class="btn btn-sm btn-outline-info me-1" title="Details">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@book.ComicBookID" class="btn btn-sm btn-outline-warning me-1" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@book.ComicBookID" class="btn btn-sm btn-outline-danger" title="Delete">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

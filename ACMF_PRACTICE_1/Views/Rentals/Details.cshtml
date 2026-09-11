@@ -1,0 +1,135 @@
+@model ACMF_PRACTICE_1.Models.Rental
+@{
+    ViewData["Title"] = $"Rental #{Model.RentalID}";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-receipt me-2"></i>Rental #@Model.RentalID</h5>
+        <a asp-action="Index" class="btn btn-sm btn-light">
+            <i class="bi bi-arrow-left me-1"></i>Back
+        </a>
+    </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Customer</dt>
+            <dd class="col-sm-9">@Model.Customer?.FullName</dd>
+
+            <dt class="col-sm-3">Rental Date</dt>
+            <dd class="col-sm-9">@Model.RentalDate.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Return Date</dt>
+            <dd class="col-sm-9">@Model.ReturnDate.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                <span class="badge @(Model.Status == "Đang thuê" ? "bg-warning text-dark" : "bg-success") fs-6">
+                    @Model.Status
+                </span>
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <form asp-action="UpdateStatus" asp-route-id="@Model.RentalID" method="post" class="d-flex gap-2 align-items-center">
+            <label class="fw-semibold me-2 mb-0">Change Status:</label>
+            @{
+                var statusOptions = new[] { "Đang thuê", "Có thể thuê" };
+                var statusList = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(statusOptions, Model.Status);
+            }
+            <select name="status" class="form-select form-select-sm" style="width:180px">
+                @foreach (var opt in statusList)
+                {
+                    <option value="@opt.Value" selected="@opt.Selected">@opt.Text</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h5><i class="bi bi-book me-2"></i>Rented Books</h5>
+    <button class="btn btn-sm btn-outline-success" data-bs-toggle="collapse" data-bs-target="#addBookForm">
+        <i class="bi bi-plus me-1"></i>Add Book
+    </button>
+</div>
+
+<div class="collapse mb-3" id="addBookForm">
+    <div class="card card-body border-success">
+        <form asp-action="AddBook" asp-route-id="@Model.RentalID" method="post" class="row g-2 align-items-end">
+            <div class="col-md-5">
+                <label class="form-label fw-semibold">Comic Book</label>
+                <select name="comicBookID" class="form-select" required>
+                    <option value="">— Select Book —</option>
+                    @foreach (SelectListItem item in (IEnumerable<SelectListItem>)ViewBag.Books)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Quantity</label>
+                <input name="quantity" type="number" min="1" value="1" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success w-100">
+                    <i class="bi bi-plus-circle me-1"></i>Add to Rental
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Book Title</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-end">Price / Day</th>
+                    <th class="text-end">Total (Days × Qty × Price)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 1;
+                   int days = (Model.ReturnDate - Model.RentalDate).Days;
+                   decimal grandTotal = 0; }
+                @foreach (var d in Model.RentalDetails)
+                {
+                    decimal lineTotal = days * d.Quantity * d.PricePerDay;
+                    grandTotal += lineTotal;
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@d.ComicBook?.Title</td>
+                        <td class="text-center">@d.Quantity</td>
+                        <td class="text-end">@d.PricePerDay.ToString("N0") VND</td>
+                        <td class="text-end">@lineTotal.ToString("N0") VND</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot class="table-light">
+                <tr>
+                    <td colspan="4" class="text-end fw-bold">Grand Total (@days days):</td>
+                    <td class="text-end fw-bold text-danger">@grandTotal.ToString("N0") VND</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

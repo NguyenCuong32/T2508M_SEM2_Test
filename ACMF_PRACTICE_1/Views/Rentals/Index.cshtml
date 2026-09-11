@@ -1,0 +1,71 @@
+@model IEnumerable<ACMF_PRACTICE_1.Models.Rental>
+@{
+    ViewData["Title"] = "Rentals";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2><i class="bi bi-receipt me-2"></i>Rentals</h2>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>New Rental
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Rental Date</th>
+                    <th>Return Date</th>
+                    <th>Books</th>
+                    <th>Status</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">No rentals found.</td>
+                    </tr>
+                }
+                @{ int i = 1; }
+                @foreach (var rental in Model)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td><strong>@rental.Customer?.FullName</strong></td>
+                        <td>@rental.RentalDate.ToString("dd/MM/yyyy")</td>
+                        <td>@rental.ReturnDate.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @foreach (var d in rental.RentalDetails)
+                            {
+                                <span class="badge bg-secondary me-1">@d.ComicBook?.Title × @d.Quantity</span>
+                            }
+                        </td>
+                        <td>
+                            <span class="badge @(rental.Status == "Đang thuê" ? "bg-warning text-dark" : "bg-success")">
+                                @rental.Status
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <a asp-action="Details" asp-route-id="@rental.RentalID" class="btn btn-sm btn-outline-info" title="Details">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

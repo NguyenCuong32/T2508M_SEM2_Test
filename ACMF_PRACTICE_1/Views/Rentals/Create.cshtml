@@ -1,0 +1,76 @@
+@model ACMF_PRACTICE_1.Models.RentalCreateViewModel
+@{
+    ViewData["Title"] = "New Rental";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>New Rental</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <h6 class="text-muted mb-3 border-bottom pb-2">Rental Information</h6>
+
+                    <div class="mb-3">
+                        <label asp-for="CustomerID" class="form-label fw-semibold">Customer</label>
+                        <select asp-for="CustomerID" asp-items="ViewBag.Customers" class="form-select">
+                            <option value="">— Select Customer —</option>
+                        </select>
+                        <span asp-validation-for="CustomerID" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="RentalDate" class="form-label fw-semibold"></label>
+                            <input asp-for="RentalDate" class="form-control" type="date" />
+                            <span asp-validation-for="RentalDate" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ReturnDate" class="form-label fw-semibold"></label>
+                            <input asp-for="ReturnDate" class="form-control" type="date" />
+                            <span asp-validation-for="ReturnDate" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Status" class="form-label fw-semibold"></label>
+                        <select asp-for="Status" asp-items="ViewBag.StatusOptions" class="form-select"></select>
+                    </div>
+
+                    <h6 class="text-muted mb-3 border-bottom pb-2 mt-4">Book Detail</h6>
+
+                    <div class="mb-3">
+                        <label asp-for="ComicBookID" class="form-label fw-semibold">Comic Book</label>
+                        <select asp-for="ComicBookID" asp-items="ViewBag.Books" class="form-select">
+                            <option value="">— Select Book —</option>
+                        </select>
+                        <span asp-validation-for="ComicBookID" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Quantity" class="form-label fw-semibold"></label>
+                        <input asp-for="Quantity" class="form-control" type="number" min="1" />
+                        <span asp-validation-for="Quantity" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>Create Rental
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

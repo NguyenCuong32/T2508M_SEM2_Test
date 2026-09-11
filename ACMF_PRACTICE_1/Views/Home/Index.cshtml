@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-5 fw-bold"><i class="bi bi-book-half text-primary me-2"></i>Comic System</h1>
+    <p class="lead text-muted">Manage comic book rentals, customers, and reports all in one place.</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    <div class="col-md-3">
+        <a asp-controller="ComicBooks" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-primary hover-card">
+                <div class="card-body text-center py-4">
+                    <i class="bi bi-book display-4 text-primary mb-3"></i>
+                    <h5 class="card-title">Comic Books</h5>
+                    <p class="card-text text-muted small">Add, edit, and manage your comic book catalog.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a asp-controller="Customers" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-success hover-card">
+                <div class="card-body text-center py-4">
+                    <i class="bi bi-people display-4 text-success mb-3"></i>
+                    <h5 class="card-title">Customers</h5>
+                    <p class="card-text text-muted small">Register new customers and view their profiles.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a asp-controller="Rentals" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-warning hover-card">
+                <div class="card-body text-center py-4">
+                    <i class="bi bi-receipt display-4 text-warning mb-3"></i>
+                    <h5 class="card-title">Rentals</h5>
+                    <p class="card-text text-muted small">Create and manage book rental transactions.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a asp-controller="Report" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-secondary hover-card">
+                <div class="card-body text-center py-4">
+                    <i class="bi bi-bar-chart display-4 text-secondary mb-3"></i>
+                    <h5 class="card-title">Report</h5>
+                    <p class="card-text text-muted small">View rental reports filtered by date range.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<style>
+    .hover-card { transition: transform .15s, box-shadow .15s; }
+    .hover-card:hover { transform: translateY(-4px); box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important; }
+</style>

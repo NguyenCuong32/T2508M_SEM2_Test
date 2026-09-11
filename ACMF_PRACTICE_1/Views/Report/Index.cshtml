@@ -1,0 +1,94 @@
+@model ACMF_PRACTICE_1.Models.RentalReportViewModel
+@{
+    ViewData["Title"] = "Rental Report";
+}
+
+<h2 class="mb-4"><i class="bi bi-bar-chart me-2"></i>Rental Report</h2>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-secondary text-white">
+        <h6 class="mb-0"><i class="bi bi-funnel me-2"></i>Filter by Date Range</h6>
+    </div>
+    <div class="card-body">
+        <form asp-action="Index" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label asp-for="StartDate" class="form-label fw-semibold"></label>
+                    <input asp-for="StartDate" class="form-control" type="date" />
+                    <span asp-validation-for="StartDate" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="EndDate" class="form-label fw-semibold"></label>
+                    <input asp-for="EndDate" class="form-control" type="date" />
+                    <span asp-validation-for="EndDate" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-secondary w-100">
+                        <i class="bi bi-search me-1"></i>Generate Report
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.StartDate.HasValue)
+{
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>
+            Results from <strong>@Model.StartDate.Value.ToString("dd/MM/yyyy")</strong>
+            to <strong>@Model.EndDate!.Value.ToString("dd/MM/yyyy")</strong>
+            — <span class="text-muted">@Model.Rows.Count record(s)</span>
+        </h5>
+        @if (Model.Rows.Any())
+        {
+            <button onclick="window.print()" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-printer me-1"></i>Print
+            </button>
+        }
+    </div>
+
+    @if (!Model.Rows.Any())
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle me-2"></i>No rentals found in the selected date range.
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-bordered table-hover mb-0" id="reportTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="text-center" style="width:60px">No</th>
+                            <th>Book Name</th>
+                            <th>Rental Date</th>
+                            <th>Return Date</th>
+                            <th>Customer Name</th>
+                            <th class="text-center">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var row in Model.Rows)
+                        {
+                            <tr>
+                                <td class="text-center">@row.No</td>
+                                <td>@row.BookName</td>
+                                <td>@row.RentalDate.ToString("dd/MM/yyyy")</td>
+                                <td>@row.ReturnDate.ToString("dd/MM/yyyy")</td>
+                                <td>@row.CustomerName</td>
+                                <td class="text-center">@row.Quantity</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
