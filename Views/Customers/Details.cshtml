@@ -1,0 +1,102 @@
+@model ComicSystem.Models.Customer
+
+@{
+    ViewData["Title"] = "Thông Tin Khách Hàng - " + Model.FullName;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card shadow border-0 mb-4">
+            <div class="card-header bg-success text-white py-3 d-flex justify-content-between align-items-center">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-person-badge me-2"></i>Hồ Sơ Khách Hàng</h4>
+                <span class="badge bg-light text-dark fs-6">Mã KH: #@Model.CustomerID</span>
+            </div>
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <span class="text-muted d-block small">Họ và tên:</span>
+                        <span class="fs-5 fw-bold text-dark">@Model.FullName</span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <span class="text-muted d-block small">Số điện thoại:</span>
+                        <span class="fs-5 fw-bold text-primary"><i class="bi bi-telephone me-1"></i>@Model.PhoneNumber</span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <span class="text-muted d-block small">Ngày đăng ký tài khoản:</span>
+                        <span class="fw-semibold"><i class="bi bi-calendar-check me-1"></i>@Model.RegistrationDate.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <span class="text-muted d-block small">Tổng số lần thuê truyện:</span>
+                        <span class="badge bg-primary fs-6">@(Model.Rentals?.Count ?? 0) phiếu thuê</span>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0 text-secondary"><i class="bi bi-journal-bookmark-fill me-2"></i>Lịch Sử Thuê Truyện</h5>
+                    <a asp-controller="Rentals" asp-action="Create" asp-route-customerId="@Model.CustomerID" class="btn btn-sm btn-primary">
+                        <i class="bi bi-plus-circle me-1"></i> Tạo phiếu thuê mới
+                    </a>
+                </div>
+
+                @if (Model.Rentals != null && Model.Rentals.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Mã phiếu</th>
+                                    <th>Ngày thuê</th>
+                                    <th>Ngày trả</th>
+                                    <th>Truyện đã thuê & Số lượng</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var r in Model.Rentals.OrderByDescending(x => x.RentalDate))
+                                {
+                                    <tr>
+                                        <td class="fw-bold">#@r.RentalID</td>
+                                        <td>@r.RentalDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@r.ReturnDate.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            @foreach (var detail in r.RentalDetails)
+                                            {
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span>• <strong>@detail.ComicBook?.Title</strong></span>
+                                                    <span class="text-muted">SL: <strong>@detail.Quantity</strong> x @string.Format("{0:N0} đ", detail.PricePerDay)</span>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td>
+                                            <span class="badge @(r.Status == "Đang thuê" ? "bg-warning text-dark" : "bg-success")">
+                                                @r.Status
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-light border text-center py-4 text-muted">
+                        <i class="bi bi-inbox fs-2 d-block mb-1"></i>
+                        Khách hàng này chưa thuê cuốn truyện nào.
+                    </div>
+                }
+
+                <div class="d-flex justify-content-between pt-3 border-top mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Danh sách khách hàng
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@Model.CustomerID" class="btn btn-warning">
+                        <i class="bi bi-pencil me-1"></i> Chỉnh sửa thông tin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

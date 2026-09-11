@@ -1,0 +1,69 @@
+@model ComicSystem.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Xóa Truyện";
+    bool hasActiveRentals = ViewBag.HasActiveRentals ?? false;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow border-danger">
+            <div class="card-header bg-danger text-white py-3">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-exclamation-octagon me-2"></i>Xác Nhận Xóa Truyện Tranh</h4>
+            </div>
+            <div class="card-body p-4">
+                @if (hasActiveRentals)
+                {
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <strong>Cảnh báo:</strong> Cuốn truyện này đã có trong lịch sử phiếu thuê. Theo ràng buộc dữ liệu, bạn không thể xóa truyện này khi còn liên kết trong bảng RentalDetails.
+                    </div>
+                }
+                else
+                {
+                    <p class="text-danger fw-semibold">Bạn có chắc chắn muốn xóa cuốn truyện tranh này khỏi hệ thống?</p>
+                }
+
+                <div class="bg-light p-3 rounded mb-4">
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Mã truyện:</div>
+                        <div class="col-sm-8 fw-bold">#@Model.ComicBookID</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Tên sách:</div>
+                        <div class="col-sm-8 fw-bold text-dark">@Model.Title</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Tác giả:</div>
+                        <div class="col-sm-8">@Model.Author</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 text-muted">Giá thuê / ngày:</div>
+                        <div class="col-sm-8 text-success fw-bold">@string.Format("{0:N0} VNĐ", Model.PricePerDay)</div>
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="ComicBookID" />
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Hủy & Quay lại
+                        </a>
+                        @if (!hasActiveRentals)
+                        {
+                            <button type="submit" class="btn btn-danger px-4">
+                                <i class="bi bi-trash me-1"></i> Xác Nhận Xóa
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-danger px-4" disabled>
+                                <i class="bi bi-slash-circle me-1"></i> Không Thể Xóa
+                            </button>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

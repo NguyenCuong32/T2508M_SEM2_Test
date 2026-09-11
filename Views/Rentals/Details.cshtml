@@ -1,0 +1,101 @@
+@model ComicSystem.Models.Rental
+
+@{
+    ViewData["Title"] = "Chi Tiết Phiếu Thuê #" + Model.RentalID;
+    var rentalDays = Math.Max(1, (int)(Model.ReturnDate.Date - Model.RentalDate.Date).TotalDays);
+    decimal grandTotal = 0;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card shadow border-0 mb-4">
+            <div class="card-header bg-primary text-white py-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-0 fw-bold"><i class="bi bi-receipt me-2"></i>Chi Tiết Phiếu Thuê Truyện #@Model.RentalID</h4>
+                    <small class="opacity-75">comicsys.com - Hệ thống quản lý thuê truyện tranh</small>
+                </div>
+                <span class="badge @(Model.Status == "Đang thuê" ? "bg-warning text-dark" : "bg-success") fs-6 px-3 py-2">
+                    @Model.Status
+                </span>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 class="text-uppercase text-muted fw-bold small mb-2">Thông Tin Khách Hàng</h6>
+                        <p class="mb-1"><strong class="fs-5">@Model.Customer?.FullName</strong></p>
+                        <p class="mb-1 text-muted"><i class="bi bi-telephone me-2"></i>Số điện thoại: <strong>@Model.Customer?.PhoneNumber</strong></p>
+                        <p class="mb-0 text-muted"><i class="bi bi-calendar-check me-2"></i>Ngày đăng ký: @Model.Customer?.RegistrationDate.ToString("dd/MM/yyyy")</p>
+                    </div>
+                    <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                        <h6 class="text-uppercase text-muted fw-bold small mb-2">Thời Gian Thuê</h6>
+                        <p class="mb-1 text-muted"><i class="bi bi-calendar-event me-2"></i>Ngày thuê: <strong>@Model.RentalDate.ToString("dd/MM/yyyy HH:mm")</strong></p>
+                        <p class="mb-1 text-muted"><i class="bi bi-calendar-check me-2"></i>Hạn trả: <strong>@Model.ReturnDate.ToString("dd/MM/yyyy")</strong></p>
+                        <p class="mb-0 text-primary fw-semibold"><i class="bi bi-clock-history me-2"></i>Tổng thời gian: @rentalDays ngày</p>
+                    </div>
+                </div>
+
+                <h5 class="fw-bold mb-3 text-secondary"><i class="bi bi-book-half me-2"></i>Danh Sách Truyện Đã Thuê (RentalDetails)</h5>
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 50px;">STT</th>
+                                <th>Tên Truyện Tranh</th>
+                                <th>Tác Giả</th>
+                                <th class="text-center">Số Lượng</th>
+                                <th class="text-end">Đơn Giá / Ngày</th>
+                                <th class="text-end">Thành Tiền (@rentalDays ngày)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int stt = 1; }
+                            @foreach (var detail in Model.RentalDetails)
+                            {
+                                var itemTotal = detail.Quantity * detail.PricePerDay * rentalDays;
+                                grandTotal += itemTotal;
+                                <tr>
+                                    <td class="text-center">@(stt++)</td>
+                                    <td>
+                                        <strong class="text-dark">@detail.ComicBook?.Title</strong>
+                                    </td>
+                                    <td>@detail.ComicBook?.Author</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-secondary">@detail.Quantity</span>
+                                    </td>
+                                    <td class="text-end">@string.Format("{0:N0} đ", detail.PricePerDay)</td>
+                                    <td class="text-end fw-bold text-success">@string.Format("{0:N0} VNĐ", itemTotal)</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-light">
+                                <td colspan="5" class="text-end fw-bold fs-6">Tổng cộng tiền thuê:</td>
+                                <td class="text-end fw-bold text-danger fs-5">@string.Format("{0:N0} VNĐ", grandTotal)</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between pt-3 border-top">
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Danh sách phiếu thuê
+                    </a>
+                    <div class="d-flex gap-2">
+                        @if (Model.Status == "Đang thuê")
+                        {
+                            <form asp-action="ReturnRental" asp-route-id="@Model.RentalID" method="post" onsubmit="return confirm('Xác nhận khách đã trả sách?');">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-check2-circle me-1"></i> Xác Nhận Trả Sách
+                                </button>
+                            </form>
+                        }
+                        <button onclick="window.print();" class="btn btn-outline-primary">
+                            <i class="bi bi-printer me-1"></i> In Phiếu Thuê
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
