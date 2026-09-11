@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Thuê truyện</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="border-bottom bg-light mb-4">
+        <nav class="navbar navbar-expand-md navbar-light container">
+            <a class="navbar-brand fw-bold" asp-controller="ComicBooks" asp-action="Index">Thuê truyện</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Mở menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="mainNav" class="collapse navbar-collapse">
+                <div class="navbar-nav">
+                    <a class="nav-link" asp-controller="ComicBooks" asp-action="Index">Quản lý truyện</a>
+                    <a class="nav-link" asp-controller="Customers" asp-action="Index">Khách hàng</a>
+                    <a class="nav-link" asp-controller="Rentals" asp-action="Index">Phiếu thuê</a>
+                    <a class="nav-link" asp-controller="Rentals" asp-action="Report">Báo cáo</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container pb-4">
+        @if (TempData["Success"] is string success)
+        {
+            <div class="alert alert-success" role="status">@success</div>
+        }
+        @if (TempData["Error"] is string error)
+        {
+            <div class="alert alert-danger" role="alert">@error</div>
+        }
+        @RenderBody()
+    </main>
+    <footer class="container border-top py-3 text-muted">Quản lý cho thuê truyện tranh</footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

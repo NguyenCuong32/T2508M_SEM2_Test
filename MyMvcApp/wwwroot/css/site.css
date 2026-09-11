@@ -1,0 +1,13 @@
+body { color: #212529; }
+h1 { font-size: 1.75rem; margin-bottom: 1.25rem; }
+h2 { font-size: 1.25rem; }
+.page-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
+.page-heading h1 { margin: 0; }
+.simple-form { max-width: 600px; }
+.quantity-input { width: 100px; }
+.validation-summary-valid { display: none; }
+.input-validation-error { border-color: #dc3545; }
+.field-validation-error { font-size: .9rem; }
+@media (max-width: 575px) {
+    .page-heading { align-items: flex-start; flex-direction: column; }
+}

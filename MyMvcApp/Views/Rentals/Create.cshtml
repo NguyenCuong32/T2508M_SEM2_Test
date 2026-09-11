@@ -1,0 +1,70 @@
+@model RentalCreateViewModel
+@{ ViewData["Title"] = "Tạo phiếu thuê"; }
+
+<h1>Tạo phiếu thuê</h1>
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <label asp-for="CustomerId" class="form-label">Khách hàng</label>
+            <select asp-for="CustomerId" class="form-select">
+                <option value="">-- Chọn khách hàng --</option>
+                @foreach (var customer in Model.Customers)
+                {
+                    <option value="@customer.CustomerId">@customer.FullName (@customer.PhoneNumber)</option>
+                }
+            </select>
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="RentalDate" class="form-label">Ngày thuê</label>
+            <input asp-for="RentalDate" asp-format="{0:yyyy-MM-dd}" type="date" class="form-control" />
+            <span asp-validation-for="RentalDate" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="ReturnDate" class="form-label">Ngày trả</label>
+            <input asp-for="ReturnDate" asp-format="{0:yyyy-MM-dd}" type="date" class="form-control" />
+            <span asp-validation-for="ReturnDate" class="text-danger"></span>
+        </div>
+    </div>
+    <h2>Chọn truyện thuê</h2>
+    <p class="text-muted">Chọn một hoặc nhiều truyện và nhập số lượng tương ứng.</p>
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light"><tr><th>Chọn</th><th>Tên truyện</th><th class="text-end">Giá thuê/ngày (VNĐ)</th><th>Số lượng</th></tr></thead>
+            <tbody>
+            @for (var i = 0; i < Model.Items.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input asp-for="Items[i].IsSelected" class="form-check-input" aria-label="Chọn @Model.Items[i].Title" />
+                        <input asp-for="Items[i].ComicBookId" type="hidden" />
+                    </td>
+                    <td><label asp-for="Items[i].IsSelected">@Model.Items[i].Title</label></td>
+                    <td class="text-end">@Model.Items[i].PricePerDay.ToString("#,##0.##")</td>
+                    <td>
+                        <input asp-for="Items[i].Quantity" type="number" min="1" class="form-control quantity-input" aria-label="Số lượng @Model.Items[i].Title" />
+                        <span asp-validation-for="Items[i].Quantity" class="text-danger"></span>
+                    </td>
+                </tr>
+            }
+            @if (Model.Items.Count == 0)
+            {
+                <tr><td colspan="4" class="text-center text-muted">Chưa có truyện để cho thuê.</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    @if (Model.Customers.Count == 0 || Model.Items.Count == 0)
+    {
+        <p class="text-danger">Cần có khách hàng và truyện trước khi tạo phiếu thuê.</p>
+        <button type="submit" class="btn btn-primary" disabled>Tạo phiếu thuê</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-primary">Tạo phiếu thuê</button>
+    }
+    <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

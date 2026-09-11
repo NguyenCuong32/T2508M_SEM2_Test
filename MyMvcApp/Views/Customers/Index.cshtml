@@ -1,0 +1,22 @@
+@model List<Customer>
+@{ ViewData["Title"] = "Khách hàng"; }
+
+<div class="page-heading">
+    <h1>Khách hàng</h1>
+    <a asp-action="Create" class="btn btn-primary">Đăng ký khách hàng</a>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-light"><tr><th>Mã</th><th>Họ tên</th><th>Số điện thoại</th><th>Ngày đăng ký</th></tr></thead>
+        <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr><td>@customer.CustomerId</td><td>@customer.FullName</td><td>@customer.PhoneNumber</td><td>@customer.RegistrationDate.ToString("dd/MM/yyyy")</td></tr>
+        }
+        @if (Model.Count == 0)
+        {
+            <tr><td colspan="4" class="text-center text-muted">Chưa có khách hàng.</td></tr>
+        }
+        </tbody>
+    </table>
+</div>
