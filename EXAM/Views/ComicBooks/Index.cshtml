@@ -1,0 +1,189 @@
+@model IEnumerable<EXAM.Models.ComicBook>
+
+@{
+    ViewData["Title"] = "Quản lý Truyện tranh";
+    var count = Model?.Count() ?? 0;
+    var avgPrice = count > 0 ? Model!.Average(x => x.PricePerDay) : 0;
+    var maxPrice = count > 0 ? Model!.Max(x => x.PricePerDay) : 0;
+}
+
+<div class="mb-4">
+    <!-- Header Section -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <h2 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                <span>Quản lý Truyện tranh</span>
+                <span class="badge-clean badge-clean-primary fs-6">ComicBooks</span>
+            </h2>
+            <p class="text-muted mb-0">Quản lý kho truyện tranh, cập nhật đơn giá thuê theo ngày</p>
+        </div>
+        
+    </div>
+
+    <!-- Thông báo kết quả -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="modern-alert modern-alert-success mb-4 alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill fs-5 text-success"></i>
+            <div class="flex-grow-1">
+                <strong>Thành công!</strong> @TempData["Success"]
+            </div>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="modern-alert modern-alert-danger mb-4 alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-5 text-danger"></i>
+            <div class="flex-grow-1">
+                <strong>Thông báo:</strong> @TempData["Error"]
+            </div>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Stat Metric Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4 col-sm-6">
+            <div class="stat-card">
+                <div class="stat-icon-wrapper stat-icon-primary">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div>
+                    <div class="stat-number">@count</div>
+                    <div class="stat-label">Tổng đầu truyện</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="stat-card">
+                <div class="stat-icon-wrapper stat-icon-success">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+                <div>
+                    <div class="stat-number">@avgPrice.ToString("N0") <span class="fs-6 fw-normal text-muted">đ</span></div>
+                    <div class="stat-label">Giá thuê trung bình</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="stat-card">
+                <div class="stat-icon-wrapper stat-icon-warning">
+                    <i class="bi bi-tag"></i>
+                </div>
+                <div>
+                    <div class="stat-number">@maxPrice.ToString("N0") <span class="fs-6 fw-normal text-muted">đ</span></div>
+                    <div class="stat-label">Giá cao nhất/ngày</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Filter Card -->
+    <div class="modern-card mb-4">
+        <div class="p-3">
+            <form asp-action="Index" method="get" class="row g-2 align-items-center">
+                <div class="col-md-9 col-sm-8">
+                    <div class="input-group modern-input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="search" value="@ViewBag.CurrentSearch" 
+                               class="form-control border-start-0 ps-0" 
+                               placeholder="Tìm theo tiêu đề truyện hoặc tác giả..." />
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-modern btn-modern-primary flex-grow-1">
+                        Tìm kiếm
+                    </button>
+                    @if (!string.IsNullOrEmpty(ViewBag.CurrentSearch as string))
+                    {
+                        <a asp-action="Index" class="btn btn-modern btn-modern-outline" title="Xóa tìm kiếm">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bảng danh sách truyện -->
+    <div class="modern-table-container">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 80px;">Mã #</th>
+                    <th>Tiêu đề truyện</th>
+                    <th>Tác giả</th>
+                    <th class="text-end" style="width: 200px;">Giá thuê/ngày</th>
+                    <th class="text-center" style="width: 240px;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <span class="badge-clean badge-clean-secondary">#@item.ComicBookID</span>
+                            </td>
+                            <td>
+                                <div class="fw-bold text-dark fs-6">@item.Title</div>
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(item.Author))
+                                {
+                                    <span class="text-secondary"><i class="bi bi-person me-1 text-muted"></i>@item.Author</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Chưa có tác giả</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <span class="badge-clean badge-clean-success fs-6 fw-bold">
+                                    @item.PricePerDay.ToString("N0") VNĐ
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <a asp-action="Details" asp-route-id="@item.ComicBookID" class="btn btn-sm btn-modern btn-modern-outline py-1 px-2" title="Xem chi tiết">
+                                        <i class="bi bi-eye text-info"></i> Xem
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.ComicBookID" class="btn btn-sm btn-modern btn-modern-outline py-1 px-2" title="Chỉnh sửa">
+                                        <i class="bi bi-pencil-square text-warning"></i> Sửa
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.ComicBookID" class="btn btn-sm btn-modern btn-modern-outline py-1 px-2 text-danger" title="Xóa">
+                                        <i class="bi bi-trash3"></i> Xóa
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <div class="text-muted mb-3">
+                                <i class="bi bi-inbox fs-1 text-secondary opacity-50"></i>
+                            </div>
+                            <h6 class="fw-bold text-dark">Không có truyện tranh nào được tìm thấy</h6>
+                            <p class="text-muted small mb-3">Hãy thử tìm với từ khóa khác hoặc thêm mới truyện vào kho.</p>
+                            @if (!string.IsNullOrEmpty(ViewBag.CurrentSearch as string))
+                            {
+                                <a asp-action="Index" class="btn btn-sm btn-modern btn-modern-outline">
+                                    Quay lại danh sách đầy đủ
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

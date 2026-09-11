@@ -1,0 +1,434 @@
+/* ==========================================================================
+   Modern Clean Theme - ComicBooks System
+   ========================================================================== */
+
+:root {
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #eef2ff;
+  --primary-rgb: 79, 70, 229;
+  
+  --secondary: #64748b;
+  --secondary-light: #f1f5f9;
+  
+  --success: #10b981;
+  --success-light: #ecfdf5;
+  --success-text: #047857;
+  
+  --warning: #f59e0b;
+  --warning-light: #fffbeb;
+  --warning-text: #b45309;
+  
+  --danger: #ef4444;
+  --danger-light: #fef2f2;
+  --danger-text: #b91c1c;
+
+  --info: #0ea5e9;
+  --info-light: #f0f9ff;
+  --info-text: #0369a1;
+  
+  --bg-body: #f8fafc;
+  --surface: #ffffff;
+  --border-color: #e2e8f0;
+  --border-hover: #cbd5e1;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 12px 24px -6px rgba(79, 70, 229, 0.15);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* ==========================================================================
+   Navigation Bar (Glassmorphism & Clean)
+   ========================================================================== */
+.modern-navbar {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  padding: 0.75rem 0;
+}
+
+.modern-navbar .navbar-brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--text-primary) !important;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+
+.modern-navbar .nav-link {
+  font-weight: 600;
+  font-size: 0.925rem;
+  color: var(--text-secondary) !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.modern-navbar .nav-link:hover {
+  color: var(--primary) !important;
+  background-color: var(--primary-light);
+}
+
+.modern-navbar .nav-link.active-nav {
+  color: var(--primary) !important;
+  background-color: var(--primary-light);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Cards & Surfaces
+   ========================================================================== */
+.modern-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.modern-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.modern-card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modern-card-body {
+  padding: 1.5rem;
+}
+
+/* ==========================================================================
+   Stat Widgets / Metric Cards
+   ========================================================================== */
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.stat-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.stat-icon-primary {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.stat-icon-success {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.stat-icon-info {
+  background: var(--info-light);
+  color: var(--info);
+}
+
+.stat-icon-warning {
+  background: var(--warning-light);
+  color: var(--warning);
+}
+
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 0.15rem;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Buttons & Actions
+   ========================================================================== */
+.btn-modern {
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid transparent;
+}
+
+.btn-modern:hover {
+  transform: translateY(-1px);
+}
+
+.btn-modern:active {
+  transform: translateY(0);
+}
+
+.btn-modern-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+.btn-modern-primary:hover {
+  background-color: var(--primary-hover);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.35);
+}
+
+.btn-modern-outline {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.btn-modern-outline:hover {
+  background-color: var(--secondary-light);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.btn-modern-success {
+  background-color: var(--success);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.btn-modern-success:hover {
+  background-color: #059669;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+}
+
+/* ==========================================================================
+   Modern Clean Table
+   ========================================================================== */
+.modern-table-container {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.modern-table {
+  width: 100%;
+  margin-bottom: 0;
+  vertical-align: middle;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.modern-table thead th {
+  background: #f8fafc;
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  border-top: none;
+}
+
+.modern-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.modern-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.modern-table tbody td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.925rem;
+  color: var(--text-primary);
+}
+
+.modern-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   Badges & Pills
+   ========================================================================== */
+.badge-clean {
+  padding: 0.35rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.775rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.badge-clean-primary {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.badge-clean-success {
+  background-color: var(--success-light);
+  color: var(--success-text);
+}
+
+.badge-clean-warning {
+  background-color: var(--warning-light);
+  color: var(--warning-text);
+}
+
+.badge-clean-info {
+  background-color: var(--info-light);
+  color: var(--info-text);
+}
+
+.badge-clean-secondary {
+  background-color: var(--secondary-light);
+  color: var(--secondary);
+}
+
+/* ==========================================================================
+   Forms & Inputs
+   ========================================================================== */
+.modern-input-group .form-control,
+.modern-form-control {
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1rem;
+  font-size: 0.925rem;
+  color: var(--text-primary);
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.modern-input-group .form-control:focus,
+.modern-form-control:focus {
+  border-color: var(--primary);
+  outline: 0;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+/* ==========================================================================
+   Alerts
+   ========================================================================== */
+.modern-alert {
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  padding: 1rem 1.25rem;
+  font-size: 0.925rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modern-alert-success {
+  background-color: var(--success-light);
+  border-color: #a7f3d0;
+  color: var(--success-text);
+}
+
+.modern-alert-danger {
+  background-color: var(--danger-light);
+  border-color: #fecaca;
+  color: var(--danger-text);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.modern-footer {
+  background-color: #ffffff;
+  border-top: 1px solid var(--border-color);
+  padding: 1.5rem 0;
+  margin-top: auto;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+}

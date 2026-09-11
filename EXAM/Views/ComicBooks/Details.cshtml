@@ -1,0 +1,136 @@
+@model EXAM.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Chi tiết Truyện tranh";
+    var rentalCount = Model.RentalDetails?.Count ?? 0;
+}
+
+<div class="container py-4" style="max-width: 850px;">
+    <!-- Breadcrumb / Back button -->
+    <div class="mb-3">
+        <a asp-action="Index" class="text-decoration-none text-muted fw-semibold small d-inline-flex align-items-center gap-1">
+            <i class="bi bi-arrow-left"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="modern-card mb-4">
+        <div class="modern-card-header bg-light">
+            <div class="d-flex align-items-center gap-3">
+                <div class="stat-icon-wrapper stat-icon-info" style="width: 44px; height: 44px; font-size: 1.2rem;">
+                    <i class="bi bi-info-circle"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold text-dark mb-0">Chi tiết Truyện tranh</h5>
+                    <small class="text-muted">Thông tin cơ bản và lịch sử đơn thuê liên kết</small>
+                </div>
+            </div>
+            <span class="badge-clean badge-clean-secondary fs-6">Mã #@Model.ComicBookID</span>
+        </div>
+
+        <div class="modern-card-body">
+            <div class="row g-4 mb-4">
+                <div class="col-md-7">
+                    <div class="mb-3">
+                        <label class="text-muted small text-uppercase fw-bold">Tiêu đề tác phẩm</label>
+                        <h3 class="fw-bold text-dark mt-1">@Model.Title</h3>
+                    </div>
+                    <div>
+                        <label class="text-muted small text-uppercase fw-bold">Tác giả</label>
+                        <div class="fs-6 mt-1 text-secondary">
+                            @if (!string.IsNullOrWhiteSpace(Model.Author))
+                            {
+                                <span class="fw-semibold text-dark"><i class="bi bi-person-check me-1 text-primary"></i>@Model.Author</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic">Chưa có thông tin tác giả</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="p-3 bg-light rounded-3 border">
+                        <div class="text-muted small text-uppercase fw-bold mb-1">Giá thuê mỗi ngày</div>
+                        <div class="fs-2 fw-bold text-success">
+                            @Model.PricePerDay.ToString("N0") <span class="fs-6 fw-normal text-muted">VNĐ / ngày</span>
+                        </div>
+                        <hr class="my-2 border-secondary opacity-25">
+                        <div class="d-flex justify-content-between align-items-center small text-muted">
+                            <span>Lượt đơn thuê:</span>
+                            <span class="badge-clean badge-clean-primary">@rentalCount lượt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lịch sử cho thuê truyện -->
+            <div class="pt-4 border-top">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-clock-history text-secondary"></i>
+                        Lịch sử đơn thuê truyện
+                    </h6>
+                    <span class="badge-clean badge-clean-info">Tổng: @rentalCount bản ghi</span>
+                </div>
+
+                @if (Model.RentalDetails != null && Model.RentalDetails.Any())
+                {
+                    <div class="modern-table-container">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>Khách hàng</th>
+                                    <th class="text-center">Số lượng</th>
+                                    <th>Ngày thuê</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model.RentalDetails)
+                                {
+                                    <tr>
+                                        <td class="fw-bold text-secondary">#@detail.RentalID</td>
+                                        <td class="fw-semibold text-dark">@(detail.Rental?.Customer?.FullName ?? "N/A")</td>
+                                        <td class="text-center">
+                                            <span class="badge-clean badge-clean-primary">@detail.Quantity cuốn</span>
+                                        </td>
+                                        <td class="text-secondary">@(detail.Rental?.RentalDate.ToString("dd/MM/yyyy") ?? "N/A")</td>
+                                        <td>
+                                            <span class="badge-clean badge-clean-warning">
+                                                @(detail.Rental?.Status ?? "Đang thuê")
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="p-4 text-center bg-light rounded-3 border border-dashed">
+                        <i class="bi bi-journal-x text-muted fs-3 d-block mb-1"></i>
+                        <span class="text-muted small">Truyện này chưa có lượt thuê nào trong hệ thống.</span>
+                    </div>
+                }
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center pt-4 mt-4 border-top">
+                <a asp-action="Index" class="btn btn-modern btn-modern-outline">
+                    <i class="bi bi-arrow-left"></i> Quay lại danh sách
+                </a>
+                <div class="d-flex gap-2">
+                    <a asp-action="Edit" asp-route-id="@Model.ComicBookID" class="btn btn-modern btn-modern-primary">
+                        <i class="bi bi-pencil-square"></i> Sửa thông tin
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@Model.ComicBookID" class="btn btn-modern btn-modern-outline text-danger">
+                        <i class="bi bi-trash3"></i> Xóa truyện
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

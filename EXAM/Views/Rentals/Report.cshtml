@@ -1,0 +1,163 @@
+@model EXAM.Models.ViewModels.RentalReportViewModel
+
+@{
+    ViewData["Title"] = "CÂU 4 - Báo cáo danh sách thuê sách theo khoảng thời gian";
+    var totalQuantity = Model.Items?.Sum(x => x.Quantity) ?? 0;
+    var totalRows = Model.Items?.Count ?? 0;
+}
+
+<div class="mb-4">
+    <!-- Header Section -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <h2 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                <span>Báo cáo danh sách thuê sách</span>
+                <span class="badge-clean badge-clean-primary fs-6">Câu 4</span>
+            </h2>
+            <p class="text-muted mb-0">Thống kê chi tiết đơn thuê sách theo khoảng thời gian từ bảng Rentals, RentalDetails, Customers, ComicBooks</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Create" class="btn btn-modern btn-modern-success">
+                <i class="bi bi-cart-plus"></i> Tạo đơn thuê mới
+            </a>
+            <button type="button" class="btn btn-modern btn-modern-outline" onclick="window.print();">
+                <i class="bi bi-printer"></i> In báo cáo
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Summary Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-6 col-sm-6">
+            <div class="stat-card">
+                <div class="stat-icon-wrapper stat-icon-primary">
+                    <i class="bi bi-receipt-cutoff"></i>
+                </div>
+                <div>
+                    <div class="stat-number">@totalRows</div>
+                    <div class="stat-label">Tổng số lượt thuê sách</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="stat-card">
+                <div class="stat-icon-wrapper stat-icon-success">
+                    <i class="bi bi-layers"></i>
+                </div>
+                <div>
+                    <div class="stat-number">@totalQuantity <span class="fs-6 fw-normal text-muted">cuốn</span></div>
+                    <div class="stat-label">Tổng số lượng truyện đã phát hành</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Card -->
+    <div class="modern-card mb-4">
+        <div class="p-3 bg-light border-bottom">
+            <span class="fw-bold text-dark small text-uppercase d-flex align-items-center gap-2">
+                <i class="bi bi-funnel text-primary"></i> Bộ lọc khoảng thời gian (Start Date &rarr; End Date)
+            </span>
+        </div>
+        <div class="p-3">
+            <form asp-action="Report" method="get" class="row g-3 align-items-end">
+                <div class="col-md-4 col-sm-6">
+                    <label asp-for="StartDate" class="form-label">
+                        Từ ngày (Start Date)
+                    </label>
+                    <div class="input-group modern-input-group">
+                        <span class="input-group-text bg-white text-muted">
+                            <i class="bi bi-calendar-event"></i>
+                        </span>
+                        <input asp-for="StartDate" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label asp-for="EndDate" class="form-label">
+                        Đến ngày (End Date)
+                    </label>
+                    <div class="input-group modern-input-group">
+                        <span class="input-group-text bg-white text-muted">
+                            <i class="bi bi-calendar-check"></i>
+                        </span>
+                        <input asp-for="EndDate" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 d-flex gap-2">
+                    <button type="submit" class="btn btn-modern btn-modern-primary flex-grow-1">
+                        <i class="bi bi-search"></i> Lọc dữ liệu
+                    </button>
+                    <a asp-action="Report" asp-route-startDate="2024-10-01" asp-route-endDate="2024-10-31" class="btn btn-modern btn-modern-outline" title="Dữ liệu mẫu tháng 10/2024">
+                        Mẫu 10/2024
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modern Table matching Câu 4 exact columns -->
+    <div class="modern-table-container">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 70px;">No</th>
+                    <th>Book name</th>
+                    <th class="text-center" style="width: 160px;">Rental date</th>
+                    <th class="text-center" style="width: 160px;">Return date</th>
+                    <th>Customer name</th>
+                    <th class="text-center" style="width: 130px;">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Items != null && Model.Items.Any())
+                {
+                    foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <span class="badge-clean badge-clean-secondary">@item.No</span>
+                            </td>
+                            <td>
+                                <span class="fw-bold text-dark fs-6">@item.BookName</span>
+                            </td>
+                            <td class="text-center text-secondary">
+                                <i class="bi bi-calendar3 me-1 text-muted"></i>
+                                @item.RentalDate.ToString("dd/MM/yyyy")
+                            </td>
+                            <td class="text-center text-secondary">
+                                @if (item.ReturnDate.HasValue)
+                                {
+                                    <span><i class="bi bi-calendar-check me-1 text-muted"></i>@item.ReturnDate.Value.ToString("dd/MM/yyyy")</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">-</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="text-primary fw-semibold d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-person"></i> @item.CustomerName
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge-clean badge-clean-success fs-6 fw-bold">
+                                    @item.Quantity cuốn
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="bi bi-calendar-x fs-1 d-block mb-2 opacity-50"></i>
+                            Không tìm thấy bản ghi thuê sách nào trong khoảng thời gian đã chọn.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

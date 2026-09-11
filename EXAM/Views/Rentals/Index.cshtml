@@ -1,0 +1,108 @@
+@model IEnumerable<EXAM.Models.Rental>
+
+@{
+    ViewData["Title"] = "Danh sách Đơn thuê sách";
+}
+
+<div class="mb-4">
+    <!-- Header Section -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <h2 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                <span>Quản lý Đơn thuê sách</span>
+                <span class="badge-clean badge-clean-primary fs-6">Câu 3</span>
+            </h2>
+            <p class="text-muted mb-0">Theo dõi toàn bộ đơn thuê và chi tiết đầu truyện trong bảng Rentals & RentalDetails</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Report" class="btn btn-modern btn-modern-outline">
+                <i class="bi bi-bar-chart-line text-primary"></i> Xem báo cáo 
+            </a>
+            <a asp-action="Create" class="btn btn-modern btn-modern-primary">
+                <i class="bi bi-cart-plus"></i> Tạo đơn thuê mới
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="modern-alert modern-alert-success mb-4 alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill fs-5 text-success"></i>
+            <div class="flex-grow-1">
+                <strong>Thành công!</strong> @TempData["Success"]
+            </div>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="modern-table-container">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 90px;">Mã đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày thuê</th>
+                    <th>Ngày hẹn trả</th>
+                    <th>Quy mô đơn</th>
+                    <th>Trạng thái</th>
+                    <th class="text-center" style="width: 140px;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <span class="badge-clean badge-clean-secondary fw-bold">#@item.RentalID</span>
+                            </td>
+                            <td>
+                                <span class="fw-bold text-dark">@(item.Customer?.FullName ?? "N/A")</span>
+                            </td>
+                            <td class="text-secondary">
+                                <i class="bi bi-calendar-check me-1 text-muted"></i>
+                                @item.RentalDate.ToString("dd/MM/yyyy")
+                            </td>
+                            <td class="text-secondary">
+                                @if (item.ReturnDate.HasValue)
+                                {
+                                    <span><i class="bi bi-calendar-x me-1 text-muted"></i>@item.ReturnDate.Value.ToString("dd/MM/yyyy")</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Chưa xác định</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge-clean badge-clean-info">
+                                    @(item.RentalDetails?.Count ?? 0) tựa truyện
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge-clean badge-clean-warning">
+                                    @(item.Status ?? "Đang thuê")
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="Details" asp-route-id="@item.RentalID" class="btn btn-sm btn-modern btn-modern-outline py-1 px-3">
+                                    <i class="bi bi-eye text-primary"></i> Xem chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="bi bi-journal-x fs-1 d-block mb-2 opacity-50"></i>
+                            Chưa có đơn thuê nào được tạo trong hệ thống.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

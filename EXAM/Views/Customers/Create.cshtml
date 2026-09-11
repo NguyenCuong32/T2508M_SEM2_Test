@@ -1,0 +1,77 @@
+@model EXAM.Models.Customer
+
+@{
+    ViewData["Title"] = "CÂU 2 - Đăng ký khách hàng mới";
+}
+
+<div class="container py-4" style="max-width: 650px;">
+    <!-- Breadcrumb / Back button -->
+    <div class="mb-3">
+        <a asp-action="Index" class="text-decoration-none text-muted fw-semibold small d-inline-flex align-items-center gap-1">
+            <i class="bi bi-arrow-left"></i> Quay lại danh sách khách hàng
+        </a>
+    </div>
+
+    <div class="modern-card">
+        <div class="modern-card-header bg-light">
+            <div class="d-flex align-items-center gap-3">
+                <div class="stat-icon-wrapper stat-icon-success" style="width: 44px; height: 44px; font-size: 1.2rem;">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold text-dark mb-0">CÂU 2: Đăng ký Khách hàng mới</h5>
+                    <small class="text-muted">Đăng ký thông tin khách hàng khi lần đầu sử dụng dịch vụ</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="modern-card-body">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="modern-alert modern-alert-danger mb-4" role="alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="FullName" class="form-label">
+                        Họ và tên khách hàng <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group modern-input-group">
+                        <span class="input-group-text bg-white text-muted">
+                            <i class="bi bi-person"></i>
+                        </span>
+                        <input asp-for="FullName" class="form-control" placeholder="Ví dụ: Nguyễn Văn A, Trần Văn B..." />
+                    </div>
+                    <span asp-validation-for="FullName" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="PhoneNumber" class="form-label">
+                        Số điện thoại
+                    </label>
+                    <div class="input-group modern-input-group">
+                        <span class="input-group-text bg-white text-muted">
+                            <i class="bi bi-telephone"></i>
+                        </span>
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="Ví dụ: 0987654321" />
+                    </div>
+                    <span asp-validation-for="PhoneNumber" class="text-danger small mt-1 d-block"></span>
+                    <div class="form-text text-muted small mt-1">
+                        Ngày đăng ký sẽ được tự động ghi nhận tại thời điểm hoàn tất form.
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                    <a asp-action="Index" class="btn btn-modern btn-modern-outline">
+                        Hủy bỏ
+                    </a>
+                    <button type="submit" class="btn btn-modern btn-modern-success px-4">
+                        <i class="bi bi-check-lg"></i> Hoàn tất đăng ký
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

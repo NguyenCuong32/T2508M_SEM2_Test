@@ -1,0 +1,66 @@
+@model EXAM.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Xác nhận Xóa Truyện tranh";
+}
+
+<div class="container py-4" style="max-width: 650px;">
+    <!-- Breadcrumb / Back button -->
+    <div class="mb-3">
+        <a asp-action="Index" class="text-decoration-none text-muted fw-semibold small d-inline-flex align-items-center gap-1">
+            <i class="bi bi-arrow-left"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="modern-card border-danger border-opacity-25">
+        <div class="modern-card-header bg-danger bg-opacity-10">
+            <div class="d-flex align-items-center gap-3">
+                <div class="stat-icon-wrapper stat-icon-warning" style="background-color: #fee2e2; color: #ef4444; width: 44px; height: 44px; font-size: 1.2rem;">
+                    <i class="bi bi-trash3"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold text-danger mb-0">Xác nhận Xóa Truyện tranh</h5>
+                    <small class="text-muted">Hành động này sẽ xóa vĩnh viễn khỏi bảng ComicBooks</small>
+                </div>
+            </div>
+            <span class="badge-clean badge-clean-secondary fs-6">Mã #@Model.ComicBookID</span>
+        </div>
+
+        <div class="modern-card-body">
+            <div class="modern-alert modern-alert-danger mb-4">
+                <i class="bi bi-exclamation-octagon-fill fs-4 text-danger flex-shrink-0"></i>
+                <div>
+                    <strong>Cảnh báo an toàn dữ liệu:</strong> Bạn có chắc chắn muốn xóa cuốn truyện này không? Nếu truyện đang tồn tại trong các đơn thuê (RentalDetails), hệ thống sẽ từ chối để bảo vệ toàn vẹn dữ liệu.
+                </div>
+            </div>
+
+            <div class="p-3 bg-light rounded-3 border mb-4">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <span class="text-muted small text-uppercase fw-bold d-block">Tiêu đề tác phẩm</span>
+                        <span class="fs-5 fw-bold text-dark">@Model.Title</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted small text-uppercase fw-bold d-block">Tác giả</span>
+                        <span class="fw-semibold text-secondary">@(string.IsNullOrEmpty(Model.Author) ? "Chưa có" : Model.Author)</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted small text-uppercase fw-bold d-block">Đơn giá thuê</span>
+                        <span class="fw-bold text-success">@Model.PricePerDay.ToString("N0") VNĐ/ngày</span>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-action="Delete" method="post" class="d-flex justify-content-between align-items-center pt-3 border-top">
+                <input type="hidden" asp-for="ComicBookID" />
+                <a asp-action="Index" class="btn btn-modern btn-modern-outline">
+                    Hủy bỏ
+                </a>
+                <button type="submit" class="btn btn-modern btn-danger px-4" style="background-color: #ef4444; border-color: #ef4444;">
+                    <i class="bi bi-trash3 me-1"></i> Xác nhận Xóa
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
