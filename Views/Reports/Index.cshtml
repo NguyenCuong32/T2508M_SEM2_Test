@@ -1,0 +1,212 @@
+@model IEnumerable<T2508M_SEM_Test.DTOs.Reports.RentalReportDto>
+
+@{
+    ViewData["Title"] = "Rental Report";
+
+    var hasSearched = ViewBag.HasSearched ?? false;
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div>
+        <h1>Rental Report</h1>
+
+        <p>
+            Search all comic book rentals by date range.
+        </p>
+    </div>
+</div>
+
+<!-- Search Filter -->
+<div class="card mb-4">
+
+    <div class="card-body p-4">
+
+        <h5 class="fw-bold mb-3">
+            <i class="bi bi-funnel me-2"></i>
+            Search Rental
+        </h5>
+
+        <form asp-action="Index"
+              method="post"
+              class="row g-3">
+
+            @Html.AntiForgeryToken()
+
+            <!-- Start Date -->
+            <div class="col-md-5">
+
+                <label class="form-label fw-semibold">
+                    Start Date
+                </label>
+
+                <input type="date"
+                       name="startDate"
+                       value="@ViewBag.StartDate"
+                       class="form-control" />
+
+            </div>
+
+            <!-- End Date -->
+            <div class="col-md-5">
+
+                <label class="form-label fw-semibold">
+                    End Date
+                </label>
+
+                <input type="date"
+                       name="endDate"
+                       value="@ViewBag.EndDate"
+                       class="form-control" />
+
+            </div>
+
+            <!-- Search Button -->
+            <div class="col-md-2 d-flex align-items-end">
+
+                <button type="submit"
+                        class="btn btn-primary w-100">
+
+                    <i class="bi bi-search me-1"></i>
+                    Search
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- Validation -->
+<div asp-validation-summary="ModelOnly"
+     class="text-danger mb-3">
+</div>
+
+@if (hasSearched)
+{
+    <!-- Report Result -->
+    <div class="card">
+
+        <div class="card-body p-0">
+
+            <div class="p-4 border-bottom">
+
+                <h5 class="fw-bold mb-1">
+                    <i class="bi bi-table me-2"></i>
+                    Rental Results
+                </h5>
+
+                <p class="text-muted mb-0">
+                    @Model.Count() rental record(s) found.
+                </p>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th class="ps-4">
+                                No
+                            </th>
+
+                            <th>
+                                Book Name
+                            </th>
+
+                            <th>
+                                Rental Date
+                            </th>
+
+                            <th>
+                                Return Date
+                            </th>
+
+                            <th>
+                                Customer Name
+                            </th>
+
+                            <th class="text-center pe-4">
+                                Quantity
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6"
+                                class="text-center text-muted py-5">
+
+                                <div class="mb-2">
+                                    <i class="bi bi-inbox fs-1"></i>
+                                </div>
+
+                                <div class="fw-semibold">
+                                    No rental records found.
+                                </div>
+
+                                <small>
+                                    Try another date range.
+                                </small>
+
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td class="ps-4 fw-semibold">
+                                    @item.No
+                                </td>
+
+                                <td>
+                                    <i class="bi bi-book me-2 text-muted"></i>
+                                    @item.BookName
+                                </td>
+
+                                <td>
+                                    @item.RentalDate.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+
+                                <td>
+                                    @item.ReturnDate.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+
+                                <td>
+                                    <i class="bi bi-person me-2 text-muted"></i>
+                                    @item.CustomerName
+                                </td>
+
+                                <td class="text-center pe-4">
+                                    <span class="badge bg-primary">
+                                        @item.Quantity
+                                    </span>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+}

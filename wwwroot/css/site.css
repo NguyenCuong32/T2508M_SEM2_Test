@@ -1,0 +1,214 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 0;
+}
+
+.app-body {
+    background-color: #f6f8fb;
+    color: #212529;
+    min-height: 100vh;
+}
+
+/* ================================
+   NAVBAR
+   ================================ */
+
+.app-navbar {
+    background: linear-gradient(
+        135deg,
+        #1f2937,
+        #111827
+    );
+
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.app-navbar .navbar-brand {
+    font-size: 1.25rem;
+    letter-spacing: 0.3px;
+}
+
+.app-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.78);
+    padding: 0.65rem 0.9rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.app-navbar .nav-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.app-navbar .nav-link.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ================================
+   MAIN
+   ================================ */
+
+main.container {
+    min-height: calc(100vh - 140px);
+}
+
+/* ================================
+   CARDS
+   ================================ */
+
+.card {
+    border: 0;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+.card-header {
+    border-top-left-radius: 14px !important;
+    border-top-right-radius: 14px !important;
+}
+
+/* ================================
+   TABLES
+   ================================ */
+
+.table {
+    background-color: #ffffff;
+}
+
+.table thead th {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* ================================
+   BUTTONS
+   ================================ */
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    box-shadow: 0 2px 6px rgba(13, 110, 253, 0.2);
+}
+
+/* ================================
+   FORMS
+   ================================ */
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+    padding: 0.65rem 0.8rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+}
+
+/* ================================
+   ALERT
+   ================================ */
+
+.alert {
+    border-radius: 10px;
+}
+
+/* ================================
+   FOOTER
+   ================================ */
+
+.app-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e9ecef;
+    padding: 18px 0;
+    margin-top: 30px;
+}
+
+/* ================================
+   PAGE HEADER
+   ================================ */
+
+.page-header {
+    margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.page-header p {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* ================================
+   DASHBOARD
+   ================================ */
+
+.dashboard-card {
+    border: 0;
+    border-radius: 14px;
+    padding: 24px;
+    background: #ffffff;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+.dashboard-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background-color: #f1f3f5;
+
+    font-size: 1.4rem;
+}
+
+/* ================================
+   BADGES
+   ================================ */
+
+.badge {
+    font-weight: 500;
+    border-radius: 6px;
+}

@@ -1,0 +1,81 @@
+@model T2508M_SEM_Test.DTOs.Customers.CustomerCreateDto
+
+@{
+    ViewData["Title"] = "Register Customer";
+}
+
+<h1>Register Customer</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="FullName"
+                       class="form-label">
+                </label>
+
+                <input asp-for="FullName"
+                       class="form-control"
+                       placeholder="Enter full name" />
+
+                <span asp-validation-for="FullName"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="PhoneNumber"
+                       class="form-label">
+                </label>
+
+                <input asp-for="PhoneNumber"
+                       class="form-control"
+                       placeholder="Enter phone number" />
+
+                <span asp-validation-for="PhoneNumber"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="RegistrationDate"
+                       class="form-label">
+                    Registration Date
+                </label>
+
+                <input asp-for="RegistrationDate"
+                       type="datetime-local"
+                       class="form-control" />
+
+                <span asp-validation-for="RegistrationDate"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary">
+                Register
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

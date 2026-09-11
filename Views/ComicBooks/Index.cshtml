@@ -1,0 +1,72 @@
+@model IEnumerable<T2508M_SEM_Test.Models.Comicbook>
+
+@{
+    ViewData["Title"] = "Comic Books";
+}
+
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1>Comic Books</h1>
+        <p>Manage comic books available for rental.</p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+
+        <i class="bi bi-plus-lg me-1"></i>
+        Add Comic Book
+
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price / Day</th>
+                <th style="width: 240px;">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ComicBookId</td>
+                    <td>@item.Title</td>
+                    <td>@item.Author</td>
+                    <td>@item.PricePerDay.ToString("N2")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.ComicBookId" class="btn btn-sm btn-info">
+                            Details
+                        </a>
+
+                        <a asp-action="Edit" asp-route-id="@item.ComicBookId" class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.ComicBookId" class="btn btn-sm btn-danger">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

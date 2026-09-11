@@ -1,0 +1,92 @@
+@model IEnumerable<T2508M_SEM_Test.Models.Rental>
+
+@{
+    ViewData["Title"] = "Rentals";
+}
+
+<div class="page-header d-flex justify-content-between align-items-center">
+
+    <div>
+        <h1>Rentals</h1>
+
+        <p>
+            Manage comic book rentals.
+        </p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+
+        <i class="bi bi-cart-plus me-1"></i>
+        New Rental
+
+    </a>
+
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Rental ID</th>
+                <th>Customer</th>
+                <th>Book</th>
+                <th>Rental Date</th>
+                <th>Return Date</th>
+                <th>Quantity</th>
+                <th>Price / Day</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var rental in Model)
+            {
+                foreach (var detail in rental.Rentaldetails)
+                {
+                    <tr>
+                        <td>@rental.RentalId</td>
+
+                        <td>
+                            @rental.Customer.FullName
+                        </td>
+
+                        <td>
+                            @detail.ComicBook.Title
+                        </td>
+
+                        <td>
+                            @rental.RentalDate
+                        </td>
+
+                        <td>
+                            @rental.ReturnDate
+                        </td>
+
+                        <td>
+                            @detail.Quantity
+                        </td>
+
+                        <td>
+                            @detail.PricePerDay.ToString("N2")
+                        </td>
+
+                        <td>
+                            <span class="badge bg-primary">
+                                @rental.Status
+                            </span>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+</div>

@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="page-header">
+    <h1>ComicSystem Dashboard</h1>
+
+    <p>
+        Comic book rental management system.
+    </p>
+</div>
+
+<div class="row g-4">
+
+    <!-- Comic Books -->
+    <div class="col-md-6 col-xl-3">
+        <a asp-controller="ComicBooks"
+           asp-action="Index"
+           class="text-decoration-none text-dark">
+
+            <div class="dashboard-card h-100">
+
+                <div class="dashboard-icon mb-3">
+                    <i class="bi bi-book"></i>
+                </div>
+
+                <h5 class="fw-bold">
+                    Comic Books
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Manage comic books, authors and rental prices.
+                </p>
+
+            </div>
+
+        </a>
+    </div>
+
+    <!-- Customers -->
+    <div class="col-md-6 col-xl-3">
+        <a asp-controller="Customers"
+           asp-action="Index"
+           class="text-decoration-none text-dark">
+
+            <div class="dashboard-card h-100">
+
+                <div class="dashboard-icon mb-3">
+                    <i class="bi bi-people"></i>
+                </div>
+
+                <h5 class="fw-bold">
+                    Customers
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Register and manage customers.
+                </p>
+
+            </div>
+
+        </a>
+    </div>
+
+    <!-- Rentals -->
+    <div class="col-md-6 col-xl-3">
+        <a asp-controller="Rentals"
+           asp-action="Index"
+           class="text-decoration-none text-dark">
+
+            <div class="dashboard-card h-100">
+
+                <div class="dashboard-icon mb-3">
+                    <i class="bi bi-cart-check"></i>
+                </div>
+
+                <h5 class="fw-bold">
+                    Rentals
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Create and view comic book rentals.
+                </p>
+
+            </div>
+
+        </a>
+    </div>
+
+    <!-- Reports -->
+    <div class="col-md-6 col-xl-3">
+        <a asp-controller="Reports"
+           asp-action="Index"
+           class="text-decoration-none text-dark">
+
+            <div class="dashboard-card h-100">
+
+                <div class="dashboard-icon mb-3">
+                    <i class="bi bi-bar-chart-line"></i>
+                </div>
+
+                <h5 class="fw-bold">
+                    Reports
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Search and view rental reports.
+                </p>
+
+            </div>
+
+        </a>
+    </div>
+
+</div>
+
+<div class="card mt-4">
+
+    <div class="card-body p-4">
+
+        <h5 class="fw-bold">
+            Welcome to ComicSystem
+        </h5>
+
+        <p class="text-muted mb-0">
+            Use the navigation menu to manage comic books,
+            customers, rentals and rental reports.
+        </p>
+
+    </div>
+
+</div>

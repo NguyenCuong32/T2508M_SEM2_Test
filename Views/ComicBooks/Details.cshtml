@@ -1,0 +1,52 @@
+@model T2508M_SEM_Test.Models.Comicbook
+
+@{
+    ViewData["Title"] = "Comic Book Details";
+}
+
+<h1>Comic Book Details</h1>
+
+<hr />
+
+<dl class="row">
+
+    <dt class="col-sm-3">
+        ID
+    </dt>
+    <dd class="col-sm-9">
+        @Model.ComicBookId
+    </dd>
+
+    <dt class="col-sm-3">
+        Title
+    </dt>
+    <dd class="col-sm-9">
+        @Model.Title
+    </dd>
+
+    <dt class="col-sm-3">
+        Author
+    </dt>
+    <dd class="col-sm-9">
+        @Model.Author
+    </dd>
+
+    <dt class="col-sm-3">
+        Price Per Day
+    </dt>
+    <dd class="col-sm-9">
+        @Model.PricePerDay.ToString("N2")
+    </dd>
+
+</dl>
+
+<a asp-action="Edit"
+   asp-route-id="@Model.ComicBookId"
+   class="btn btn-warning">
+    Edit
+</a>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>
