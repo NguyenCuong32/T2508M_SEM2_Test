@@ -33,6 +33,7 @@ namespace ComicSystem.Controllers
             ViewBag.TotalCustomers = customers.Count();
             ViewBag.ActiveRentals = rentals.Count(r => r.Status == "Đang thuê");
             ViewBag.TotalRentals = rentals.Count();
+            ViewBag.RecentRentals = rentals.OrderByDescending(r => r.RentalDate).ThenByDescending(r => r.RentalID).Take(5).ToList();
 
             return View();
         }

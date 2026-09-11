@@ -35,10 +35,10 @@
                 <input asp-for="EndDate" type="date" class="form-control" />
             </div>
             <div class="col-md-6 d-flex gap-2">
-                <button type="submit" class="btn btn-primary px-4 rounded-pill">
+                <button type="submit" class="btn btn-teal px-4 rounded-pill">
                     <i class="bi bi-funnel me-1"></i> Lọc dữ liệu
                 </button>
-                <a asp-action="Index" asp-route-startDate="2024-10-01" asp-route-endDate="2024-10-31" class="btn btn-outline-info rounded-pill">
+                <a asp-action="Index" asp-route-startDate="2024-10-01" asp-route-endDate="2024-10-31" class="btn btn-outline-teal rounded-pill">
                     <i class="bi bi-calendar-event me-1"></i> Tháng 10/2024 (Đề thi)
                 </a>
             </div>
@@ -51,7 +51,7 @@
     <div class="col-md-4">
         <div class="card border-0 shadow-sm p-3 bg-white">
             <div class="text-muted small text-uppercase fw-semibold">Số lượt thuê trong kỳ</div>
-            <h3 class="fw-bold text-primary mb-0 mt-1">@Model.TotalRecords lượt</h3>
+            <h3 class="fw-bold text-teal mb-0 mt-1">@Model.TotalRecords lượt</h3>
         </div>
     </div>
     <div class="col-md-4">
@@ -72,7 +72,7 @@
 <div class="card border-0 shadow-sm overflow-hidden">
     <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
         <span class="fw-bold text-dark">
-            <i class="bi bi-table text-primary me-2"></i>Kết quả thống kê từ @Model.StartDate.ToString("dd/MM/yyyy") đến @Model.EndDate.ToString("dd/MM/yyyy")
+            <i class="bi bi-table text-teal me-2"></i>Kết quả thống kê từ @Model.StartDate.ToString("dd/MM/yyyy") đến @Model.EndDate.ToString("dd/MM/yyyy")
         </span>
         <span class="badge bg-light text-muted border">Mẫu chuẩn đề bài FPT Aptech SET01</span>
     </div>
@@ -104,7 +104,7 @@
                                 <span class="fw-semibold text-dark">@item.CustomerName</span>
                             </td>
                             <td class="text-center">
-                                <span class="badge bg-primary-subtle text-primary fs-6 px-3 py-1">@item.Quantity</span>
+                                <span class="badge bg-teal-subtle text-teal fs-6 px-3 py-1">@item.Quantity</span>
                             </td>
                             <td class="text-end d-print-none text-muted">
                                 @item.PricePerDay.ToString("N0") VNĐ
@@ -132,7 +132,7 @@
                 <tfoot class="table-light fw-bold">
                     <tr>
                         <td colspan="5" class="text-end text-uppercase ps-3">Tổng Cộng:</td>
-                        <td class="text-center fs-6 text-primary">@Model.TotalQuantity</td>
+                        <td class="text-center fs-6 text-teal">@Model.TotalQuantity</td>
                         <td class="d-print-none"></td>
                         <td class="text-end d-print-none fs-6 text-success">@Model.TotalEstimatedRevenue.ToString("N0") VNĐ</td>
                     </tr>

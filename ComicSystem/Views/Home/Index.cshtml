@@ -1,21 +1,23 @@
 @{
     ViewData["Title"] = "Bảng điều khiển ComicSystem";
+    var recentRentals = ViewBag.RecentRentals as List<ComicSystem.Models.Rental> ?? new List<ComicSystem.Models.Rental>();
 }
 
+<!-- Hero Banner (Teal & Slate, Compact & Eye-Friendly) -->
 <div class="row mb-4">
     <div class="col-12">
-        <div class="p-5 text-white rounded-4 shadow-sm" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+        <div class="hero-teal-banner text-white p-4 px-lg-5">
             <div class="row align-items-center">
                 <div class="col-lg-8">
-                    <span class="badge bg-white text-primary fw-semibold px-3 py-2 rounded-pill mb-3">
-                        <i class="bi bi-star-fill text-warning me-1"></i> FPT Aptech - Exam Paper SET01
+                    <span class="badge bg-white text-teal fw-semibold px-3 py-1 rounded-pill mb-2 shadow-sm">
+                        <i class="bi bi-mortarboard-fill me-1"></i> FPT Aptech - Exam Paper SET01
                     </span>
-                    <h1 class="display-5 fw-bold mb-3">Hệ Thống Quản Lý Thuê Truyện Tranh</h1>
-                    <p class="lead mb-4 text-white-50">
-                        Hệ thống phát triển trên nền tảng <strong>ASP.NET Core 8 MVC</strong> tuân thủ <strong>5 nguyên lý SOLID</strong>, kết nối cơ sở dữ liệu SQL Server với đầy đủ các nghiệp vụ quản lý, đăng ký, cho thuê và báo cáo doanh thu.
+                    <h1 class="h2 fw-bold mb-2 text-white">Hệ Thống Quản Lý Thuê Truyện Tranh</h1>
+                    <p class="mb-3 text-white-50 small" style="max-width: 650px;">
+                        Hệ thống phát triển trên nền tảng <strong>ASP.NET Core 8 MVC</strong> tuân thủ <strong>SOLID</strong>, kết nối cơ sở dữ liệu SQL Server với đầy đủ các nghiệp vụ quản lý, đăng ký, cho thuê và báo cáo doanh thu.
                     </p>
-                    <div class="d-flex flex-wrap gap-3">
-                        <a asp-controller="Rentals" asp-action="Create" class="btn btn-light text-primary fw-semibold px-4 py-2 rounded-pill">
+                    <div class="d-flex flex-wrap gap-2">
+                        <a asp-controller="Rentals" asp-action="Create" class="btn btn-light text-teal fw-semibold px-4 py-2 rounded-pill shadow-sm">
                             <i class="bi bi-cart-plus me-1"></i> Tạo đơn thuê ngay
                         </a>
                         <a asp-controller="Reports" asp-action="Index" class="btn btn-outline-light fw-semibold px-4 py-2 rounded-pill">
@@ -23,85 +25,112 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-4 text-center d-none d-lg-block">
-                    <i class="bi bi-book text-white-50" style="font-size: 10rem; opacity: 0.25;"></i>
+                <div class="col-lg-4 d-none d-lg-block text-end">
+                    <div class="p-3 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-25 text-start shadow-sm d-inline-block" style="min-width: 250px;">
+                        <div class="small text-white-50 mb-1 text-uppercase fw-semibold" style="font-size: 0.75rem;">Thông tin hệ thống</div>
+                        <div class="d-flex align-items-center text-white mb-2 small">
+                            <i class="bi bi-check-circle-fill text-info me-2"></i> ASP.NET Core 8.0 MVC
+                        </div>
+                        <div class="d-flex align-items-center text-white mb-2 small">
+                            <i class="bi bi-check-circle-fill text-info me-2"></i> SQL Server / EF Core
+                        </div>
+                        <div class="d-flex align-items-center text-white small">
+                            <i class="bi bi-check-circle-fill text-info me-2"></i> Clean Architecture &amp; SOLID
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Stats Counter -->
+<!-- Interactive Stats Counter (Clickable Cards with Micro-Interactions) -->
 <div class="row g-3 mb-4">
     <div class="col-md-3 col-sm-6">
-        <div class="card p-3 h-100 bg-white border-0 shadow-sm">
-            <div class="d-flex align-items-center justify-content-between">
+        <a asp-controller="ComicBooks" asp-action="Index" class="card card-stat card-hover-lift p-3 h-100 shadow-sm border-0 d-block text-decoration-none">
+            <div class="d-flex align-items-center justify-content-between mb-2">
                 <div>
                     <span class="text-muted small text-uppercase fw-semibold">Đầu truyện tranh</span>
-                    <h2 class="fw-bold mb-0 mt-1 text-primary">@ViewBag.TotalBooks</h2>
+                    <h2 class="fw-bold mb-0 mt-1 text-teal">@ViewBag.TotalBooks</h2>
                 </div>
-                <div class="bg-primary-subtle text-primary p-3 rounded-circle">
-                    <i class="bi bi-journal-album fs-3"></i>
+                <div class="bg-teal-subtle text-teal p-3 rounded-circle stat-icon">
+                    <i class="bi bi-journal-bookmark fs-3"></i>
                 </div>
             </div>
-        </div>
+            <div class="small text-teal fw-semibold d-flex align-items-center gap-1">
+                <span>Quản lý kho truyện</span>
+                <i class="bi bi-arrow-right"></i>
+            </div>
+        </a>
     </div>
     <div class="col-md-3 col-sm-6">
-        <div class="card p-3 h-100 bg-white border-0 shadow-sm">
-            <div class="d-flex align-items-center justify-content-between">
+        <a asp-controller="Customers" asp-action="Index" class="card card-stat card-hover-lift p-3 h-100 shadow-sm border-0 d-block text-decoration-none">
+            <div class="d-flex align-items-center justify-content-between mb-2">
                 <div>
                     <span class="text-muted small text-uppercase fw-semibold">Khách hàng</span>
                     <h2 class="fw-bold mb-0 mt-1 text-success">@ViewBag.TotalCustomers</h2>
                 </div>
-                <div class="bg-success-subtle text-success p-3 rounded-circle">
+                <div class="bg-success-subtle text-success p-3 rounded-circle stat-icon">
                     <i class="bi bi-people-fill fs-3"></i>
                 </div>
             </div>
-        </div>
+            <div class="small text-success fw-semibold d-flex align-items-center gap-1">
+                <span>Danh sách hội viên</span>
+                <i class="bi bi-arrow-right"></i>
+            </div>
+        </a>
     </div>
     <div class="col-md-3 col-sm-6">
-        <div class="card p-3 h-100 bg-white border-0 shadow-sm">
-            <div class="d-flex align-items-center justify-content-between">
+        <a asp-controller="Rentals" asp-action="Index" class="card card-stat card-hover-lift p-3 h-100 shadow-sm border-0 d-block text-decoration-none">
+            <div class="d-flex align-items-center justify-content-between mb-2">
                 <div>
                     <span class="text-muted small text-uppercase fw-semibold">Đơn đang thuê</span>
                     <h2 class="fw-bold mb-0 mt-1 text-warning">@ViewBag.ActiveRentals</h2>
                 </div>
-                <div class="bg-warning-subtle text-warning p-3 rounded-circle">
+                <div class="bg-warning-subtle text-warning p-3 rounded-circle stat-icon">
                     <i class="bi bi-clock-history fs-3"></i>
                 </div>
             </div>
-        </div>
+            <div class="small text-warning-emphasis fw-semibold d-flex align-items-center gap-1">
+                <span>Theo dõi hẹn trả</span>
+                <i class="bi bi-arrow-right"></i>
+            </div>
+        </a>
     </div>
     <div class="col-md-3 col-sm-6">
-        <div class="card p-3 h-100 bg-white border-0 shadow-sm">
-            <div class="d-flex align-items-center justify-content-between">
+        <a asp-controller="Reports" asp-action="Index" class="card card-stat card-hover-lift p-3 h-100 shadow-sm border-0 d-block text-decoration-none">
+            <div class="d-flex align-items-center justify-content-between mb-2">
                 <div>
                     <span class="text-muted small text-uppercase fw-semibold">Tổng lượt thuê</span>
                     <h2 class="fw-bold mb-0 mt-1 text-info">@ViewBag.TotalRentals</h2>
                 </div>
-                <div class="bg-info-subtle text-info p-3 rounded-circle">
+                <div class="bg-info-subtle text-info p-3 rounded-circle stat-icon">
                     <i class="bi bi-receipt fs-3"></i>
                 </div>
             </div>
-        </div>
+            <div class="small text-info fw-semibold d-flex align-items-center gap-1">
+                <span>Báo cáo doanh số</span>
+                <i class="bi bi-arrow-right"></i>
+            </div>
+        </a>
     </div>
 </div>
 
-<!-- Exam Questions Grid -->
-<div class="row g-4">
+<!-- Exam Questions Grid (Clean, Eye-Friendly Design) -->
+<div class="row g-3 mb-4">
     <!-- Q1 -->
     <div class="col-md-6 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-            <div class="card-body d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <span class="badge bg-primary px-2 py-1 rounded">Question 1</span>
-                    <span class="badge bg-secondary-subtle text-dark">3 Điểm</span>
+        <div class="card card-stat card-hover-lift h-100 border-0 shadow-sm">
+            <div class="card-body p-4 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-teal text-white px-2 py-1 rounded">Question 1</span>
+                    <span class="badge bg-slate-100 text-muted border">3 Điểm</span>
                 </div>
-                <h5 class="card-title fw-bold text-dark">CRUD Truyện tranh</h5>
+                <h5 class="card-title fw-bold text-dark mb-2">CRUD Truyện tranh</h5>
                 <p class="card-text text-muted small flex-grow-1">
-                    Trang quản lý danh sách, thêm mới, xem chi tiết, chỉnh sửa và xóa truyện tranh trong bảng <code>ComicBooks</code>.
+                    Quản lý danh sách, tìm kiếm, thêm mới, xem chi tiết, chỉnh sửa và xóa truyện tranh trong bảng <code>ComicBooks</code>.
                 </p>
-                <a asp-controller="ComicBooks" asp-action="Index" class="btn btn-outline-primary btn-sm rounded-pill mt-3">
+                <a asp-controller="ComicBooks" asp-action="Index" class="btn btn-outline-teal btn-sm rounded-pill mt-3 w-100">
                     Vào quản lý truyện <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>
@@ -110,17 +139,17 @@
 
     <!-- Q2 -->
     <div class="col-md-6 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-            <div class="card-body d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <span class="badge bg-success px-2 py-1 rounded">Question 2</span>
-                    <span class="badge bg-secondary-subtle text-dark">3 Điểm</span>
+        <div class="card card-stat card-hover-lift h-100 border-0 shadow-sm">
+            <div class="card-body p-4 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-success text-white px-2 py-1 rounded">Question 2</span>
+                    <span class="badge bg-slate-100 text-muted border">3 Điểm</span>
                 </div>
-                <h5 class="card-title fw-bold text-dark">Đăng ký khách hàng</h5>
+                <h5 class="card-title fw-bold text-dark mb-2">Đăng ký khách hàng</h5>
                 <p class="card-text text-muted small flex-grow-1">
-                    Khách hàng đăng ký lần đầu: Họ tên, Số điện thoại (validate chuẩn), Ngày đăng ký lưu vào bảng <code>Customers</code>.
+                    Đăng ký khách hàng lần đầu với Họ tên, Số điện thoại (kiểm tra định dạng và chống trùng), ngày đăng ký vào <code>Customers</code>.
                 </p>
-                <a asp-controller="Customers" asp-action="Register" class="btn btn-outline-success btn-sm rounded-pill mt-3">
+                <a asp-controller="Customers" asp-action="Register" class="btn btn-outline-success btn-sm rounded-pill mt-3 w-100">
                     Đăng ký khách mới <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>
@@ -129,17 +158,17 @@
 
     <!-- Q3 -->
     <div class="col-md-6 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-            <div class="card-body d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
+        <div class="card card-stat card-hover-lift h-100 border-0 shadow-sm">
+            <div class="card-body p-4 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="badge bg-warning text-dark px-2 py-1 rounded">Question 3</span>
-                    <span class="badge bg-secondary-subtle text-dark">5 Điểm</span>
+                    <span class="badge bg-slate-100 text-muted border">5 Điểm</span>
                 </div>
-                <h5 class="card-title fw-bold text-dark">Thuê truyện tranh</h5>
+                <h5 class="card-title fw-bold text-dark mb-2">Thuê truyện tranh</h5>
                 <p class="card-text text-muted small flex-grow-1">
-                    Trang tạo phiếu thuê: Khách hàng, ngày thuê, ngày hẹn trả, thêm động nhiều truyện, số lượng, lưu vào <code>Rentals</code> &amp; <code>RentalDetails</code>.
+                    Tạo phiếu thuê động chọn nhiều truyện, tính tạm tính tự động, lưu Transaction vào <code>Rentals</code> &amp; <code>RentalDetails</code>.
                 </p>
-                <a asp-controller="Rentals" asp-action="Create" class="btn btn-outline-warning text-dark btn-sm rounded-pill mt-3">
+                <a asp-controller="Rentals" asp-action="Create" class="btn btn-outline-warning text-dark btn-sm rounded-pill mt-3 w-100">
                     Tạo đơn thuê <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>
@@ -148,20 +177,113 @@
 
     <!-- Q4 -->
     <div class="col-md-6 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-            <div class="card-body d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
+        <div class="card card-stat card-hover-lift h-100 border-0 shadow-sm">
+            <div class="card-body p-4 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="badge bg-info text-dark px-2 py-1 rounded">Question 4</span>
-                    <span class="badge bg-secondary-subtle text-dark">3 Điểm</span>
+                    <span class="badge bg-slate-100 text-muted border">3 Điểm</span>
                 </div>
-                <h5 class="card-title fw-bold text-dark">Báo cáo theo ngày</h5>
+                <h5 class="card-title fw-bold text-dark mb-2">Báo cáo theo ngày</h5>
                 <p class="card-text text-muted small flex-grow-1">
-                    Báo cáo tất cả truyện đã thuê từ ngày đến ngày theo đúng mẫu bảng đề bài (Book name, Rental date, Return date, Customer, Quantity).
+                    Báo cáo tất cả truyện đã thuê theo khoảng thời gian chuẩn định dạng đề bài thi, hỗ trợ in ấn và tính tổng doanh thu.
                 </p>
-                <a asp-controller="Reports" asp-action="Index" class="btn btn-outline-info text-dark btn-sm rounded-pill mt-3">
+                <a asp-controller="Reports" asp-action="Index" class="btn btn-outline-info text-dark btn-sm rounded-pill mt-3 w-100">
                     Xem báo cáo <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Quick Operation Table (Live Recent Rentals) -->
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-clock-history text-teal fs-5"></i>
+            <h5 class="fw-bold mb-0 text-dark">Đơn Thuê Cần Xử Lý Nhanh</h5>
+            <span class="badge bg-teal-subtle text-teal ms-1">Hoạt động thời gian thực</span>
+        </div>
+        <a asp-controller="Rentals" asp-action="Index" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+            Xem tất cả đơn <i class="bi bi-chevron-right ms-1"></i>
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-custom align-middle mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4">Mã Đơn</th>
+                    <th>Khách Hàng</th>
+                    <th>Ngày Thuê</th>
+                    <th>Ngày Hẹn Trả</th>
+                    <th>Đầu Sách</th>
+                    <th>Trạng Thái</th>
+                    <th class="text-center pe-4" style="width: 180px;">Thao Tác Nhanh</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (recentRentals != null && recentRentals.Any())
+                {
+                    foreach (var item in recentRentals)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted">#@item.RentalID</td>
+                            <td>
+                                <div class="fw-bold text-dark">@item.Customer?.FullName</div>
+                                <small class="text-muted"><i class="bi bi-telephone me-1"></i>@item.Customer?.PhoneNumber</small>
+                            </td>
+                            <td>@item.RentalDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <span class="@(item.Status == "Đang thuê" && item.ReturnDate < DateTime.Today ? "text-danger fw-bold" : "")">
+                                    @item.ReturnDate.ToString("dd/MM/yyyy")
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    @item.RentalDetails?.Count đầu truyện (@(item.RentalDetails?.Sum(d => d.Quantity) ?? 0) cuốn)
+                                </span>
+                            </td>
+                            <td>
+                                @if (item.Status == "Đang thuê")
+                                {
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle badge-status">
+                                        <i class="bi bi-clock me-1"></i>Đang thuê
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle badge-status">
+                                        <i class="bi bi-check-all me-1"></i>Đã trả
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-center pe-4">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <a asp-controller="Rentals" asp-action="Details" asp-route-id="@item.RentalID" class="btn btn-sm btn-outline-info rounded-pill px-2" title="Chi tiết">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    @if (item.Status == "Đang thuê")
+                                    {
+                                        <form asp-controller="Rentals" asp-action="Return" asp-route-id="@item.RentalID" method="post" class="d-inline" onsubmit="return confirm('Xác nhận khách hàng đã trả toàn bộ truyện?');">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-2" title="Trả sách nhanh">
+                                                <i class="bi bi-arrow-return-left me-1"></i> Trả sách
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">
+                            Chưa có đơn thuê nào trong hệ thống.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

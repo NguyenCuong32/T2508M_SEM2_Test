@@ -23,11 +23,12 @@
         .navbar-brand {
             font-weight: 700;
             letter-spacing: -0.5px;
-            color: #4f46e5 !important;
+            color: #0f766e !important;
         }
         .navbar {
             background-color: #ffffff;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid #e2e8f0;
         }
         .nav-link {
             font-weight: 500;
@@ -36,30 +37,27 @@
             border-radius: 6px;
             transition: all 0.2s ease;
         }
-        .nav-link:hover, .nav-link.active {
-            color: #4f46e5 !important;
-            background-color: #eef2ff;
+        .nav-link:hover {
+            color: #0d9488 !important;
+            background-color: #f0fdfa;
+        }
+        .nav-link.active {
+            color: #0f766e !important;
+            background-color: #ccfbf1 !important;
+            font-weight: 600;
         }
         .card {
             border: 1px solid #e2e8f0;
             border-radius: 12px;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-        }
-        .btn-primary {
-            background-color: #4f46e5;
-            border-color: #4f46e5;
-        }
-        .btn-primary:hover {
-            background-color: #4338ca;
-            border-color: #4338ca;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
         }
         .table-custom th {
             background-color: #f1f5f9;
             color: #334155;
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.825rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             border-bottom: 2px solid #e2e8f0;
         }
         .badge-status {
@@ -69,14 +67,17 @@
         }
     </style>
 </head>
+@{
+    var activeController = ViewContext.RouteData.Values["Controller"]?.ToString() ?? "";
+}
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light sticky-top py-3">
+        <nav class="navbar navbar-expand-lg navbar-light sticky-top py-2 py-lg-3">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
-                    <i class="bi bi-book-half fs-3 text-primary"></i>
+                    <i class="bi bi-book-half fs-3" style="color: #0d9488;"></i>
                     <span>ComicSystem</span>
-                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-7 fw-normal ms-1">v1.0</span>
+                    <span class="badge bg-teal-subtle text-teal border border-teal-subtle fs-7 fw-normal ms-1">v1.0</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -85,36 +86,36 @@
                 <div class="collapse navbar-collapse" id="navbarMain">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                            <a class="nav-link @(activeController == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">
                                 <i class="bi bi-house-door me-1"></i> Trang chủ
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="ComicBooks" asp-action="Index">
+                            <a class="nav-link @(activeController == "ComicBooks" ? "active" : "")" asp-controller="ComicBooks" asp-action="Index">
                                 <i class="bi bi-journal-text me-1"></i> 1. Quản lý Truyện
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Customers" asp-action="Index">
+                            <a class="nav-link @(activeController == "Customers" ? "active" : "")" asp-controller="Customers" asp-action="Index">
                                 <i class="bi bi-people me-1"></i> 2. Khách hàng
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Rentals" asp-action="Index">
+                            <a class="nav-link @(activeController == "Rentals" ? "active" : "")" asp-controller="Rentals" asp-action="Index">
                                 <i class="bi bi-cart-check me-1"></i> 3. Thuê truyện
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Reports" asp-action="Index">
+                            <a class="nav-link @(activeController == "Reports" ? "active" : "")" asp-controller="Reports" asp-action="Index">
                                 <i class="bi bi-bar-chart-line me-1"></i> 4. Báo cáo
                             </a>
                         </li>
                     </ul>
                     <div class="d-flex gap-2">
-                        <a asp-controller="Customers" asp-action="Register" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                        <a asp-controller="Customers" asp-action="Register" class="btn btn-outline-teal btn-sm rounded-pill px-3">
                             <i class="bi bi-person-plus me-1"></i> Đăng ký KH
                         </a>
-                        <a asp-controller="Rentals" asp-action="Create" class="btn btn-primary btn-sm rounded-pill px-3">
+                        <a asp-controller="Rentals" asp-action="Create" class="btn btn-teal btn-sm rounded-pill px-3">
                             <i class="bi bi-plus-circle me-1"></i> Thuê sách mới
                         </a>
                     </div>
