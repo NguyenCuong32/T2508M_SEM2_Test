@@ -1,0 +1,73 @@
+@model IEnumerable<WebApplication1.Models.Customer>
+
+@{
+    ViewData["Title"] = "Danh sách khách hàng (Question 2)";
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div>
+        <div class="badge bg-success mb-2">Question 2: 3 điểm</div>
+        <h2 class="fw-bold mb-0">Danh Sách Khách Hàng (Customers)</h2>
+        <p class="text-muted small mb-0">Quản lý và tra cứu thông tin khách hàng đăng ký thuê truyện</p>
+    </div>
+    <a asp-action="Register" class="btn btn-success rounded-pill px-4 shadow-sm">
+        <i class="bi bi-person-plus me-1"></i> Đăng ký khách hàng mới
+    </a>
+</div>
+
+<!-- Table Card -->
+<div class="card border-0 shadow-sm overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover table-custom mb-0">
+            <thead>
+                <tr>
+                    <th style="width: 80px;">Mã KH</th>
+                    <th>Họ và tên (FullName)</th>
+                    <th>Số điện thoại (PhoneNumber)</th>
+                    <th>Ngày đăng ký (RegistrationDate)</th>
+                    <th class="text-end" style="width: 200px;">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="bi bi-person-slash fs-1 d-block mb-2 text-secondary"></i>
+                            Chưa có khách hàng nào trong hệ thống. Hãy đăng ký khách hàng mới!
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold text-secondary">#@item.CustomerID</td>
+                            <td>
+                                <div class="fw-bold text-dark fs-6">
+                                    <i class="bi bi-person-circle text-success me-2"></i>@item.FullName
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border px-3 py-2 fs-6">
+                                    <i class="bi bi-telephone text-primary me-1"></i>@item.PhoneNumber
+                                </span>
+                            </td>
+                            <td>
+                                <span class="text-muted">
+                                    <i class="bi bi-calendar3 me-1"></i>@item.RegistrationDate.ToString("dd/MM/yyyy HH:mm")
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <a asp-controller="Rentals" asp-action="Create" class="btn btn-sm btn-outline-primary rounded-pill">
+                                    <i class="bi bi-cart-plus me-1"></i> Tạo đơn thuê
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

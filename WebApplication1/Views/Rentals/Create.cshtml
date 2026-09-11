@@ -1,0 +1,166 @@
+@model WebApplication1.Models.ViewModels.RentalCreateViewModel
+
+@{
+    ViewData["Title"] = "Thuê truyện tranh (Question 3)";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <div class="badge bg-warning text-dark mb-1">Question 3: 5 điểm</div>
+                <h4 class="mb-0 fw-bold"><i class="bi bi-cart-plus text-warning me-2"></i>Thuê Truyện Tranh (Rental Book Page)</h4>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted small mb-4">
+                    Chọn khách hàng, bộ truyện, ngày thuê, ngày trả, số lượng và đơn giá thuê. Hệ thống sẽ tự động lưu thông tin vào 2 bảng <code>Rentals</code> và <code>RentalDetails</code>.
+                </p>
+
+                <form asp-action="Create" method="post" id="rentalForm">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <!-- Customer selection -->
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label asp-for="CustomerID" class="form-label fw-semibold mb-0">Khách hàng thuê truyện <span class="text-danger">*</span></label>
+                            <a asp-controller="Customers" asp-action="Register" class="text-primary small fw-semibold text-decoration-none">
+                                <i class="bi bi-plus-circle"></i> Đăng ký khách mới
+                            </a>
+                        </div>
+                        <select asp-for="CustomerID" asp-items="Model.CustomerList" class="form-select">
+                            <option value="">-- Chọn khách hàng --</option>
+                        </select>
+                        <span asp-validation-for="CustomerID" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Comic Book selection -->
+                    <div class="mb-3">
+                        <label asp-for="ComicBookID" class="form-label fw-semibold">Bộ truyện cần thuê <span class="text-danger">*</span></label>
+                        <select asp-for="ComicBookID" asp-items="Model.ComicBookList" class="form-select" id="comicBookSelect">
+                            <option value="">-- Chọn truyện --</option>
+                        </select>
+                        <span asp-validation-for="ComicBookID" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <!-- Rental Date -->
+                        <div class="col-md-6">
+                            <label asp-for="RentalDate" class="form-label fw-semibold">Ngày thuê (Rental date) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-calendar-check"></i></span>
+                                <input asp-for="RentalDate" type="date" class="form-control" id="rentalDateInput" />
+                            </div>
+                            <span asp-validation-for="RentalDate" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Return Date -->
+                        <div class="col-md-6">
+                            <label asp-for="ReturnDate" class="form-label fw-semibold">Ngày trả (Return date) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-calendar-x"></i></span>
+                                <input asp-for="ReturnDate" type="date" class="form-control" id="returnDateInput" />
+                            </div>
+                            <span asp-validation-for="ReturnDate" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- Quantity -->
+                        <div class="col-md-6">
+                            <label asp-for="Quantity" class="form-label fw-semibold">Số lượng truyện (Quantity) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input asp-for="Quantity" type="number" min="1" max="100" class="form-control" id="quantityInput" />
+                                <span class="input-group-text">cuốn</span>
+                            </div>
+                            <span asp-validation-for="Quantity" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Price Per Day -->
+                        <div class="col-md-6">
+                            <label asp-for="PricePerDay" class="form-label fw-semibold">Giá thuê / ngày (Price per day) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input asp-for="PricePerDay" type="number" step="500" min="500" class="form-control" id="pricePerDayInput" />
+                                <span class="input-group-text">VNĐ</span>
+                            </div>
+                            <span asp-validation-for="PricePerDay" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <!-- Live Calculation Summary Card -->
+                    <div class="p-3 bg-light rounded-3 border mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted small">Thời gian thuê ước tính:</span>
+                            <span class="fw-semibold text-dark" id="calcDays">0 ngày</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted small">Số lượng:</span>
+                            <span class="fw-semibold text-dark" id="calcQuantity">1 cuốn</span>
+                        </div>
+                        <hr class="my-2" />
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-dark">Tổng phí thuê dự kiến:</span>
+                            <span class="fs-5 fw-bold text-primary" id="calcTotal">0 đ</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                            <i class="bi bi-arrow-left me-1"></i> Lịch sử thuê
+                        </a>
+                        <button type="submit" class="btn btn-warning rounded-pill px-5 fw-bold text-dark shadow-sm">
+                            <i class="bi bi-check-circle-fill me-1"></i> Xác nhận thuê truyện
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            function updateCalculator() {
+                var rentalDateStr = $('#rentalDateInput').val();
+                var returnDateStr = $('#returnDateInput').val();
+                var quantity = parseInt($('#quantityInput').val()) || 0;
+                var pricePerDay = parseFloat($('#pricePerDayInput').val()) || 0;
+
+                var days = 1;
+                if (rentalDateStr && returnDateStr) {
+                    var rDate = new Date(rentalDateStr);
+                    var retDate = new Date(returnDateStr);
+                    var diffTime = retDate - rDate;
+                    days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if (days <= 0) days = 1;
+                }
+
+                var total = days * quantity * pricePerDay;
+
+                $('#calcDays').text(days + " ngày");
+                $('#calcQuantity').text(quantity + " cuốn");
+                $('#calcTotal').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total));
+            }
+
+            // Fetch book price when selecting comic book
+            $('#comicBookSelect').on('change', function () {
+                var bookId = $(this).val();
+                if (bookId) {
+                    $.getJSON('/Rentals/GetBookPrice/' + bookId, function (data) {
+                        if (data && data.success) {
+                            $('#pricePerDayInput').val(data.price);
+                            updateCalculator();
+                        }
+                    });
+                }
+            });
+
+            $('#rentalDateInput, #returnDateInput, #quantityInput, #pricePerDayInput').on('input change', function () {
+                updateCalculator();
+            });
+
+            updateCalculator();
+        });
+    </script>
+}

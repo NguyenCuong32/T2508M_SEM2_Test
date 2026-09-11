@@ -1,0 +1,66 @@
+@model WebApplication1.Models.Customer
+
+@{
+    ViewData["Title"] = "Đăng ký khách hàng mới (Question 2)";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <div class="badge bg-success mb-1">Question 2: Customer Register</div>
+                <h4 class="mb-0 fw-bold"><i class="bi bi-person-plus text-success me-2"></i>Đăng Ký Khách Hàng</h4>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted small mb-4">
+                    Khách hàng lần đầu sử dụng dịch vụ vui lòng nhập đầy đủ họ tên, số điện thoại và ngày đăng ký để lưu vào hệ thống (Bảng <code>Customers</code>).
+                </p>
+
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label fw-semibold">Họ và tên khách hàng <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                            <input asp-for="FullName" class="form-control" placeholder="Ví dụ: NguyenHung, Nguyen Van A..." />
+                        </div>
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PhoneNumber" class="form-label fw-semibold">Số điện thoại <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-telephone"></i></span>
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Ví dụ: 0987654321" />
+                        </div>
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="RegistrationDate" class="form-label fw-semibold">Ngày đăng ký (Register date) <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-calendar-event"></i></span>
+                            <input asp-for="RegistrationDate" type="datetime-local" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                        </div>
+                        <span asp-validation-for="RegistrationDate" class="text-danger small"></span>
+                        <div class="form-text">Mặc định là ngày giờ hiện tại.</div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                            <i class="bi bi-arrow-left me-1"></i> Danh sách
+                        </a>
+                        <button type="submit" class="btn btn-success rounded-pill px-4 fw-semibold">
+                            <i class="bi bi-check-lg me-1"></i> Đăng ký ngay
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

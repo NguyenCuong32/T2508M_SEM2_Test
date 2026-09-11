@@ -1,0 +1,56 @@
+@model WebApplication1.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Chỉnh sửa truyện tranh";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <div class="badge bg-warning text-dark mb-1">Question 1: Update</div>
+                <h4 class="mb-0 fw-bold"><i class="bi bi-pencil-square text-warning me-2"></i>Chỉnh Sửa Truyện Tranh</h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                    <input type="hidden" asp-for="ComicBookID" />
+
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label fw-semibold">Tên truyện <span class="text-danger">*</span></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Author" class="form-label fw-semibold">Tác giả</label>
+                        <input asp-for="Author" class="form-control" />
+                        <span asp-validation-for="Author" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="PricePerDay" class="form-label fw-semibold">Giá thuê mỗi ngày (VNĐ) <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input asp-for="PricePerDay" type="number" step="500" min="500" class="form-control" />
+                            <span class="input-group-text">VNĐ / ngày</span>
+                        </div>
+                        <span asp-validation-for="PricePerDay" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                            <i class="bi bi-arrow-left me-1"></i> Quay lại
+                        </a>
+                        <button type="submit" class="btn btn-warning rounded-pill px-4 fw-semibold text-dark">
+                            <i class="bi bi-check-lg me-1"></i> Cập nhật thay đổi
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

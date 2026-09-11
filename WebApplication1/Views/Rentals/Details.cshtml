@@ -1,0 +1,89 @@
+@model WebApplication1.Models.Rental
+
+@{
+    ViewData["Title"] = "Chi tiết phiếu thuê #" + Model.RentalID;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-receipt text-primary me-2"></i>Phiếu Thuê Truyện #@Model.RentalID</h4>
+                <span class="badge @(Model.Status == "Đang thuê" ? "badge-rental-active" : "badge-rental-completed") px-3 py-2 rounded-pill fs-6">
+                    @Model.Status
+                </span>
+            </div>
+            <div class="card-body p-4">
+                <!-- Customer Info -->
+                <div class="p-3 bg-light rounded-3 mb-4">
+                    <h6 class="fw-bold text-muted text-uppercase mb-2 small">Thông tin khách hàng</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Họ và tên:</strong> @Model.Customer?.FullName
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Số điện thoại:</strong> @Model.Customer?.PhoneNumber
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental Dates -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="border rounded-3 p-3">
+                            <span class="text-muted small d-block">Ngày thuê (Rental date)</span>
+                            <span class="fw-bold fs-6">@Model.RentalDate.ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="border rounded-3 p-3">
+                            <span class="text-muted small d-block">Ngày trả (Return date)</span>
+                            <span class="fw-bold fs-6">@Model.ReturnDate.ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental Details Table -->
+                <h6 class="fw-bold text-muted text-uppercase mb-2 small">Chi tiết sách thuê (RentalDetails)</h6>
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tên truyện (ComicBook)</th>
+                                <th>Tác giả</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-end">Đơn giá / ngày</th>
+                                <th class="text-end">Thời gian thuê</th>
+                                <th class="text-end">Thành tiền ước tính</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var detail in Model.RentalDetails)
+                            {
+                                int days = Math.Max(1, (Model.ReturnDate.Date - Model.RentalDate.Date).Days);
+                                decimal itemTotal = days * detail.Quantity * detail.PricePerDay;
+                                <tr>
+                                    <td class="fw-bold text-primary">@detail.ComicBook?.Title</td>
+                                    <td>@(detail.ComicBook?.Author ?? "—")</td>
+                                    <td class="text-center">@detail.Quantity</td>
+                                    <td class="text-end">@detail.PricePerDay.ToString("N0") đ</td>
+                                    <td class="text-end">@days ngày</td>
+                                    <td class="text-end fw-bold text-success">@itemTotal.ToString("N0") đ</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách
+                    </a>
+                    <a asp-action="Report" class="btn btn-outline-dark rounded-pill px-4">
+                        <i class="bi bi-bar-chart-line me-1"></i> Xem báo cáo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
