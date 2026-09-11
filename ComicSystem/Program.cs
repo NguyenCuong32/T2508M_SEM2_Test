@@ -9,6 +9,27 @@ using ComicSystem.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Ensure WebRootPath resolves properly even if executed directly from bin folder
+if (string.IsNullOrEmpty(builder.Environment.WebRootPath) || !Directory.Exists(builder.Environment.WebRootPath))
+{
+    var candidates = new[]
+    {
+        Path.Combine(builder.Environment.ContentRootPath, "wwwroot"),
+        Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, "..", "..", "..", "wwwroot")),
+        Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "wwwroot")),
+        Path.Combine(AppContext.BaseDirectory, "wwwroot")
+    };
+
+    foreach (var path in candidates)
+    {
+        if (Directory.Exists(path))
+        {
+            builder.Environment.WebRootPath = path;
+            break;
+        }
+    }
+}
+
 // 1. Database Context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
