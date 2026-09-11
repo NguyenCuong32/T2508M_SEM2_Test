@@ -65,7 +65,7 @@ namespace ComicSystem.Data
                 entity.HasOne(d => d.ComicBook)
                     .WithMany(p => p.RentalDetails)
                     .HasForeignKey(d => d.ComicBookID)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

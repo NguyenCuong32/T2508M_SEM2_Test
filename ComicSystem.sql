@@ -56,7 +56,7 @@ CREATE TABLE RentalDetails (
     Quantity INT NOT NULL DEFAULT 1,
     PricePerDay DECIMAL(10,2) NOT NULL,
     CONSTRAINT FK_RentalDetails_Rentals FOREIGN KEY (RentalID) REFERENCES Rentals(RentalID) ON DELETE CASCADE,
-    CONSTRAINT FK_RentalDetails_ComicBooks FOREIGN KEY (ComicBookID) REFERENCES ComicBooks(ComicBookID)
+    CONSTRAINT FK_RentalDetails_ComicBooks FOREIGN KEY (ComicBookID) REFERENCES ComicBooks(ComicBookID) ON DELETE CASCADE
 );
 GO
 

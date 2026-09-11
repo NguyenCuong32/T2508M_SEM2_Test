@@ -2,15 +2,6 @@
     ViewData["Title"] = "Trang chủ - ComicSystem";
 }
 
-<div class="p-5 mb-4 bg-light rounded-3 shadow-sm border">
-    <div class="container-fluid py-3">
-        <h1 class="display-5 fw-bold text-primary"><i class="bi bi-book-half me-2"></i>Hệ thống Quản lý Thuê Truyện Tranh (ComicSystem)</h1>
-        <p class="col-md-10 fs-5 text-secondary">
-            Bài thi môn <strong>Developing ASP.NET Core MVC Applications - SET01</strong>. Đáp ứng đầy đủ các yêu cầu quản lý truyện, đăng ký khách hàng, cho thuê truyện và lập báo cáo.
-        </p>
-    </div>
-</div>
-
 <div class="row g-4">
     <!-- Question 1 Card -->
     <div class="col-md-6 col-lg-3">
@@ -18,8 +9,7 @@
             <div class="card-body text-center d-flex flex-column justify-content-between">
                 <div>
                     <div class="display-6 text-primary mb-2"><i class="bi bi-journal-album"></i></div>
-                    <h5 class="card-title fw-bold">Câu 1: Quản lý Truyện</h5>
-                    <p class="card-text text-muted small">Thực hiện các thao tác Thêm, Xem, Sửa, Xóa (CRUD) danh sách truyện tranh vào bảng <code>ComicBooks</code>.</p>
+                    <h5 class="card-title fw-bold">Bài 1: Quản lý Truyện</h5>
                 </div>
                 <a asp-controller="ComicBooks" asp-action="Index" class="btn btn-primary w-100 mt-3">Quản lý ComicBooks</a>
             </div>
@@ -32,8 +22,7 @@
             <div class="card-body text-center d-flex flex-column justify-content-between">
                 <div>
                     <div class="display-6 text-success mb-2"><i class="bi bi-person-plus"></i></div>
-                    <h5 class="card-title fw-bold">Câu 2: Đăng ký Khách hàng</h5>
-                    <p class="card-text text-muted small">Form đăng ký cho khách hàng lần đầu sử dụng với Họ tên, SĐT, Ngày đăng ký vào bảng <code>Customers</code>.</p>
+                    <h5 class="card-title fw-bold">Bài 2: Đăng ký Khách hàng</h5>
                 </div>
                 <a asp-controller="Customers" asp-action="Register" class="btn btn-success w-100 mt-3">Đăng ký Customer</a>
             </div>
@@ -46,8 +35,7 @@
             <div class="card-body text-center d-flex flex-column justify-content-between">
                 <div>
                     <div class="display-6 text-info mb-2"><i class="bi bi-cart-plus"></i></div>
-                    <h5 class="card-title fw-bold">Câu 3: Cho thuê Truyện</h5>
-                    <p class="card-text text-muted small">Tạo đơn cho thuê truyện với Ngày thuê, Ngày trả, Số lượng, Đơn giá vào bảng <code>Rentals</code> & <code>RentalDetails</code>.</p>
+                    <h5 class="card-title fw-bold">Bài 3: Cho thuê Truyện</h5>
                 </div>
                 <a asp-controller="Rentals" asp-action="Create" class="btn btn-info text-white w-100 mt-3">Tạo phiếu cho thuê</a>
             </div>
@@ -60,8 +48,7 @@
             <div class="card-body text-center d-flex flex-column justify-content-between">
                 <div>
                     <div class="display-6 text-warning mb-2"><i class="bi bi-file-earmark-bar-graph"></i></div>
-                    <h5 class="card-title fw-bold">Câu 4: Báo cáo (Report)</h5>
-                    <p class="card-text text-muted small">Lập báo cáo tất cả lượt thuê từ Start date đến End date chuẩn mẫu bảng yêu cầu đề bài.</p>
+                    <h5 class="card-title fw-bold">Bài 4: Báo cáo</h5>
                 </div>
                 <a asp-controller="Reports" asp-action="Index" class="btn btn-warning w-100 mt-3">Xem báo cáo</a>
             </div>

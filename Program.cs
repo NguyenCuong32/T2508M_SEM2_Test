@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ComicSystem.Data;
+using ComicSystem.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,12 @@ builder.Services.AddControllersWithViews();
 // Register DbContext with SQL Server
 builder.Services.AddDbContext<ComicDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ComicConnection")));
+
+// Register Repositories (Dependency Injection)
+builder.Services.AddScoped<IComicBookRepository, ComicBookRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IRentalRepository, RentalRepository>();
+
 
 var app = builder.Build();
 

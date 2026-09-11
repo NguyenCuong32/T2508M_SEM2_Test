@@ -1,25 +1,24 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ComicSystem.Data;
 using ComicSystem.Models;
+using ComicSystem.Repositories;
 
 namespace ComicSystem.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly ComicDbContext _context;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomersController(ComicDbContext context)
+        public CustomersController(ICustomerRepository customerRepository)
         {
-            _context = context;
+            _customerRepository = customerRepository;
         }
 
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var customers = await _context.Customers.ToListAsync();
+            var customers = await _customerRepository.GetAllAsync();
             return View(customers);
         }
 
@@ -40,8 +39,7 @@ namespace ComicSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
+                await _customerRepository.AddAsync(customer);
                 TempData["SuccessMessage"] = $"Đăng ký thành công cho khách hàng: {customer.FullName}!";
                 return RedirectToAction(nameof(Index));
             }

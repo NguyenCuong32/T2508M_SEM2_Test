@@ -1,25 +1,23 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ComicSystem.Data;
 using ComicSystem.Models;
+using ComicSystem.Repositories;
 
 namespace ComicSystem.Controllers
 {
     public class ComicBooksController : Controller
     {
-        private readonly ComicDbContext _context;
+        private readonly IComicBookRepository _comicBookRepository;
 
-        public ComicBooksController(ComicDbContext context)
+        public ComicBooksController(IComicBookRepository comicBookRepository)
         {
-            _context = context;
+            _comicBookRepository = comicBookRepository;
         }
 
         // GET: ComicBooks
         public async Task<IActionResult> Index()
         {
-            var books = await _context.ComicBooks.ToListAsync();
+            var books = await _comicBookRepository.GetAllAsync();
             return View(books);
         }
 
@@ -31,8 +29,7 @@ namespace ComicSystem.Controllers
                 return NotFound();
             }
 
-            var comicBook = await _context.ComicBooks
-                .FirstOrDefaultAsync(m => m.ComicBookID == id);
+            var comicBook = await _comicBookRepository.GetByIdAsync(id.Value);
             if (comicBook == null)
             {
                 return NotFound();
@@ -54,8 +51,7 @@ namespace ComicSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(comicBook);
-                await _context.SaveChangesAsync();
+                await _comicBookRepository.AddAsync(comicBook);
                 TempData["SuccessMessage"] = "Thêm mới truyện thành công!";
                 return RedirectToAction(nameof(Index));
             }
@@ -70,7 +66,7 @@ namespace ComicSystem.Controllers
                 return NotFound();
             }
 
-            var comicBook = await _context.ComicBooks.FindAsync(id);
+            var comicBook = await _comicBookRepository.GetByIdAsync(id.Value);
             if (comicBook == null)
             {
                 return NotFound();
@@ -90,23 +86,13 @@ namespace ComicSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                if (!await _comicBookRepository.ExistsAsync(comicBook.ComicBookID))
                 {
-                    _context.Update(comicBook);
-                    await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Cập nhật truyện thành công!";
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ComicBookExists(comicBook.ComicBookID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
+                await _comicBookRepository.UpdateAsync(comicBook);
+                TempData["SuccessMessage"] = "Cập nhật truyện thành công!";
                 return RedirectToAction(nameof(Index));
             }
             return View(comicBook);
@@ -120,8 +106,7 @@ namespace ComicSystem.Controllers
                 return NotFound();
             }
 
-            var comicBook = await _context.ComicBooks
-                .FirstOrDefaultAsync(m => m.ComicBookID == id);
+            var comicBook = await _comicBookRepository.GetByIdAsync(id.Value);
             if (comicBook == null)
             {
                 return NotFound();
@@ -135,20 +120,9 @@ namespace ComicSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var comicBook = await _context.ComicBooks.FindAsync(id);
-            if (comicBook != null)
-            {
-                _context.ComicBooks.Remove(comicBook);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Xóa truyện thành công!";
-            }
-
+            await _comicBookRepository.DeleteAsync(id);
+            TempData["SuccessMessage"] = "Xóa truyện thành công!";
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ComicBookExists(int id)
-        {
-            return _context.ComicBooks.Any(e => e.ComicBookID == id);
         }
     }
 }

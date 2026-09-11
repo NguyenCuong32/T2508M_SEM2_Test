@@ -1,48 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ComicSystem.Data;
+using ComicSystem.Repositories;
 using ComicSystem.ViewModels;
 
 namespace ComicSystem.Controllers
 {
     public class ReportsController : Controller
     {
-        private readonly ComicDbContext _context;
+        private readonly IRentalRepository _rentalRepository;
 
-        public ReportsController(ComicDbContext context)
+        public ReportsController(IRentalRepository rentalRepository)
         {
-            _context = context;
+            _rentalRepository = rentalRepository;
         }
 
         // GET: Reports
         public async Task<IActionResult> Index(DateTime? startDate, DateTime? endDate)
         {
-            var query = _context.RentalDetails
-                .Include(rd => rd.Rental)
-                    .ThenInclude(r => r!.Customer)
-                .Include(rd => rd.ComicBook)
-                .AsQueryable();
-
-            if (startDate.HasValue)
-            {
-                query = query.Where(rd => rd.Rental!.RentalDate >= startDate.Value.Date);
-            }
-
-            if (endDate.HasValue)
-            {
-                // Include the full day of endDate
-                var endDay = endDate.Value.Date.AddDays(1).AddTicks(-1);
-                query = query.Where(rd => rd.Rental!.RentalDate <= endDay);
-            }
-
-            var rentalDetailsList = await query
-                .OrderBy(rd => rd.Rental!.RentalDate)
-                .ThenBy(rd => rd.RentalID)
-                .ToListAsync();
+            var rentalDetailsList = await _rentalRepository.GetReportDetailsAsync(startDate, endDate);
 
             var reportItems = new List<ReportItemViewModel>();
             int stt = 1;
