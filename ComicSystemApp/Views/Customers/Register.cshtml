@@ -1,0 +1,17 @@
+@model ComicSystemApp.DTOs.CustomerRegisterDTO
+
+<h2>Đăng ký khách hàng mới</h2>
+
+<form asp-action="Register" method="post">
+    <div class="mb-3">
+        <label>Họ tên khách hàng:</label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Số điện thoại:</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Xác nhận đăng ký</button>
+</form>

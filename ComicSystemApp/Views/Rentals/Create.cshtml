@@ -1,0 +1,27 @@
+@model ComicSystemApp.DTOs.RentalCreateDTO
+
+<h2>Tạo phiếu thuê truyện</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label>Chọn khách hàng:</label>
+        <select asp-for="CustomerID" class="form-control" asp-items="ViewBag.CustomerID"></select>
+    </div>
+    <div class="mb-3">
+        <label>Chọn sách:</label>
+        <select asp-for="ComicBookID" class="form-control" asp-items="ViewBag.ComicBookID"></select>
+    </div>
+    <div class="mb-3">
+        <label>Ngày thuê:</label>
+        <input asp-for="RentalDate" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Ngày trả:</label>
+        <input asp-for="ReturnDate" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Số lượng:</label>
+        <input asp-for="Quantity" type="number" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Xác nhận thuê</button>
+</form>

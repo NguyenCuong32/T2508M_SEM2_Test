@@ -1,0 +1,43 @@
+@model IEnumerable<ComicSystemApp.DTOs.RentalReportDTO>
+
+<h2>Báo cáo danh sách thuê sách</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-auto">
+        <label>Từ ngày:</label>
+        <input type="date" name="startDate" class="form-control" />
+    </div>
+    <div class="col-auto">
+        <label>Đến ngày:</label>
+        <input type="date" name="endDate" class="form-control" />
+    </div>
+    <div class="col-auto align-self-end">
+        <button type="submit" class="btn btn-primary">Lọc báo cáo</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Book name</th>
+            <th>Rental date</th>
+            <th>Return date</th>
+            <th>Customer name</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.No</td>
+                <td>@item.BookName</td>
+                <td>@item.RentalDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.ReturnDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.CustomerName</td>
+                <td>@item.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>

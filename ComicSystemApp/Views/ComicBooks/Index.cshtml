@@ -1,0 +1,26 @@
+@model IEnumerable<ComicSystemApp.DTOs.ComicBookDTO>
+
+<h2>Danh sách truyện</h2>
+<p><a asp-action="Create" class="btn btn-success">Thêm truyện mới</a></p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Giá thuê/ngày</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ComicBookID</td>
+                <td>@item.Title</td>
+                <td>@item.Author</td>
+                <td>@item.PricePerDay.ToString("N0") VNĐ</td>
+            </tr>
+        }
+    </tbody>
+</table>
