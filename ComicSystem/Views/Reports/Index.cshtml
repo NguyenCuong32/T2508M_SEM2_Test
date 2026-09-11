@@ -1,0 +1,143 @@
+@model ComicSystem.ViewModels.ReportFilterViewModel
+
+@{
+    ViewData["Title"] = "Báo Cáo Thuê Truyện Tranh (Question 4)";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Báo cáo</li>
+            </ol>
+        </nav>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-info text-dark">Question 4 - 3 Điểm</span>
+            <h2 class="fw-bold mb-0 text-dark">Báo Cáo Thuê Truyện Theo Khoảng Thời Gian</h2>
+        </div>
+    </div>
+    <button onclick="window.print()" class="btn btn-outline-secondary rounded-pill d-print-none">
+        <i class="bi bi-printer me-1"></i> In báo cáo
+    </button>
+</div>
+
+<!-- Bộ lọc ngày -->
+<div class="card border-0 shadow-sm mb-4 d-print-none">
+    <div class="card-body p-4">
+        <form asp-action="Index" method="get" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label asp-for="StartDate" class="form-label fw-semibold">Từ ngày (Start date):</label>
+                <input asp-for="StartDate" type="date" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EndDate" class="form-label fw-semibold">Đến ngày (End date):</label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+            </div>
+            <div class="col-md-6 d-flex gap-2">
+                <button type="submit" class="btn btn-primary px-4 rounded-pill">
+                    <i class="bi bi-funnel me-1"></i> Lọc dữ liệu
+                </button>
+                <a asp-action="Index" asp-route-startDate="2024-10-01" asp-route-endDate="2024-10-31" class="btn btn-outline-info rounded-pill">
+                    <i class="bi bi-calendar-event me-1"></i> Tháng 10/2024 (Đề thi)
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Thống kê tóm tắt -->
+<div class="row g-3 mb-4 d-print-none">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3 bg-white">
+            <div class="text-muted small text-uppercase fw-semibold">Số lượt thuê trong kỳ</div>
+            <h3 class="fw-bold text-primary mb-0 mt-1">@Model.TotalRecords lượt</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3 bg-white">
+            <div class="text-muted small text-uppercase fw-semibold">Tổng số cuốn truyện đã thuê</div>
+            <h3 class="fw-bold text-success mb-0 mt-1">@Model.TotalQuantity cuốn</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3 bg-white">
+            <div class="text-muted small text-uppercase fw-semibold">Doanh thu dự kiến</div>
+            <h3 class="fw-bold text-warning mb-0 mt-1">@Model.TotalEstimatedRevenue.ToString("N0") VNĐ</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Bảng hiển thị báo cáo chuẩn đề thi -->
+<div class="card border-0 shadow-sm overflow-hidden">
+    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+        <span class="fw-bold text-dark">
+            <i class="bi bi-table text-primary me-2"></i>Kết quả thống kê từ @Model.StartDate.ToString("dd/MM/yyyy") đến @Model.EndDate.ToString("dd/MM/yyyy")
+        </span>
+        <span class="badge bg-light text-muted border">Mẫu chuẩn đề bài FPT Aptech SET01</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-custom align-middle mb-0">
+            <thead class="table-light text-center">
+                <tr>
+                    <th style="width: 80px;">No</th>
+                    <th>Book name</th>
+                    <th>Rental date</th>
+                    <th>Return date</th>
+                    <th>Customer name</th>
+                    <th style="width: 120px;">Quantity</th>
+                    <th class="d-print-none" style="width: 150px;">PricePerDay</th>
+                    <th class="d-print-none" style="width: 180px;">Estimated Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Items != null && Model.Items.Any())
+                {
+                    foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td class="text-center fw-bold text-muted">@item.No</td>
+                            <td class="fw-semibold text-dark">@item.BookName</td>
+                            <td class="text-center">@item.RentalDate.ToString("dd/MM/yyyy")</td>
+                            <td class="text-center">@item.ReturnDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <span class="fw-semibold text-dark">@item.CustomerName</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-primary-subtle text-primary fs-6 px-3 py-1">@item.Quantity</span>
+                            </td>
+                            <td class="text-end d-print-none text-muted">
+                                @item.PricePerDay.ToString("N0") VNĐ
+                            </td>
+                            <td class="text-end d-print-none fw-bold text-success">
+                                @item.EstimatedTotal.ToString("N0") VNĐ
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">
+                            <i class="bi bi-clipboard-x fs-1 text-secondary d-block mb-2"></i>
+                            Không có đơn thuê truyện nào trong khoảng thời gian từ 
+                            <strong>@Model.StartDate.ToString("dd/MM/yyyy")</strong> đến 
+                            <strong>@Model.EndDate.ToString("dd/MM/yyyy")</strong>.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            @if (Model.Items != null && Model.Items.Any())
+            {
+                <tfoot class="table-light fw-bold">
+                    <tr>
+                        <td colspan="5" class="text-end text-uppercase ps-3">Tổng Cộng:</td>
+                        <td class="text-center fs-6 text-primary">@Model.TotalQuantity</td>
+                        <td class="d-print-none"></td>
+                        <td class="text-end d-print-none fs-6 text-success">@Model.TotalEstimatedRevenue.ToString("N0") VNĐ</td>
+                    </tr>
+                </tfoot>
+            }
+        </table>
+    </div>
+</div>

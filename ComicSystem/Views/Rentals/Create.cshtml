@@ -1,0 +1,293 @@
+@model ComicSystem.ViewModels.RentalCreateViewModel
+
+@{
+    ViewData["Title"] = "Tạo Đơn Thuê Truyện Tranh (Question 3)";
+    var booksList = Model.AvailableBooks?.ToList() ?? new List<ComicSystem.Models.ComicBook>();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index">Đơn thuê</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tạo mới</li>
+            </ol>
+        </nav>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-warning text-dark">Question 3 - 5 Điểm</span>
+            <h2 class="fw-bold mb-0 text-dark">Tạo Phiếu Thuê Truyện Mới</h2>
+        </div>
+    </div>
+</div>
+
+<form asp-action="Create" method="post" id="rentalForm">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4" role="alert"></div>
+
+    <div class="row g-4">
+        <!-- Thông tin chung đơn thuê -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h5 class="fw-bold mb-0 text-primary">
+                        <i class="bi bi-info-circle me-1"></i> Thông Tin Khách &amp; Thời Gian
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label asp-for="CustomerID" class="form-label fw-semibold mb-0"></label>
+                            <a asp-controller="Customers" asp-action="Register" target="_blank" class="small text-decoration-none">
+                                <i class="bi bi-person-plus"></i> Đăng ký KH mới
+                            </a>
+                        </div>
+                        <select asp-for="CustomerID" asp-items="Model.CustomerList" class="form-select select2" required>
+                            <option value="">-- Chọn khách hàng thuê sách --</option>
+                        </select>
+                        <span asp-validation-for="CustomerID" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="RentalDate" class="form-label fw-semibold"></label>
+                        <input asp-for="RentalDate" type="date" class="form-control" id="rentalDateInput" required />
+                        <span asp-validation-for="RentalDate" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ReturnDate" class="form-label fw-semibold"></label>
+                        <input asp-for="ReturnDate" type="date" class="form-control" id="returnDateInput" required />
+                        <span asp-validation-for="ReturnDate" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Status" class="form-label fw-semibold"></label>
+                        <input asp-for="Status" class="form-control bg-light" readonly value="Đang thuê" />
+                    </div>
+
+                    <!-- Tóm tắt chi phí dự kiến -->
+                    <div class="p-3 bg-light rounded-3 border">
+                        <h6 class="fw-bold text-dark mb-2">Ước tính đơn thuê</h6>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Thời gian thuê:</span>
+                            <span id="summaryDays" class="fw-semibold text-dark">7 ngày</span>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Tổng số lượng sách:</span>
+                            <span id="summaryTotalBooks" class="fw-semibold text-dark">0 cuốn</span>
+                        </div>
+                        <hr class="my-2" />
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-dark">Tổng tạm tính:</span>
+                            <span id="summaryGrandTotal" class="fw-bold text-success fs-5">0 VNĐ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách sách thuê động -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0 text-dark">
+                        <i class="bi bi-book me-1 text-warning"></i> Danh Sách Truyện Đăng Ký Thuê
+                    </h5>
+                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" id="btnAddRow">
+                        <i class="bi bi-plus-circle me-1"></i> Thêm cuốn truyện
+                    </button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="tableItems">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 40%;">Tên Truyện Tranh</th>
+                                    <th style="width: 20%;" class="text-end">Đơn Giá / Ngày</th>
+                                    <th style="width: 15%;" class="text-center">Số Lượng</th>
+                                    <th style="width: 20%;" class="text-end">Thành Tiền</th>
+                                    <th style="width: 5%;" class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemsBody">
+                                <!-- Dynamic rows rendered by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="noItemsAlert" class="text-center py-5 text-muted">
+                        <i class="bi bi-cart-x fs-1 text-secondary d-block mb-2"></i>
+                        Chưa có truyện tranh nào được chọn. Hãy bấm nút <strong>"+ Thêm cuốn truyện"</strong> ở trên!
+                    </div>
+                </div>
+                <div class="card-footer bg-white p-3 d-flex justify-content-end gap-2 border-top">
+                    <a asp-action="Index" class="btn btn-light px-4">Quay lại danh sách</a>
+                    <button type="submit" class="btn btn-warning px-4 text-dark fw-bold" id="btnSubmit">
+                        <i class="bi bi-check2-circle me-1"></i> Xác Nhận Thuê Sách
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Data payload for JavaScript -->
+<script type="application/json" id="booksDataJson">
+    @Html.Raw(System.Text.Json.JsonSerializer.Serialize(booksList))
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        const books = JSON.parse(document.getElementById('booksDataJson').textContent);
+        const itemsBody = document.getElementById('itemsBody');
+        const noItemsAlert = document.getElementById('noItemsAlert');
+        const rentalDateInput = document.getElementById('rentalDateInput');
+        const returnDateInput = document.getElementById('returnDateInput');
+        let rowIndex = 0;
+
+        function getRentalDays() {
+            const start = new Date(rentalDateInput.value);
+            const end = new Date(returnDateInput.value);
+            if (isNaN(start) || isNaN(end)) return 1;
+            const diffTime = end - start;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays <= 0 ? 1 : diffDays;
+        }
+
+        function updateAllCalculations() {
+            const days = getRentalDays();
+            document.getElementById('summaryDays').textContent = days + " ngày";
+
+            let totalQuantity = 0;
+            let grandTotal = 0;
+
+            const rows = itemsBody.querySelectorAll('tr');
+            if (rows.length === 0) {
+                noItemsAlert.style.display = 'block';
+            } else {
+                noItemsAlert.style.display = 'none';
+            }
+
+            rows.forEach(row => {
+                const select = row.querySelector('.book-select');
+                const qtyInput = row.querySelector('.qty-input');
+                const priceSpan = row.querySelector('.price-span');
+                const priceInput = row.querySelector('.price-input');
+                const lineTotalSpan = row.querySelector('.line-total');
+
+                const selectedOption = select.options[select.selectedIndex];
+                const price = parseFloat(selectedOption?.dataset?.price || 0);
+                const qty = parseInt(qtyInput.value || 1);
+
+                priceSpan.textContent = price.toLocaleString('vi-VN') + " đ";
+                priceInput.value = price;
+
+                const lineTotal = price * qty * days;
+                lineTotalSpan.textContent = lineTotal.toLocaleString('vi-VN') + " đ";
+
+                if (select.value && select.value !== "0") {
+                    totalQuantity += qty;
+                    grandTotal += lineTotal;
+                }
+            });
+
+            document.getElementById('summaryTotalBooks').textContent = totalQuantity + " cuốn";
+            document.getElementById('summaryGrandTotal').textContent = grandTotal.toLocaleString('vi-VN') + " VNĐ";
+        }
+
+        function addRow(selectedBookId = 0, defaultQty = 1) {
+            const idx = rowIndex++;
+            const tr = document.createElement('tr');
+            tr.dataset.index = idx;
+
+            let optionsHtml = '<option value="">-- Chọn truyện --</option>';
+            books.forEach(b => {
+                const isSelected = (b.ComicBookID === selectedBookId) ? 'selected' : '';
+                optionsHtml += `<option value="${b.ComicBookID}" data-price="${b.PricePerDay}" ${isSelected}>${b.Title} (${b.Author})</option>`;
+            });
+
+            tr.innerHTML = `
+                <td class="ps-3">
+                    <select name="Items[${idx}].ComicBookID" class="form-select form-select-sm book-select" required>
+                        ${optionsHtml}
+                    </select>
+                </td>
+                <td class="text-end">
+                    <span class="price-span fw-semibold text-secondary">0 đ</span>
+                    <input type="hidden" name="Items[${idx}].PricePerDay" class="price-input" value="0" />
+                </td>
+                <td class="text-center">
+                    <input type="number" name="Items[${idx}].Quantity" class="form-control form-control-sm text-center qty-input" 
+                           value="${defaultQty}" min="1" max="100" required />
+                </td>
+                <td class="text-end fw-bold text-success">
+                    <span class="line-total">0 đ</span>
+                </td>
+                <td class="text-center pe-3">
+                    <button type="button" class="btn btn-sm btn-outline-danger btn-remove" title="Xóa dòng này">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            itemsBody.appendChild(tr);
+
+            // Bind events
+            tr.querySelector('.book-select').addEventListener('change', updateAllCalculations);
+            tr.querySelector('.qty-input').addEventListener('input', updateAllCalculations);
+            tr.querySelector('.btn-remove').addEventListener('click', function() {
+                tr.remove();
+                reindexRows();
+                updateAllCalculations();
+            });
+
+            updateAllCalculations();
+        }
+
+        function reindexRows() {
+            const rows = itemsBody.querySelectorAll('tr');
+            rows.forEach((row, newIdx) => {
+                row.dataset.index = newIdx;
+                const select = row.querySelector('.book-select');
+                const qtyInput = row.querySelector('.qty-input');
+                const priceInput = row.querySelector('.price-input');
+
+                select.name = `Items[${newIdx}].ComicBookID`;
+                qtyInput.name = `Items[${newIdx}].Quantity`;
+                priceInput.name = `Items[${newIdx}].PricePerDay`;
+            });
+            rowIndex = rows.length;
+        }
+
+        document.getElementById('btnAddRow').addEventListener('click', () => addRow());
+        rentalDateInput.addEventListener('change', updateAllCalculations);
+        returnDateInput.addEventListener('change', updateAllCalculations);
+
+        // Add 1 default row on load
+        if (books.length > 0) {
+            addRow(books[0].ComicBookID, 1);
+        } else {
+            addRow();
+        }
+
+        document.getElementById('rentalForm').addEventListener('submit', function(e) {
+            const rows = itemsBody.querySelectorAll('tr');
+            if (rows.length === 0) {
+                e.preventDefault();
+                alert('Vui lòng thêm ít nhất một cuốn truyện để thuê.');
+                return false;
+            }
+            let hasValidItem = false;
+            rows.forEach(r => {
+                const val = r.querySelector('.book-select').value;
+                if (val && val !== "0") hasValidItem = true;
+            });
+            if (!hasValidItem) {
+                e.preventDefault();
+                alert('Vui lòng chọn truyện tranh hợp lệ.');
+                return false;
+            }
+        });
+    </script>
+}

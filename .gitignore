@@ -1,0 +1,11 @@
+## Ignore Visual Studio / .NET Core temporary files
+bin/
+obj/
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+_ReSharper*/
+*.suo
+*.ide/
+appsettings.Development.json

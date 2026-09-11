@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ComicSystem (comicsys.com)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #4f46e5 !important;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+        }
+        .nav-link {
+            font-weight: 500;
+            color: #475569 !important;
+            padding: 0.5rem 0.9rem !important;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #4f46e5 !important;
+            background-color: #eef2ff;
+        }
+        .card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            background-color: #4f46e5;
+            border-color: #4f46e5;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca;
+            border-color: #4338ca;
+        }
+        .table-custom th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .badge-status {
+            font-size: 0.85rem;
+            padding: 0.35em 0.65em;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light sticky-top py-3">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-book-half fs-3 text-primary"></i>
+                    <span>ComicSystem</span>
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-7 fw-normal ms-1">v1.0</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door me-1"></i> Trang chủ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="ComicBooks" asp-action="Index">
+                                <i class="bi bi-journal-text me-1"></i> 1. Quản lý Truyện
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Customers" asp-action="Index">
+                                <i class="bi bi-people me-1"></i> 2. Khách hàng
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Rentals" asp-action="Index">
+                                <i class="bi bi-cart-check me-1"></i> 3. Thuê truyện
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Reports" asp-action="Index">
+                                <i class="bi bi-bar-chart-line me-1"></i> 4. Báo cáo
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex gap-2">
+                        <a asp-controller="Customers" asp-action="Register" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                            <i class="bi bi-person-plus me-1"></i> Đăng ký KH
+                        </a>
+                        <a asp-controller="Rentals" asp-action="Create" class="btn btn-primary btn-sm rounded-pill px-3">
+                            <i class="bi bi-plus-circle me-1"></i> Thuê sách mới
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container py-4">
+        <partial name="_Alerts" />
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top py-4 bg-white mt-5">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <p class="col-md-6 mb-0 text-muted small">
+                &copy; @DateTime.Now.Year ComicSystem (comicsys.com) - FPT Aptech SEM Test Exam (SET01)
+            </p>
+            <ul class="nav col-md-6 justify-content-end list-unstyled d-flex gap-3 small text-muted">
+                <li><i class="bi bi-check2-circle text-success"></i> ASP.NET Core 8 MVC</li>
+                <li><i class="bi bi-check2-circle text-success"></i> SOLID Architecture</li>
+                <li><i class="bi bi-check2-circle text-success"></i> SQL Server</li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

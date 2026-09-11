@@ -1,0 +1,51 @@
+@model ComicSystem.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Chi tiết Truyện: " + Model.Title;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="d-flex align-items-center mb-3">
+            <a asp-action="Index" class="btn btn-sm btn-outline-secondary rounded-circle me-3 p-2 lh-1">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <h3 class="fw-bold mb-0">Thông Tin Truyện Tranh</h3>
+        </div>
+
+        <div class="card border-0 shadow-sm overflow-hidden">
+            <div class="card-header bg-primary text-white py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fs-5 fw-bold">@Model.Title</span>
+                    <span class="badge bg-white text-primary">Mã: #@Model.ComicBookID</span>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 text-muted">Tên sách:</dt>
+                    <dd class="col-sm-8 fw-semibold fs-5 text-dark">@Model.Title</dd>
+
+                    <dt class="col-sm-4 text-muted mt-3">Tác giả:</dt>
+                    <dd class="col-sm-8 mt-3">
+                        <i class="bi bi-person-circle text-secondary me-1"></i>@Model.Author
+                    </dd>
+
+                    <dt class="col-sm-4 text-muted mt-3">Giá thuê theo ngày:</dt>
+                    <dd class="col-sm-8 mt-3">
+                        <span class="badge bg-success-subtle text-success fs-6 fw-bold px-3 py-2">
+                            @Model.PricePerDay.ToString("N0") VNĐ / ngày
+                        </span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-light p-3 d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Quay lại
+                </a>
+                <a asp-action="Edit" asp-route-id="@Model.ComicBookID" class="btn btn-warning text-dark fw-semibold">
+                    <i class="bi bi-pencil-square me-1"></i> Chỉnh sửa
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

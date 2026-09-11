@@ -1,0 +1,110 @@
+@model IEnumerable<ComicSystem.Models.Rental>
+
+@{
+    ViewData["Title"] = "Quản lý Thuê Truyện (Rentals)";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Đơn thuê truyện</li>
+            </ol>
+        </nav>
+        <h2 class="fw-bold mb-0 text-dark">
+            <i class="bi bi-cart-check text-warning me-2"></i>Danh Sách Đơn Thuê Truyện
+        </h2>
+    </div>
+    <a asp-action="Create" class="btn btn-warning rounded-pill px-3 shadow-sm fw-semibold text-dark">
+        <i class="bi bi-plus-lg me-1"></i> Tạo đơn thuê mới (Q3)
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover table-custom align-middle mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4">Mã Đơn</th>
+                    <th>Khách Hàng</th>
+                    <th>Ngày Thuê</th>
+                    <th>Ngày Hẹn Trả</th>
+                    <th>Đầu Truyện &amp; Số Lượng</th>
+                    <th>Trạng Thái</th>
+                    <th class="text-center pe-4" style="width: 200px;">Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var rental in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted">#@rental.RentalID</td>
+                            <td>
+                                <div class="fw-bold text-dark">@rental.Customer?.FullName</div>
+                                <small class="text-muted"><i class="bi bi-telephone me-1"></i>@rental.Customer?.PhoneNumber</small>
+                            </td>
+                            <td>
+                                <i class="bi bi-calendar3 text-primary me-1"></i>
+                                @rental.RentalDate.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                <i class="bi bi-calendar-check text-danger me-1"></i>
+                                @rental.ReturnDate.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border me-1">
+                                    @rental.RentalDetails.Count đầu sách
+                                </span>
+                                <span class="badge bg-primary-subtle text-primary">
+                                    Tổng: @rental.RentalDetails.Sum(d => d.Quantity) cuốn
+                                </span>
+                            </td>
+                            <td>
+                                @if (rental.Status == "Đang thuê")
+                                {
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle badge-status">
+                                        <i class="bi bi-clock me-1"></i>Đang thuê
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle badge-status">
+                                        <i class="bi bi-check-all me-1"></i>Đã trả
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-center pe-4">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a asp-action="Details" asp-route-id="@rental.RentalID" class="btn btn-outline-info" title="Xem chi tiết đơn thuê">
+                                        <i class="bi bi-eye"></i> Chi tiết
+                                    </a>
+                                    @if (rental.Status == "Đang thuê")
+                                    {
+                                        <form asp-action="Return" asp-route-id="@rental.RentalID" method="post" class="d-inline" onsubmit="return confirm('Xác nhận khách hàng đã trả toàn bộ truyện?');">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-outline-success ms-1" title="Đánh dấu đã trả">
+                                                <i class="bi bi-arrow-return-left"></i> Trả sách
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                            Chưa có phiếu thuê truyện nào trong hệ thống.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

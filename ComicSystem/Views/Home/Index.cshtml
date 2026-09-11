@@ -1,0 +1,167 @@
+@{
+    ViewData["Title"] = "Bảng điều khiển ComicSystem";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="p-5 text-white rounded-4 shadow-sm" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge bg-white text-primary fw-semibold px-3 py-2 rounded-pill mb-3">
+                        <i class="bi bi-star-fill text-warning me-1"></i> FPT Aptech - Exam Paper SET01
+                    </span>
+                    <h1 class="display-5 fw-bold mb-3">Hệ Thống Quản Lý Thuê Truyện Tranh</h1>
+                    <p class="lead mb-4 text-white-50">
+                        Hệ thống phát triển trên nền tảng <strong>ASP.NET Core 8 MVC</strong> tuân thủ <strong>5 nguyên lý SOLID</strong>, kết nối cơ sở dữ liệu SQL Server với đầy đủ các nghiệp vụ quản lý, đăng ký, cho thuê và báo cáo doanh thu.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a asp-controller="Rentals" asp-action="Create" class="btn btn-light text-primary fw-semibold px-4 py-2 rounded-pill">
+                            <i class="bi bi-cart-plus me-1"></i> Tạo đơn thuê ngay
+                        </a>
+                        <a asp-controller="Reports" asp-action="Index" class="btn btn-outline-light fw-semibold px-4 py-2 rounded-pill">
+                            <i class="bi bi-file-earmark-bar-graph me-1"></i> Xem báo cáo theo ngày
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center d-none d-lg-block">
+                    <i class="bi bi-book text-white-50" style="font-size: 10rem; opacity: 0.25;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Counter -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <div class="card p-3 h-100 bg-white border-0 shadow-sm">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small text-uppercase fw-semibold">Đầu truyện tranh</span>
+                    <h2 class="fw-bold mb-0 mt-1 text-primary">@ViewBag.TotalBooks</h2>
+                </div>
+                <div class="bg-primary-subtle text-primary p-3 rounded-circle">
+                    <i class="bi bi-journal-album fs-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card p-3 h-100 bg-white border-0 shadow-sm">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small text-uppercase fw-semibold">Khách hàng</span>
+                    <h2 class="fw-bold mb-0 mt-1 text-success">@ViewBag.TotalCustomers</h2>
+                </div>
+                <div class="bg-success-subtle text-success p-3 rounded-circle">
+                    <i class="bi bi-people-fill fs-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card p-3 h-100 bg-white border-0 shadow-sm">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small text-uppercase fw-semibold">Đơn đang thuê</span>
+                    <h2 class="fw-bold mb-0 mt-1 text-warning">@ViewBag.ActiveRentals</h2>
+                </div>
+                <div class="bg-warning-subtle text-warning p-3 rounded-circle">
+                    <i class="bi bi-clock-history fs-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card p-3 h-100 bg-white border-0 shadow-sm">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small text-uppercase fw-semibold">Tổng lượt thuê</span>
+                    <h2 class="fw-bold mb-0 mt-1 text-info">@ViewBag.TotalRentals</h2>
+                </div>
+                <div class="bg-info-subtle text-info p-3 rounded-circle">
+                    <i class="bi bi-receipt fs-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Exam Questions Grid -->
+<div class="row g-4">
+    <!-- Q1 -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge bg-primary px-2 py-1 rounded">Question 1</span>
+                    <span class="badge bg-secondary-subtle text-dark">3 Điểm</span>
+                </div>
+                <h5 class="card-title fw-bold text-dark">CRUD Truyện tranh</h5>
+                <p class="card-text text-muted small flex-grow-1">
+                    Trang quản lý danh sách, thêm mới, xem chi tiết, chỉnh sửa và xóa truyện tranh trong bảng <code>ComicBooks</code>.
+                </p>
+                <a asp-controller="ComicBooks" asp-action="Index" class="btn btn-outline-primary btn-sm rounded-pill mt-3">
+                    Vào quản lý truyện <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge bg-success px-2 py-1 rounded">Question 2</span>
+                    <span class="badge bg-secondary-subtle text-dark">3 Điểm</span>
+                </div>
+                <h5 class="card-title fw-bold text-dark">Đăng ký khách hàng</h5>
+                <p class="card-text text-muted small flex-grow-1">
+                    Khách hàng đăng ký lần đầu: Họ tên, Số điện thoại (validate chuẩn), Ngày đăng ký lưu vào bảng <code>Customers</code>.
+                </p>
+                <a asp-controller="Customers" asp-action="Register" class="btn btn-outline-success btn-sm rounded-pill mt-3">
+                    Đăng ký khách mới <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge bg-warning text-dark px-2 py-1 rounded">Question 3</span>
+                    <span class="badge bg-secondary-subtle text-dark">5 Điểm</span>
+                </div>
+                <h5 class="card-title fw-bold text-dark">Thuê truyện tranh</h5>
+                <p class="card-text text-muted small flex-grow-1">
+                    Trang tạo phiếu thuê: Khách hàng, ngày thuê, ngày hẹn trả, thêm động nhiều truyện, số lượng, lưu vào <code>Rentals</code> &amp; <code>RentalDetails</code>.
+                </p>
+                <a asp-controller="Rentals" asp-action="Create" class="btn btn-outline-warning text-dark btn-sm rounded-pill mt-3">
+                    Tạo đơn thuê <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge bg-info text-dark px-2 py-1 rounded">Question 4</span>
+                    <span class="badge bg-secondary-subtle text-dark">3 Điểm</span>
+                </div>
+                <h5 class="card-title fw-bold text-dark">Báo cáo theo ngày</h5>
+                <p class="card-text text-muted small flex-grow-1">
+                    Báo cáo tất cả truyện đã thuê từ ngày đến ngày theo đúng mẫu bảng đề bài (Book name, Rental date, Return date, Customer, Quantity).
+                </p>
+                <a asp-controller="Reports" asp-action="Index" class="btn btn-outline-info text-dark btn-sm rounded-pill mt-3">
+                    Xem báo cáo <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

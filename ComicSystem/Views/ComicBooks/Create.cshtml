@@ -1,0 +1,56 @@
+@model ComicSystem.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Thêm mới Truyện Tranh";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="d-flex align-items-center mb-3">
+            <a asp-action="Index" class="btn btn-sm btn-outline-secondary rounded-circle me-3 p-2 lh-1">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <h3 class="fw-bold mb-0">Thêm Mới Truyện Tranh</h3>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label fw-semibold"></label>
+                        <input asp-for="Title" class="form-control" placeholder="Ví dụ: Thám Tử Lừng Danh Conan" />
+                        <span asp-validation-for="Title" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Author" class="form-label fw-semibold"></label>
+                        <input asp-for="Author" class="form-control" placeholder="Ví dụ: Gosho Aoyama" />
+                        <span asp-validation-for="Author" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="PricePerDay" class="form-label fw-semibold"></label>
+                        <div class="input-group">
+                            <input asp-for="PricePerDay" type="number" step="500" class="form-control" placeholder="5000" />
+                            <span class="input-group-text">VNĐ / ngày</span>
+                        </div>
+                        <span asp-validation-for="PricePerDay" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-action="Index" class="btn btn-light px-4">Hủy bỏ</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-check2-circle me-1"></i> Lưu truyện
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
