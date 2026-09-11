@@ -1,0 +1,90 @@
+@model ACMF_Final.Web.ViewModels.CreateRentalViewModel
+
+@{
+    ViewData["Title"] = "Create Rental";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-cart-plus"></i> Create New Rental</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="CustomerID" class="form-label"></label>
+                                <select asp-for="CustomerID" asp-items="Model.CustomerList" class="form-select">
+                                    <option value="">-- Select Customer --</option>
+                                </select>
+                                <span asp-validation-for="CustomerID" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="RentalDate" class="form-label"></label>
+                                <input asp-for="RentalDate" class="form-control" type="date" />
+                                <span asp-validation-for="RentalDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="ReturnDate" class="form-label"></label>
+                                <input asp-for="ReturnDate" class="form-control" type="date" />
+                                <span asp-validation-for="ReturnDate" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <h5 class="mb-3"><i class="bi bi-book"></i> Select Comic Books</h5>
+
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 50px;">Select</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Price/Day</th>
+                                    <th style="width: 120px;">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="hidden" asp-for="Items[i].ComicBookID" />
+                                            <input type="hidden" asp-for="Items[i].Title" />
+                                            <input type="hidden" asp-for="Items[i].Author" />
+                                            <input type="hidden" asp-for="Items[i].PricePerDay" />
+                                            <input type="checkbox" asp-for="Items[i].IsSelected" class="form-check-input" />
+                                        </td>
+                                        <td><strong>@Model.Items[i].Title</strong></td>
+                                        <td>@Model.Items[i].Author</td>
+                                        <td>@Model.Items[i].PricePerDay.ToString("N0") VND</td>
+                                        <td>
+                                            <input asp-for="Items[i].Quantity" class="form-control form-control-sm" type="number" min="1" max="100" />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <div class="d-flex justify-content-between mt-3">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Create Rental
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

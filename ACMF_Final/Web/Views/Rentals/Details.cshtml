@@ -1,0 +1,78 @@
+@model ACMF_Final.Domain.Entities.Rental
+
+@{
+    ViewData["Title"] = "Rental Details";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="bi bi-eye"></i> Rental Details - #@Model.RentalID</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <strong>Customer:</strong><br />
+                            @Model.Customer?.FullName
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Rental Date:</strong><br />
+                            @Model.RentalDate.ToString("dd/MM/yyyy")
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Return Date:</strong><br />
+                            @Model.ReturnDate.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+
+                    <h5><i class="bi bi-book"></i> Rented Comics</h5>
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Comic Title</th>
+                                <th>Quantity</th>
+                                <th>Price/Day</th>
+                                <th>Days</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int index = 1;
+                                decimal grandTotal = 0;
+                            }
+                            @foreach (var detail in Model.RentalDetails)
+                            {
+                                var days = (decimal)(Model.ReturnDate - Model.RentalDate).TotalDays;
+                                var subtotal = detail.Quantity * detail.PricePerDay * days;
+                                grandTotal += subtotal;
+                                <tr>
+                                    <td>@index</td>
+                                    <td><strong>@detail.ComicBook?.Title</strong></td>
+                                    <td>@detail.Quantity</td>
+                                    <td>@detail.PricePerDay.ToString("N0") VND</td>
+                                    <td>@days</td>
+                                    <td>@subtotal.ToString("N0") VND</td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-warning">
+                                <td colspan="5" class="text-end"><strong>Grand Total:</strong></td>
+                                <td><strong>@grandTotal.ToString("N0") VND</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
