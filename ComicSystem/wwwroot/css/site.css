@@ -1,0 +1,274 @@
+/* ===== BASE ===== */
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html { font-size: 15px; }
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f4f8;
+    color: #1e293b;
+    margin-bottom: 60px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== NAVBAR ===== */
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+/* ===== CARDS ===== */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* ===== TABLES ===== */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead.table-dark th {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0d9488 100%) !important;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.85rem 1rem;
+}
+
+.table tbody td {
+    padding: 0.8rem 1rem;
+    vertical-align: middle;
+    border-color: #e2e8f0;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: rgba(13, 148, 136, 0.03);
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: rgba(13, 148, 136, 0.08);
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.45rem 1rem;
+    transition: all 0.25s ease;
+    border: none;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0d9488 100%);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #172e4d 0%, #0b7e74 100%);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #047857 0%, #0d9f6e 100%);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    color: #fff;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    color: #fff;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #94a3b8;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #64748b;
+    color: #fff;
+}
+
+.btn-sm {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+}
+
+/* ===== FORMS ===== */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1.5px solid #cbd5e1;
+    padding: 0.6rem 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #0d9488;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #475569;
+    margin-bottom: 0.4rem;
+}
+
+.input-group-text {
+    border-radius: 8px 0 0 8px;
+    border: 1.5px solid #cbd5e1;
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #475569;
+}
+
+/* ===== BADGES ===== */
+.badge {
+    font-weight: 500;
+    font-size: 0.78rem;
+    padding: 0.4em 0.7em;
+    border-radius: 6px;
+}
+
+.badge.bg-info {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+}
+
+.badge.bg-success {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+}
+
+/* ===== ALERTS ===== */
+.alert-success {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    border: none;
+    color: #065f46;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+/* ===== HEADINGS ===== */
+h2 {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 1.6rem;
+}
+
+h2 i {
+    color: #0d9488;
+}
+
+h2.text-danger i {
+    color: #ef4444;
+}
+
+/* ===== CARD BORDERS ===== */
+.card.border-danger {
+    border: 2px solid #ef4444 !important;
+    border-radius: 12px;
+}
+
+/* ===== FOOTER ===== */
+.footer-custom {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    margin-top: auto;
+}
+
+/* ===== DESCRIPTION LIST ===== */
+dl.row dt {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+dl.row dd {
+    font-size: 0.95rem;
+    color: #1e293b;
+}
+
+/* ===== EMPTY STATE ===== */
+.text-muted i[style*="font-size: 4rem"] {
+    color: #94a3b8 !important;
+}
+
+/* ===== PAGE HEADER ===== */
+.d-flex.justify-content-between.align-items-center.mb-4 {
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* ===== FOCUS STATES ===== */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem rgba(13, 148, 136, 0.5);
+}
+
+/* ===== REPORT CARD HEADER ===== */
+.card-header[style*="background"] {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0d9488 100%) !important;
+}
+
+/* ===== TRANSITIONS ===== */
+.card, .btn, .form-control, .form-select, .badge, .nav-link {
+    transition: all 0.25s ease;
+}

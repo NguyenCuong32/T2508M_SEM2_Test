@@ -1,0 +1,96 @@
+@model IEnumerable<ComicSystem.Models.Rental>
+
+@{
+    ViewData["Title"] = "Rentals";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2><i class="bi bi-cart-check-fill"></i> Rentals</h2>
+        <p class="text-muted mb-0">Track all comic book rentals</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary btn-lg">
+        <i class="bi bi-plus-circle me-1"></i> New Rental
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>@TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card">
+    <div class="card-body p-0">
+        @if (Model.Any())
+        {
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width:50px">#</th>
+                        <th>Customer</th>
+                        <th>Comic Books</th>
+                        <th>Rental Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                        <th class="text-center" style="width:140px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int index = 1; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold text-muted">@(index++)</td>
+                            <td>
+                                <i class="bi bi-person-circle text-muted me-1"></i>
+                                <strong>@item.Customer?.FullName</strong>
+                            </td>
+                            <td>
+                                @foreach (var detail in item.RentalDetails)
+                                {
+                                    <span class="badge bg-info me-1">@detail.ComicBook?.Title (x@detail.Quantity)</span>
+                                }
+                            </td>
+                            <td>@item.RentalDate.ToString("MM/dd/yyyy")</td>
+                            <td>@item.ReturnDate.ToString("MM/dd/yyyy")</td>
+                            <td>
+                                @if (item.Status == "Active")
+                                {
+                                    <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@item.Status</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Details" asp-route-id="@item.RentalID" class="btn btn-sm btn-info">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.RentalID" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-cart-x" style="font-size: 4rem; color: #b2bec3;"></i>
+                <h5 class="mt-3 text-muted">No rentals yet</h5>
+                <p class="text-muted">Create a new rental to start tracking.</p>
+                <a asp-action="Create" class="btn btn-primary mt-2">
+                    <i class="bi bi-plus-circle me-1"></i> Create First Rental
+                </a>
+            </div>
+        }
+    </div>
+</div>
