@@ -1,0 +1,184 @@
+@model finaltest_ACMF.Models.RentalCreateViewModel
+
+@{
+    ViewData["Title"] = "Thuê Truyện Tranh";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">
+                    <i class="fa-solid fa-cart-plus text-warning"></i> Lập Phiếu Thuê Truyện
+                </h1>
+                <p class="text-muted mb-0">Question 3: Chọn khách hàng, truyện, thời gian thuê và số lượng để tạo phiếu</p>
+            </div>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-receipt me-1"></i> Lịch sử thuê
+            </a>
+        </div>
+
+        <div class="card card-custom p-4">
+            <form asp-action="Create" method="post" id="rentalForm">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <!-- Step 1: Customer & Book -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="CustomerID" class="form-label fw-bold">
+                            <i class="fa-solid fa-user text-primary me-1"></i> Chọn Khách hàng <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="CustomerID" asp-items="ViewBag.CustomerID" class="form-select form-select-lg">
+                            <option value="">-- Chọn khách hàng --</option>
+                        </select>
+                        <span asp-validation-for="CustomerID" class="text-danger small"></span>
+                        <div class="mt-1">
+                            <small class="text-muted">Chưa có thông tin? <a asp-controller="Customers" asp-action="Register" class="text-primary fw-semibold">Đăng ký khách mới</a></small>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ComicBookID" class="form-label fw-bold">
+                            <i class="fa-solid fa-book text-warning me-1"></i> Chọn Truyện tranh <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="ComicBookID" asp-items="ViewBag.ComicBookID" class="form-select form-select-lg" id="bookSelect">
+                            <option value="">-- Chọn cuốn truyện --</option>
+                        </select>
+                        <span asp-validation-for="ComicBookID" class="text-danger small"></span>
+                        <div class="mt-1">
+                            <small class="text-muted">Chưa có truyện? <a asp-controller="ComicBooks" asp-action="Create" class="text-primary fw-semibold">Thêm truyện mới</a></small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Rental Dates -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="RentalDate" class="form-label fw-bold">
+                            <i class="fa-regular fa-calendar-check text-success me-1"></i> Ngày thuê (Rental Date) <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="RentalDate" type="date" class="form-control" id="rentalDate" value="@Model.RentalDate.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="RentalDate" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ReturnDate" class="form-label fw-bold">
+                            <i class="fa-regular fa-calendar-xmark text-danger me-1"></i> Ngày hẹn trả (Return Date) <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="ReturnDate" type="date" class="form-control" id="returnDate" value="@Model.ReturnDate.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="ReturnDate" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <!-- Step 3: Quantity & Price -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label asp-for="Quantity" class="form-label fw-bold">
+                            <i class="fa-solid fa-layer-group text-secondary me-1"></i> Số lượng truyện (Quantity) <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Quantity" type="number" min="1" max="100" class="form-control" id="quantityInput" />
+                        <span asp-validation-for="Quantity" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Status" class="form-label fw-bold">
+                            <i class="fa-solid fa-flag text-info me-1"></i> Trạng thái ban đầu
+                        </label>
+                        <select asp-for="Status" class="form-select">
+                            <option value="Đang thuê">Đang thuê</option>
+                            <option value="Đã trả">Đã trả</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <!-- Real-time Cost Estimation Card -->
+                <div class="card bg-light border-0 rounded-3 p-3 mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted"><i class="fa-solid fa-calculator me-1"></i> Số ngày thuê dự tính:</span>
+                        <span class="fw-bold fs-6" id="calcDays">7 ngày</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">Đơn giá / ngày:</span>
+                        <span class="fw-bold" id="calcPrice">0 VNĐ</span>
+                    </div>
+                    <hr class="my-2" />
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-dark fs-5">Ước tính tổng tiền:</span>
+                        <span class="fw-bold text-danger fs-4" id="calcTotal">0 VNĐ</span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 pt-2 border-top">
+                    <a asp-action="Index" class="btn btn-light px-4">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-warning px-5 fw-bold shadow-sm">
+                        <i class="fa-solid fa-check me-1"></i> Xác nhận cho thuê
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const bookSelect = document.getElementById('bookSelect');
+            const rentalDateInput = document.getElementById('rentalDate');
+            const returnDateInput = document.getElementById('returnDate');
+            const quantityInput = document.getElementById('quantityInput');
+            const calcDays = document.getElementById('calcDays');
+            const calcPrice = document.getElementById('calcPrice');
+            const calcTotal = document.getElementById('calcTotal');
+
+            let currentUnitPrice = 0;
+
+            async function updateBookPrice() {
+                const bookId = bookSelect.value;
+                if (!bookId) {
+                    currentUnitPrice = 0;
+                    calculateEstimatedTotal();
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/Rentals/GetBookPrice?id=${bookId}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        currentUnitPrice = data.price;
+                        calculateEstimatedTotal();
+                    }
+                } catch (e) {
+                    console.error("Error fetching price", e);
+                }
+            }
+
+            function calculateEstimatedTotal() {
+                const rDate = new Date(rentalDateInput.value);
+                const retDate = new Date(returnDateInput.value);
+                const qty = parseInt(quantityInput.value) || 1;
+
+                let days = 1;
+                if (!isNaN(rDate.getTime()) && !isNaN(retDate.getTime())) {
+                    const diffTime = retDate - rDate;
+                    days = Math.max(1, Math.round(diffTime / (1000 * 60 * 60 * 24)));
+                }
+
+                calcDays.innerText = `${days} ngày`;
+                calcPrice.innerText = `${Number(currentUnitPrice).toLocaleString('vi-VN')} VNĐ/ngày`;
+
+                const total = days * qty * currentUnitPrice;
+                calcTotal.innerText = `${Number(total).toLocaleString('vi-VN')} VNĐ`;
+            }
+
+            bookSelect.addEventListener('change', updateBookPrice);
+            rentalDateInput.addEventListener('change', calculateEstimatedTotal);
+            returnDateInput.addEventListener('change', calculateEstimatedTotal);
+            quantityInput.addEventListener('input', calculateEstimatedTotal);
+
+            // Trigger on load
+            updateBookPrice();
+        });
+    </script>
+}

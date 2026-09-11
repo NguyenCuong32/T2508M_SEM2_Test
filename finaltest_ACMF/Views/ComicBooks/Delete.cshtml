@@ -1,0 +1,50 @@
+@model finaltest_ACMF.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Xác nhận xóa truyện";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title text-danger">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Xóa Truyện Tranh
+                </h1>
+                <p class="text-muted mb-0">Question 1: Xác nhận xóa bản ghi khỏi cơ sở dữ liệu</p>
+            </div>
+            <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+        </div>
+
+        <div class="card card-custom p-4 border border-danger border-opacity-25">
+            <div class="alert alert-warning d-flex align-items-center mb-4">
+                <i class="fa-solid fa-circle-exclamation fs-3 me-3 text-warning"></i>
+                <div>
+                    Bạn có chắc chắn muốn xóa cuốn truyện này không? Hành động này không thể hoàn tác!
+                </div>
+            </div>
+
+            <dl class="row mb-4">
+                <dt class="col-sm-4 text-secondary">Mã truyện:</dt>
+                <dd class="col-sm-8 fw-bold">#@Model.ComicBookID</dd>
+
+                <dt class="col-sm-4 text-secondary">Tên truyện:</dt>
+                <dd class="col-sm-8 fs-5 fw-bold text-primary">@Model.Title</dd>
+
+                <dt class="col-sm-4 text-secondary">Tác giả:</dt>
+                <dd class="col-sm-8">@Model.Author</dd>
+
+                <dt class="col-sm-4 text-secondary">Giá thuê / ngày:</dt>
+                <dd class="col-sm-8 fw-bold text-success">@Model.PricePerDay.ToString("N0") VNĐ</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post" class="d-flex justify-content-end gap-2 border-top pt-3">
+                <input type="hidden" asp-for="ComicBookID" />
+                <a asp-action="Index" class="btn btn-light px-4">Hủy</a>
+                <button type="submit" class="btn btn-danger px-4 fw-semibold">
+                    <i class="fa-solid fa-trash me-1"></i> Xác nhận xóa
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

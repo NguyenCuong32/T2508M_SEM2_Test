@@ -1,0 +1,107 @@
+@model IEnumerable<finaltest_ACMF.Models.Rental>
+
+@{
+    ViewData["Title"] = "Lịch sử thuê truyện";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">
+            <i class="fa-solid fa-receipt text-warning"></i> Quản lý Phiếu Thuê Truyện
+        </h1>
+        <p class="text-muted mb-0">Question 3: Danh sách các giao dịch thuê truyện của khách hàng</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Create" class="btn btn-warning px-3 py-2 fw-bold rounded-3 shadow-sm">
+            <i class="fa-solid fa-cart-plus me-1"></i> Lập phiếu thuê mới
+        </a>
+    </div>
+</div>
+
+<div class="card card-custom overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr class="text-uppercase fs-7 text-secondary">
+                    <th class="ps-4">Mã phiếu</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày thuê</th>
+                    <th>Ngày hẹn trả</th>
+                    <th>Truyện & Số lượng</th>
+                    <th>Trạng thái</th>
+                    <th class="text-end pe-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold">
+                                <a asp-action="Details" asp-route-id="@item.RentalID" class="text-decoration-none">
+                                    #@item.RentalID.ToString("D4")
+                                </a>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="bg-secondary bg-opacity-10 text-secondary p-2 rounded-circle">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.CustomerID" class="fw-bold text-dark text-decoration-none">
+                                            @(item.Customer?.FullName ?? "N/A")
+                                        </a>
+                                        <small class="text-muted d-block">@(item.Customer?.PhoneNumber)</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="fw-medium text-dark"><i class="fa-regular fa-calendar-check text-success me-1"></i> @item.RentalDate.ToString("dd/MM/yyyy")</span>
+                            </td>
+                            <td>
+                                <span class="fw-medium text-dark"><i class="fa-regular fa-calendar-xmark text-danger me-1"></i> @item.ReturnDate.ToString("dd/MM/yyyy")</span>
+                            </td>
+                            <td>
+                                @foreach (var detail in item.RentalDetails)
+                                {
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1">
+                                            <i class="fa-solid fa-book me-1"></i> @(detail.ComicBook?.Title)
+                                        </span>
+                                        <span class="badge bg-dark">x@(detail.Quantity)</span>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @if (item.Status == "Đang thuê")
+                                {
+                                    <span class="badge-status-renting"><i class="fa-solid fa-clock me-1"></i> @item.Status</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-status-returned"><i class="fa-solid fa-check me-1"></i> @item.Status</span>
+                                }
+                            </td>
+                            <td class="text-end pe-4">
+                                <a asp-action="Details" asp-route-id="@item.RentalID" class="btn btn-sm btn-outline-info" title="Xem chi tiết hóa đơn">
+                                    <i class="fa-solid fa-eye me-1"></i> Chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-inbox fa-3x mb-3 text-secondary opacity-50"></i>
+                            <p class="mb-0">Chưa có phiếu thuê truyện nào trong hệ thống.</p>
+                            <a asp-action="Create" class="btn btn-sm btn-warning mt-3 fw-bold">Tạo phiếu thuê đầu tiên</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

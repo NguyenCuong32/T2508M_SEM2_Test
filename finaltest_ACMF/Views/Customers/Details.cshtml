@@ -1,0 +1,116 @@
+@model finaltest_ACMF.Models.Customer
+
+@{
+    ViewData["Title"] = "Chi tiết Khách hàng - " + Model.FullName;
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">
+            <i class="fa-solid fa-user-tag text-primary"></i> @Model.FullName
+        </h1>
+        <p class="text-muted mb-0">Mã KH: CUST-@Model.CustomerID.ToString("D4") | Đăng ký ngày: @Model.RegistrationDate.ToString("dd/MM/yyyy HH:mm")</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-controller="Rentals" asp-action="Create" asp-route-customerId="@Model.CustomerID" class="btn btn-warning fw-semibold">
+            <i class="fa-solid fa-cart-plus me-1"></i> Lập phiếu thuê
+        </a>
+        <a asp-action="Edit" asp-route-id="@Model.CustomerID" class="btn btn-outline-primary">
+            <i class="fa-solid fa-pen-to-square me-1"></i> Sửa thông tin
+        </a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Quay lại danh sách</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card card-custom p-4 text-center">
+            <div class="bg-primary bg-opacity-10 text-primary rounded-circle mx-auto p-4 mb-3" style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-user-tie fa-3x"></i>
+            </div>
+            <h4 class="fw-bold mb-1">@Model.FullName</h4>
+            <p class="text-muted"><i class="fa-solid fa-phone me-1"></i> @Model.PhoneNumber</p>
+            <div class="p-3 bg-light rounded-3 text-start">
+                <div class="mb-2">
+                    <small class="text-muted d-block">Mã khách hàng:</small>
+                    <span class="fw-bold">#@Model.CustomerID</span>
+                </div>
+                <div class="mb-2">
+                    <small class="text-muted d-block">Ngày tham gia:</small>
+                    <span class="fw-bold">@Model.RegistrationDate.ToString("dd/MM/yyyy HH:mm")</span>
+                </div>
+                <div>
+                    <small class="text-muted d-block">Tổng số lần thuê:</small>
+                    <span class="badge bg-primary fs-6">@(Model.Rentals?.Count ?? 0) lần</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card card-custom p-4">
+            <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-info"></i> Lịch sử các phiếu thuê của khách hàng
+            </h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr class="small text-secondary">
+                            <th>Mã phiếu</th>
+                            <th>Ngày thuê</th>
+                            <th>Ngày hẹn trả</th>
+                            <th>Truyện đã thuê</th>
+                            <th>Trạng thái</th>
+                            <th class="text-end">Chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Rentals != null && Model.Rentals.Any())
+                        {
+                            foreach (var rental in Model.Rentals.OrderByDescending(r => r.RentalDate))
+                            {
+                                <tr>
+                                    <td class="fw-bold">#@rental.RentalID</td>
+                                    <td>@rental.RentalDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@rental.ReturnDate.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        @foreach (var detail in rental.RentalDetails)
+                                        {
+                                            <span class="badge bg-light text-dark border me-1">
+                                                @(detail.ComicBook?.Title) (x@(detail.Quantity))
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (rental.Status == "Đang thuê")
+                                        {
+                                            <span class="badge-status-renting">@rental.Status</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge-status-returned">@rental.Status</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <a asp-controller="Rentals" asp-action="Details" asp-route-id="@rental.RentalID" class="btn btn-sm btn-outline-info">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    Khách hàng này chưa có giao dịch thuê truyện nào.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

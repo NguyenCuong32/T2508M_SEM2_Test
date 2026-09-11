@@ -1,0 +1,66 @@
+@model finaltest_ACMF.Models.Customer
+
+@{
+    ViewData["Title"] = "Chỉnh sửa thông tin khách hàng";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7 col-md-9">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">
+                    <i class="fa-solid fa-user-pen text-warning"></i> Sửa Thông Tin Khách Hàng
+                </h1>
+                <p class="text-muted mb-0">Cập nhật thông tin thành viên: @Model.FullName</p>
+            </div>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
+            </a>
+        </div>
+
+        <div class="card card-custom p-4">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                <input type="hidden" asp-for="CustomerID" />
+
+                <div class="mb-3">
+                    <label asp-for="FullName" class="form-label fw-bold">Họ và Tên khách hàng <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-user text-primary"></i></span>
+                        <input asp-for="FullName" class="form-control form-control-lg" />
+                    </div>
+                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label fw-bold">Số điện thoại liên hệ <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-phone text-success"></i></span>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                    </div>
+                    <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="RegistrationDate" class="form-label fw-bold">Ngày đăng ký</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-calendar text-secondary"></i></span>
+                        <input asp-for="RegistrationDate" type="datetime-local" value="@Model.RegistrationDate.ToString("yyyy-MM-ddTHH:mm")" class="form-control" />
+                    </div>
+                    <span asp-validation-for="RegistrationDate" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 pt-2 border-top">
+                    <a asp-action="Index" class="btn btn-light px-4">Hủy</a>
+                    <button type="submit" class="btn btn-warning px-4 fw-semibold">
+                        <i class="fa-solid fa-check me-1"></i> Cập nhật thông tin
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

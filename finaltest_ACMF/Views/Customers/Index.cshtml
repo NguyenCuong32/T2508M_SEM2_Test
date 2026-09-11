@@ -1,0 +1,111 @@
+@model IEnumerable<finaltest_ACMF.Models.Customer>
+
+@{
+    ViewData["Title"] = "Danh sách Khách hàng";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">
+            <i class="fa-solid fa-users text-primary"></i> Quản lý Khách hàng
+        </h1>
+        <p class="text-muted mb-0">Question 2: Danh sách thành viên đã đăng ký thuê truyện</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Register" class="btn btn-primary px-3 py-2 fw-semibold rounded-3 shadow-sm">
+            <i class="fa-solid fa-user-plus me-1"></i> Đăng ký khách hàng mới
+        </a>
+    </div>
+</div>
+
+<!-- Search Bar -->
+<div class="card card-custom p-3 mb-4">
+    <form asp-action="Index" method="get" class="row g-2 align-items-center">
+        <div class="col-md-9">
+            <div class="input-group">
+                <span class="input-group-text bg-light border-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control bg-light border-0" placeholder="Tìm kiếm theo họ tên hoặc số điện thoại..." />
+            </div>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-dark w-100 fw-medium">
+                <i class="fa-solid fa-filter me-1"></i> Tìm kiếm
+            </button>
+            @if (ViewData["CurrentFilter"] != null)
+            {
+                <a asp-action="Index" class="btn btn-outline-secondary">Xóa lọc</a>
+            }
+        </div>
+    </form>
+</div>
+
+<!-- Customers Table -->
+<div class="card card-custom overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr class="text-uppercase fs-7 text-secondary">
+                    <th class="ps-4">ID</th>
+                    <th>Họ và Tên (FullName)</th>
+                    <th>Số điện thoại (PhoneNumber)</th>
+                    <th>Ngày đăng ký (RegistrationDate)</th>
+                    <th>Lượt thuê</th>
+                    <th class="text-end pe-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted">#@item.CustomerID</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="bg-info bg-opacity-10 text-info p-2 rounded-circle">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <a asp-action="Details" asp-route-id="@item.CustomerID" class="fw-bold text-dark text-decoration-none">
+                                        @item.FullName
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="fw-semibold text-dark"><i class="fa-solid fa-phone small text-muted me-1"></i> @item.PhoneNumber</span>
+                            </td>
+                            <td>
+                                <span class="text-muted"><i class="fa-regular fa-calendar small me-1"></i> @item.RegistrationDate.ToString("dd/MM/yyyy HH:mm")</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">@(item.Rentals?.Count ?? 0) lần thuê</span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group">
+                                    <a asp-controller="Rentals" asp-action="Create" asp-route-customerId="@item.CustomerID" class="btn btn-sm btn-outline-success" title="Lập phiếu thuê">
+                                        <i class="fa-solid fa-cart-plus"></i> Cho thuê
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.CustomerID" class="btn btn-sm btn-outline-primary" title="Sửa">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.CustomerID" class="btn btn-sm btn-outline-info" title="Xem lịch sử">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-user-xmark fa-3x mb-3 text-secondary opacity-50"></i>
+                            <p class="mb-0">Chưa có khách hàng nào được đăng ký.</p>
+                            <a asp-action="Register" class="btn btn-sm btn-primary mt-3">Đăng ký khách hàng ngay</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

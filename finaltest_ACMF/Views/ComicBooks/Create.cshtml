@@ -1,0 +1,67 @@
+@model finaltest_ACMF.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Thêm Truyện Mới";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7 col-md-9">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">
+                    <i class="fa-solid fa-plus-circle text-primary"></i> Thêm Truyện Tranh Mới
+                </h1>
+                <p class="text-muted mb-0">Question 1: Thêm bản ghi mới vào bảng ComicBooks</p>
+            </div>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
+            </a>
+        </div>
+
+        <div class="card card-custom p-4">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label fw-bold">Tên truyện <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-book text-primary"></i></span>
+                        <input asp-for="Title" class="form-control form-control-lg" placeholder="Ví dụ: Doraemon, Conan, One Piece..." />
+                    </div>
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Author" class="form-label fw-bold">Tác giả <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-pen-nib text-secondary"></i></span>
+                        <input asp-for="Author" class="form-control" placeholder="Ví dụ: Fujiko F. Fujio, Gosho Aoyama..." />
+                    </div>
+                    <span asp-validation-for="Author" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="PricePerDay" class="form-label fw-bold">Giá thuê 1 ngày (VNĐ) <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-money-bill-wave text-success"></i></span>
+                        <input asp-for="PricePerDay" type="number" step="500" min="100" class="form-control" placeholder="5000" />
+                        <span class="input-group-text">VNĐ / ngày</span>
+                    </div>
+                    <span asp-validation-for="PricePerDay" class="text-danger small"></span>
+                    <div class="form-text">Mức giá áp dụng cho mỗi ngày khách mượn truyện.</div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 pt-2 border-top">
+                    <a asp-action="Index" class="btn btn-light px-4">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Lưu truyện
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
