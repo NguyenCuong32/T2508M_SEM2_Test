@@ -1,0 +1,119 @@
+@model ComicSystem.Web.Models.ViewModels.RentalReportViewModel
+
+@{
+    ViewData["Title"] = "Báo Cáo Thuê Sách (Câu 4)";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold text-primary mb-1">
+            <i class="bi bi-file-earmark-bar-graph me-2"></i>Báo Cáo Thuê Truyện Tranh (Câu 4)
+        </h2>
+        <p class="text-muted mb-0">Create a report of all book rents between start date to end date</p>
+    </div>
+    <div>
+        <button onclick="window.print()" class="btn btn-outline-secondary shadow-sm me-2">
+            <i class="bi bi-printer me-1"></i> In báo cáo
+        </button>
+    </div>
+</div>
+
+<!-- Form Lọc Ngày -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-light py-3">
+        <h6 class="card-title mb-0 fw-bold"><i class="bi bi-funnel me-1"></i> Bộ Lọc Khoảng Thời Gian</h6>
+    </div>
+    <div class="card-body">
+        <form asp-action="Index" method="get" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label asp-for="StartDate" class="form-label fw-semibold">Từ ngày (Start Date):</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="bi bi-calendar-event"></i></span>
+                    <input type="date" name="startDate" value="@(Model.StartDate?.ToString("yyyy-MM-dd"))" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="EndDate" class="form-label fw-semibold">Đến ngày (End Date):</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="bi bi-calendar-check"></i></span>
+                    <input type="date" name="endDate" value="@(Model.EndDate?.ToString("yyyy-MM-dd"))" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-search me-1"></i> Xuất báo cáo
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-counterclockwise"></i> Mặc định
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bảng Kết Quả Khớp Chính Xác Bảng Mẫu Trang 2 Của Đề Thi -->
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="fw-bold text-dark mb-0">Danh Sách Truyện Đã Thuê Trong Kỳ</h5>
+            <small class="text-muted">
+                Kỳ báo cáo: 
+                <strong>@(Model.StartDate?.ToString("dd/MM/yyyy") ?? "Từ trước")</strong> 
+                đến 
+                <strong>@(Model.EndDate?.ToString("dd/MM/yyyy") ?? "Hiện tại")</strong>
+            </small>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-primary fs-6 me-2">Tổng lượt: @Model.TotalRentals</span>
+            <span class="badge bg-success fs-6">Tổng số lượng: @Model.TotalQuantity cuốn</span>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle mb-0 text-center">
+            <thead class="table-light align-middle">
+                <tr style="height: 48px;">
+                    <th style="width: 70px;">No</th>
+                    <th class="text-start">Book name</th>
+                    <th>Rental date</th>
+                    <th>Return date</th>
+                    <th class="text-start">Customer name</th>
+                    <th style="width: 120px;">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Items.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            Không có bản ghi thuê sách nào trong khoảng thời gian đã chọn.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.No</td>
+                            <td class="text-start fw-semibold text-primary">@item.BookName</td>
+                            <td>@item.RentalDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.ReturnDate.ToString("dd/MM/yyyy")</td>
+                            <td class="text-start fw-semibold text-dark">@item.CustomerName</td>
+                            <td class="fw-bold fs-6">@item.Quantity</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+            @if (Model.Items.Any())
+            {
+                <tfoot class="table-light fw-bold">
+                    <tr>
+                        <td colspan="5" class="text-end">Tổng cộng số lượng:</td>
+                        <td class="text-center text-danger fs-5">@Model.TotalQuantity</td>
+                    </tr>
+                </tfoot>
+            }
+        </table>
+    </div>
+</div>
