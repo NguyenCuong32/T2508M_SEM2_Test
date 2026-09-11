@@ -1,0 +1,19 @@
+## Visual Studio cache and settings
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.userprefs
+
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## Docker / Temporary
+.dockerignore
+*.tmp
+*.log

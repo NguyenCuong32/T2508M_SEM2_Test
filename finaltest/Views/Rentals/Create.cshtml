@@ -1,0 +1,187 @@
+@model finaltest.Models.RentalCreateViewModel
+
+@{
+    ViewData["Title"] = "Thuê truyện (Rental book page)";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9 col-xl-8">
+        <div class="card shadow-sm">
+            <div class="card-header py-3 bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0"><i class="bi bi-cart-plus-fill me-2"></i>Thuê truyện tranh (Question 3)</h5>
+                <span class="badge bg-light text-primary">comicsys.com</span>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted small mb-4">
+                    Thêm thông tin thuê truyện bao gồm: Khách hàng, Truyện tranh, Ngày thuê, Ngày trả, Số lượng và Đơn giá thuê theo ngày.
+                </p>
+
+                <form asp-action="Create" method="post" id="rentalForm">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label asp-for="CustomerID" class="form-label fw-semibold">
+                                <i class="bi bi-person text-primary me-1"></i>Khách hàng (Customer) <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="CustomerID" asp-items="Model.CustomersList" class="form-select" required>
+                                <option value="">-- Chọn khách hàng --</option>
+                            </select>
+                            <span asp-validation-for="CustomerID" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <a asp-controller="Customers" asp-action="Register" class="btn btn-outline-success w-100" target="_blank">
+                                <i class="bi bi-person-plus me-1"></i> Khách mới? Đăng ký
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label asp-for="ComicBookID" class="form-label fw-semibold">
+                                <i class="bi bi-book text-primary me-1"></i>Truyện tranh (Comic Book) <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="ComicBookID" asp-items="Model.ComicBooksList" class="form-select" id="comicBookSelect" required>
+                                <option value="">-- Chọn truyện tranh --</option>
+                            </select>
+                            <span asp-validation-for="ComicBookID" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label asp-for="RentalDate" class="form-label fw-semibold">
+                                <i class="bi bi-calendar-check text-primary me-1"></i>Ngày thuê (Rental date) <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="RentalDate" class="form-control" type="date" id="rentalDateInput" />
+                            <span asp-validation-for="RentalDate" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="ReturnDate" class="form-label fw-semibold">
+                                <i class="bi bi-calendar-x text-primary me-1"></i>Ngày trả (Return date) <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="ReturnDate" class="form-control" type="date" id="returnDateInput" />
+                            <span asp-validation-for="ReturnDate" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <label asp-for="Quantity" class="form-label fw-semibold">
+                                <i class="bi bi-123 text-primary me-1"></i>Số lượng (Quantity) <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Quantity" class="form-control" type="number" min="1" max="100" id="quantityInput" />
+                            <span asp-validation-for="Quantity" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <label asp-for="PricePerDay" class="form-label fw-semibold">
+                                <i class="bi bi-tag text-primary me-1"></i>Giá thuê / ngày (Price per day) <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <input asp-for="PricePerDay" class="form-control" type="number" step="500" id="pricePerDayInput" />
+                                <span class="input-group-text">VNĐ</span>
+                            </div>
+                            <span asp-validation-for="PricePerDay" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Status" class="form-label fw-semibold">
+                                <i class="bi bi-toggle-on text-primary me-1"></i>Trạng thái (Status)
+                            </label>
+                            <select asp-for="Status" class="form-select">
+                                <option value="Đang thuê">Đang thuê</option>
+                                <option value="Đã trả">Đã trả</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <!-- Live Calculation Card -->
+                    <div class="card bg-light border-primary my-4">
+                        <div class="card-body py-3">
+                            <div class="row align-items-center text-center text-md-start">
+                                <div class="col-md-4 mb-2 mb-md-0">
+                                    <small class="text-muted d-block">Số ngày thuê:</small>
+                                    <span class="fw-bold fs-5 text-dark" id="calcDays">0 ngày</span>
+                                </div>
+                                <div class="col-md-4 mb-2 mb-md-0">
+                                    <small class="text-muted d-block">Tổng số lượng:</small>
+                                    <span class="fw-bold fs-5 text-dark" id="calcQuantity">1 quyển</span>
+                                </div>
+                                <div class="col-md-4 text-md-end">
+                                    <small class="text-muted d-block">Tạm tính thành tiền:</small>
+                                    <span class="fw-bold fs-4 text-danger" id="calcTotalFee">0 VNĐ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách
+                        </a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-check-circle me-1"></i> Xác nhận Thuê truyện
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const comicBookSelect = document.getElementById('comicBookSelect');
+            const priceInput = document.getElementById('pricePerDayInput');
+            const quantityInput = document.getElementById('quantityInput');
+            const rentalDateInput = document.getElementById('rentalDateInput');
+            const returnDateInput = document.getElementById('returnDateInput');
+            const calcDaysEl = document.getElementById('calcDays');
+            const calcQuantityEl = document.getElementById('calcQuantity');
+            const calcTotalFeeEl = document.getElementById('calcTotalFee');
+
+            function updateFeeCalculation() {
+                const qty = parseInt(quantityInput.value) || 0;
+                const price = parseFloat(priceInput.value) || 0;
+                const rDate = new Date(rentalDateInput.value);
+                const retDate = new Date(returnDateInput.value);
+
+                let diffDays = 1;
+                if (!isNaN(rDate.getTime()) && !isNaN(retDate.getTime())) {
+                    const diffTime = retDate.getTime() - rDate.getTime();
+                    diffDays = Math.max(1, Math.round(diffTime / (1000 * 60 * 60 * 24)));
+                }
+
+                calcDaysEl.textContent = diffDays + ' ngày';
+                calcQuantityEl.textContent = qty + ' quyển';
+
+                const total = diffDays * price * qty;
+                calcTotalFeeEl.textContent = total.toLocaleString('vi-VN') + ' VNĐ';
+            }
+
+            comicBookSelect.addEventListener('change', function () {
+                const bookId = this.value;
+                if (bookId) {
+                    fetch('/ComicBooks/GetPrice?id=' + bookId)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.pricePerDay !== undefined) {
+                                priceInput.value = data.pricePerDay;
+                                updateFeeCalculation();
+                            }
+                        })
+                        .catch(err => console.error(err));
+                }
+            });
+
+            quantityInput.addEventListener('input', updateFeeCalculation);
+            priceInput.addEventListener('input', updateFeeCalculation);
+            rentalDateInput.addEventListener('change', updateFeeCalculation);
+            returnDateInput.addEventListener('change', updateFeeCalculation);
+
+            updateFeeCalculation();
+        });
+    </script>
+}

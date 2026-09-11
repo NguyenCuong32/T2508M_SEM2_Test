@@ -1,0 +1,81 @@
+@model finaltest.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Chi tiết truyện tranh";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0"><i class="bi bi-info-circle me-2 text-primary"></i>Thông tin truyện tranh</h5>
+                <span class="badge bg-primary fs-6">Mã #@Model.ComicBookID</span>
+            </div>
+            <div class="card-body p-4">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 text-muted">Tên truyện (Title):</dt>
+                    <dd class="col-sm-8 fw-bold fs-5 text-primary">@Model.Title</dd>
+
+                    <dt class="col-sm-4 text-muted">Tác giả (Author):</dt>
+                    <dd class="col-sm-8">@Model.Author</dd>
+
+                    <dt class="col-sm-4 text-muted">Giá thuê 1 ngày (PricePerDay):</dt>
+                    <dd class="col-sm-8 fw-bold text-success fs-5">@Model.PricePerDay.ToString("N0") VNĐ</dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-white d-flex justify-content-between py-3">
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách
+                </a>
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.ComicBookID" class="btn btn-primary me-2">
+                        <i class="bi bi-pencil me-1"></i> Chỉnh sửa
+                    </a>
+                    <a asp-controller="Rentals" asp-action="Create" asp-route-comicBookId="@Model.ComicBookID" class="btn btn-success">
+                        <i class="bi bi-cart-plus me-1"></i> Thuê truyện này
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.RentalDetails != null && Model.RentalDetails.Any())
+        {
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>Lịch sử thuê truyện này</h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Mã phiếu</th>
+                                <th>Khách hàng</th>
+                                <th>Ngày thuê</th>
+                                <th>Ngày trả</th>
+                                <th>Số lượng</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rd in Model.RentalDetails)
+                            {
+                                <tr>
+                                    <td><a asp-controller="Rentals" asp-action="Details" asp-route-id="@rd.RentalID">#@rd.RentalID</a></td>
+                                    <td>@rd.Rental?.Customer?.FullName</td>
+                                    <td>@rd.Rental?.RentalDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@rd.Rental?.ReturnDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@rd.Quantity</td>
+                                    <td>
+                                        <span class="badge @(rd.Rental?.Status == "Đang thuê" ? "badge-status-renting" : "badge-status-returned")">
+                                            @rd.Rental?.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>

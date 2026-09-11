@@ -1,0 +1,46 @@
+@model finaltest.Models.ComicBook
+
+@{
+    ViewData["Title"] = "Xóa truyện tranh";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white py-3">
+                <h5 class="card-title mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i>Xác nhận xóa truyện tranh</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="alert alert-warning">
+                    <i class="bi bi-info-circle me-1"></i> Bạn có chắc chắn muốn xóa cuốn truyện tranh này khỏi hệ thống không?
+                </div>
+
+                <dl class="row mb-4">
+                    <dt class="col-sm-4 text-muted">Mã truyện:</dt>
+                    <dd class="col-sm-8 fw-bold">#@Model.ComicBookID</dd>
+
+                    <dt class="col-sm-4 text-muted">Tên truyện:</dt>
+                    <dd class="col-sm-8 fw-semibold text-primary">@Model.Title</dd>
+
+                    <dt class="col-sm-4 text-muted">Tác giả:</dt>
+                    <dd class="col-sm-8">@Model.Author</dd>
+
+                    <dt class="col-sm-4 text-muted">Giá thuê / ngày:</dt>
+                    <dd class="col-sm-8 text-success fw-bold">@Model.PricePerDay.ToString("N0") VNĐ</dd>
+                </dl>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="ComicBookID" />
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Hủy và quay lại
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash-fill me-1"></i> Xác nhận xóa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
