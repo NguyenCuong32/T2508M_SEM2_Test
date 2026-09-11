@@ -16,6 +16,5 @@ public class Customer
     public string PhoneNumber { get; set; } = "";
 
     [DataType(DataType.Date), Display(Name = "Ngày đăng ký")]
-    [Range(typeof(DateTime), "1000-01-01", "9999-12-31", ErrorMessage = "Ngày đăng ký không hợp lệ.")]
     public DateTime RegistrationDate { get; set; } = DateTime.Today;
 }

@@ -11,11 +11,9 @@ public class RentalCreateViewModel : IValidatableObject
     public int CustomerId { get; set; }
 
     [DataType(DataType.Date), Display(Name = "Ngày thuê")]
-    [Range(typeof(DateTime), "1000-01-01", "9999-12-31", ErrorMessage = "Ngày thuê không hợp lệ.")]
     public DateTime RentalDate { get; set; } = DateTime.Today;
 
     [DataType(DataType.Date), Display(Name = "Ngày trả")]
-    [Range(typeof(DateTime), "1000-01-01", "9999-12-31", ErrorMessage = "Ngày trả không hợp lệ.")]
     public DateTime ReturnDate { get; set; } = DateTime.Today.AddDays(1);
 
     [ValidateNever]
